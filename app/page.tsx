@@ -47,7 +47,7 @@ export default function Home() {
       <div>
         <p className="capitalize font-semibold text-[#001219] mb-6 text-3xl sm:text-5xl ">New animes</p>
       </div>
-      <div className="grid grid-cols-[repeat(auto-fit,minmax(250px,1fr))] gap-7 items-start">
+      <div className="grid grid-cols-[repeat(auto-fit,minmax(250px,1fr))] gap-7">
       {
         data.map((anime: AnimeProp) => {
           return (

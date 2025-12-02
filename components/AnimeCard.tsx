@@ -1,13 +1,14 @@
 import { AnimeProp, AnimePropContainer } from '@/app/page';
+import { getFullLink } from '@/app/providers';
 import Image from 'next/image';
+import Link from 'next/link';
 import React from 'react';
 
 const AnimeCard = ({ anime }: AnimePropContainer) => {
-    const img = `https://shikimori.one${anime.image.original}`
     return (
         <div className='p-2 bg-[#708d81] flex  flex-col gap-y-3'>
             <div className="relative w-full h-95">
-                <Image className='rounded-lg' src={img} fill alt={anime.name} />
+                <Image className='rounded-lg' src={getFullLink(anime.image.original)} fill alt={anime.name} />
             </div>
             <div className='flex items-center  justify-between '>
                 <div>
@@ -20,7 +21,7 @@ const AnimeCard = ({ anime }: AnimePropContainer) => {
 
             </div>
             <div className='flex items-center justify-center'>
-                <button className=' px-3 py-1.5 cursor-pointer rounded-sm text-white bg-[#1c2321]'>Details</button>
+                <Link href={`/animes/${anime.id}`} className=' px-3 py-1.5 cursor-pointer rounded-sm text-white bg-[#1c2321]'>Details</Link>
             </div>
         </div>
     );
