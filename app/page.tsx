@@ -2,8 +2,7 @@
 import AnimeCard from "@/components/AnimeCard";
 import Spinner from "@/components/Spinner";
 import { useQuery } from "@tanstack/react-query";
-import { div } from "motion/react-client";
-import Image from "next/image";
+
 import Link from "next/link";
 
 interface imageProp{

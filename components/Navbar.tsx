@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { BiHeart } from "react-icons/bi";
 import { FaHeart, FaShoppingCart } from "react-icons/fa";
 
 const Navbar = () => {
@@ -11,12 +10,21 @@ const Navbar = () => {
             <div className="flex items-center justify-center gap-x-3">
                 <div>
                     <Link href='/cart'>
-                        <FaShoppingCart size={32} />
+                        <div className="relative">
+                            <FaShoppingCart size={32} />
+                            <p className="absolute -right-2 -top-1 text-white px-1.5 py-0.5
+                             bg-[#000000e9] text-xs rounded-4xl">5</p>
+                        </div>
                     </Link>
                 </div>
                 <div>
                     <Link href='/faviourite'>
-                        <FaHeart size={32} />
+                        <div className="relative">
+                            <FaHeart size={32} />
+                            <p className="absolute -right-2 -top-1 text-white px-1.5 py-0.5
+                             bg-[#000000e9] text-xs rounded-4xl">5</p>
+                        </div>
+
                     </Link>
                 </div>
             </div>
