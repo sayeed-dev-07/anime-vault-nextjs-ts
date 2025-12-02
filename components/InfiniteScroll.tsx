@@ -9,82 +9,56 @@ import { AnimeProp } from "@/app/page";
 
 const InfiniteScroll = () => {
     const { ref, inView } = useInView({
-        threshold: 0,
-        rootMargin: '100px', // Trigger 100px before the element comes into view
     });
-    
-    const fetchData = async ({ pageParam }: { pageParam: number }) => {
-        const res = await fetch(`https://shikimori.one/api/animes?page=${pageParam}&limit=8`);
-        if (!res.ok) {
-            throw new Error('Failed to fetch anime data');
-        }
-        const data = await res.json();
-        return data;
-    };
 
-    const {
-        data,
-        error,
-        fetchNextPage,
-        hasNextPage,
-        isFetching,
-        isFetchingNextPage,
-        status
-    } = useInfiniteQuery({
-        queryKey: ['animes'],
-        queryFn: fetchData,
-        initialPageParam: 1,
-        getNextPageParam: (lastPage, allPages) => {
-           
-            if (!lastPage || lastPage.length < 8) {
-                return undefined;
+    const fetchData = async ({pageParam = 1}) => {
+        const data = await fetch(`https://shikimori.one/api/animes?page=${pageParam}&limit=8`)
+        return await data.json()
+    }
+    const { isPending, data, error, fetchNextPage, hasNextPage, isFetchingNextPage } = useInfiniteQuery(
+        {
+            queryKey: ['anime'],
+            queryFn: fetchData,
+            staleTime: 10000,
+            initialPageParam: 1,
+            getNextPageParam: (lastPage, AllPages) => {
+                return lastPage.length === 0 ? null : AllPages.length + 1
             }
-    
-            return allPages.length + 1;
-        },
-    });
-
-    useEffect(() => {
-        console.log('InView:', inView, 'HasNextPage:', hasNextPage, 'IsFetchingNextPage:', isFetchingNextPage);
-        if (inView && hasNextPage && !isFetchingNextPage) {
-            console.log('Fetching next page...');
-            const timer = setTimeout(() => {
-                fetchNextPage();
-            }, 200);
-            return () => clearTimeout(timer);
         }
-    }, [inView, hasNextPage, isFetchingNextPage, fetchNextPage]);
+    )
+    useEffect(()=>{
+        if (inView && hasNextPage) {
+            setTimeout(()=>{
+                fetchNextPage()
+            },500)
+        }
+    },[fetchNextPage, hasNextPage, inView])
+    const animes = data ? data.pages.flatMap((page => page)) : []
 
-    if (status === 'pending') {
-        return <Spinner />;
+
+    if (isPending) {
+        return <div className="min-h-[70vh] flex items-center justify-center">
+            <Spinner />
+        </div>
     }
+    if (error) {
+        return (<div className="min-h-[70vh] flex items-center justify-center">
+            <p className="text-3xl">Something went wrong : {error.message}</p>
+        </div>)
 
-    if (status === 'error') {
-        return (
-            <div className="text-4xl min-h-screen flex items-center justify-center">
-                Something went wrong: {error.message}
-            </div>
-        );
     }
-
-    const allAnime = data?.pages.flatMap(page => page) ?? [];
-
-
     return (
         <div>
-            <div className="grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-7 items-start">
-                {allAnime.map((elem: AnimeProp) => (
-                    <AnimeCard key={elem.id} anime={elem} />
-                ))}
+            <div className="grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-7">
+                {
+                    animes.map((anime, index) => <AnimeCard key={`${anime.id}-${index}`} anime={anime} />)
+                }
             </div>
-            
-        
-            <div ref={ref} className="flex justify-center py-8 min-h-[100px]">
-                {isFetchingNextPage && <Spinner />}
-                {!hasNextPage && allAnime.length > 0 && (
-                    <p className="text-gray-500">No more anime to load</p>
-                )}
+            {
+                hasNextPage && <div ref={ref}>
+                <Spinner/> 
             </div>
+            }
         </div>
     );
 };
