@@ -1,23 +1,29 @@
 'use client'
-import React, { createContext, useState } from "react";
+import React, { createContext, useContext, useState } from "react";
+import { AnimeProp } from "./page";
 
 interface contextData {
-    number: number,
-    setNumber: React.Dispatch<React.SetStateAction<number>>
+    faviourite: AnimeProp[],
+    setFaviourite: React.Dispatch<React.SetStateAction<AnimeProp[]>>
 }
 
 
 
-export const AnimeContext = createContext< null | contextData>(null)
+export const AnimeContext = createContext<undefined | contextData>(undefined)
 
+export function useAnimeContext() {
+  const ctx = useContext(AnimeContext);
+  if (!ctx) throw new Error("useAnimeContext must be used inside <ContextApi>");
+  return ctx;
+}
 
 
 
 export const ContextApi = ({ children }: { children: React.ReactNode }) => {
-    const [number, setNumber] = useState<number>(0)
-    
+    const [faviourite, setFaviourite] = useState<AnimeProp[]>([])
+
     return (
-        <AnimeContext.Provider value={{number, setNumber}}>
+        <AnimeContext.Provider value={{ faviourite, setFaviourite }}>
             {children}
         </AnimeContext.Provider>
     );

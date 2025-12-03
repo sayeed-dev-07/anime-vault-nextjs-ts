@@ -1,12 +1,25 @@
+import { AnimeContext, useAnimeContext } from '@/app/context';
 import { AnimeProp, AnimePropContainer } from '@/app/page';
 import { getFullLink } from '@/app/providers';
 import Image from 'next/image';
 import Link from 'next/link';
-import React from 'react';
+import { BiHeart } from 'react-icons/bi';
+import { FaHeart } from 'react-icons/fa';
 
 const AnimeCard = ({ anime }: AnimePropContainer) => {
+    
+    const {faviourite, setFaviourite} = useAnimeContext()
+    function handleCLick(){
+        if (faviourite.includes(anime)) {
+            const newFav = faviourite.filter((anim)=> anim.id !== anime.id)
+            setFaviourite([...newFav])
+        }else{
+            setFaviourite(prev => [...prev, anime])
+        }
+    }
+   
     return (
-        <div className='p-2 bg-[#708d81] flex  flex-col gap-y-3'>
+        <div className='p-2 bg-[#708d81] flex  flex-col gap-y-3 max-w-[500px]'>
             <div className="relative w-full h-95">
                 <Image className='rounded-lg' src={getFullLink(anime.image.original)} fill alt={anime.name} />
             </div>
@@ -20,8 +33,13 @@ const AnimeCard = ({ anime }: AnimePropContainer) => {
                 </div>
 
             </div>
-            <div className='flex items-center justify-center'>
+            <div className='flex items-center justify-between'>
                 <Link href={`/animes/${anime.id}`} className=' px-3 py-1.5 cursor-pointer rounded-sm text-white bg-[#1c2321]'>Details</Link>
+                <div onClick={ handleCLick}>
+                    {
+                        faviourite.includes(anime) ? <FaHeart size={32} className='cursor-pointer' fill='crimson'/>  :<BiHeart  className='cursor-pointer hover:fill-[crimson]' size={32}/>
+                    }
+                </div>
             </div>
         </div>
     );
