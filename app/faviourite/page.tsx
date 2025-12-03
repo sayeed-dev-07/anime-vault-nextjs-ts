@@ -1,6 +1,6 @@
 'use client'
-import { useContext } from "react";
-import { AnimeContext, useAnimeContext } from "../context";
+
+import { useAnimeContext } from "../context";
 import AnimeCard from "@/components/AnimeCard";
 import Link from "next/link";
 

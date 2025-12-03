@@ -1,5 +1,5 @@
-import { AnimeContext, useAnimeContext } from '@/app/context';
-import { AnimeProp, AnimePropContainer } from '@/app/page';
+import {  useAnimeContext } from '@/app/context';
+import {  AnimePropContainer } from '@/app/page';
 import { getFullLink } from '@/app/providers';
 import Image from 'next/image';
 import Link from 'next/link';

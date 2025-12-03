@@ -24,7 +24,7 @@ const InfiniteScroll = ({
         const data = await fetch(`${linkData}${pageParam}&limit=8`)
         return await data.json()
     }
-    const { isPending, data, error, fetchNextPage, hasNextPage, isFetchingNextPage } = useInfiniteQuery(
+    const { isPending, data, error, fetchNextPage, hasNextPage } = useInfiniteQuery(
         {
             queryKey: ['anime', linkData],
             queryFn: fetchData,

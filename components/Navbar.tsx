@@ -1,6 +1,5 @@
 'use client'
 import { useAnimeContext } from "@/app/context";
-import { p } from "motion/react-client";
 import Image from "next/image";
 import Link from "next/link";
 import { FaHeart, FaShoppingCart } from "react-icons/fa";

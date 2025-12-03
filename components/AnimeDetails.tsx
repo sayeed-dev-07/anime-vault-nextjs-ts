@@ -30,8 +30,9 @@ export interface AnimeObjPropContainer {
     prop: AnimeObjProp
 }
 const AnimeDetails = ({ prop }: AnimeObjPropContainer) => {
-    const videoUrl = prop.videos[0]?.player_url
-    const videoUrl2 = prop.videos[1]?.player_url
+    const videoUrl = prop.videos?.[0]?.player_url ?? null;
+const videoUrl2 = prop.videos?.[1]?.player_url ?? null;
+
     return (
         <div className="pb-[5%] relative text-[#001219]">
             <div className="fixed right-[5%] bottom-[5%] z-100">
