@@ -30,8 +30,13 @@ export interface AnimeObjPropContainer {
     prop: AnimeObjProp
 }
 const AnimeDetails = ({ prop }: AnimeObjPropContainer) => {
-    const videoUrl = prop.videos?.[0]?.player_url ?? null;
-const videoUrl2 = prop.videos?.[1]?.player_url ?? null;
+    // Extract raw URL safely
+    const raw1 = prop.videos?.[0]?.player_url ?? null;
+    const raw2 = prop.videos?.[1]?.player_url ?? null;
+
+    // Normalize URLs to always be https://
+    const videoUrl = raw1 ? raw1.replace(/^http:\/\//, "https://") : null;
+    const videoUrl2 = raw2 ? raw2.replace(/^http:\/\//, "https://") : null;
 
     return (
         <div className="pb-[5%] relative text-[#001219]">
