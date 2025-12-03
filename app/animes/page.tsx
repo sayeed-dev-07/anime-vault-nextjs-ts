@@ -30,7 +30,7 @@ const Animes = () => {
           value={inputValue}
           onChange={handleChange}
           onKeyDown={(e) => e.key === "Enter" && handleSearch()}
-          className="text-xl px-1 py-0.5 outline-none bg-white rounded-sm"
+          className="text-xl text-black px-1 py-0.5 outline-none bg-white rounded-sm"
           type="text"
         />
         <button
@@ -41,7 +41,7 @@ const Animes = () => {
         </button>
       </div>
 
-      <p className="text-3xl font-semibold mb-3">
+      <p className="text-3xl text-black font-semibold mb-3">
         {query ? `Search Result For: ${query}` : "All Animes"}
       </p>
 
