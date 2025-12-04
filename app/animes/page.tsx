@@ -1,6 +1,6 @@
 'use client'
 
-import InfiniteScroll from "@/components/InfiniteScroll";
+import InfiniteScroll from "@/app/components/InfiniteScroll";
 import { useState } from "react";
 import { AnimeProp } from "../page";
 import { useSearchParams, useRouter } from "next/navigation";
@@ -10,11 +10,11 @@ const Animes = () => {
   const router = useRouter();
 
   const query = params.get("search") ?? "";
-  const [inputValue, setInputValue] = useState(query); 
+  const [inputValue, setInputValue] = useState(query);
   const [animes, setAnimes] = useState<AnimeProp[]>([]);
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
-    setInputValue(e.target.value); 
+    setInputValue(e.target.value);
   }
 
   function handleSearch() {

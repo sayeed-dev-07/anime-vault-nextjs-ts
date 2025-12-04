@@ -1,27 +1,27 @@
 'use client'
-import AnimeCard from "@/components/AnimeCard";
-import Spinner from "@/components/Spinner";
+import AnimeCard from "@/app/components/AnimeCard";
+import Spinner from "@/app/components/Spinner";
 import { useQuery } from "@tanstack/react-query";
 
 import Link from "next/link";
 
-interface imageProp{
-  original:string
+interface imageProp {
+  original: string
 }
-export interface AnimeProp{
+export interface AnimeProp {
   id: number,
   name: string,
-  image:imageProp,
+  image: imageProp,
   kind: string,
   score: string
 }
-export interface AnimePropContainer{
+export interface AnimePropContainer {
   anime: AnimeProp
 }
 
 export default function Home() {
   const { data, isLoading, isError } = useQuery({
-    queryKey: ['animedata'], 
+    queryKey: ['animedata'],
     queryFn: async () => {
       const res = await fetch('https://shikimori.one/api/animes?page=1&limit=4');
       return res.json();
@@ -34,7 +34,7 @@ export default function Home() {
   }
   if (isLoading) {
     return <div className="min-h-[calc(100vh-100px)] w-full flex items-center justify-center">
-      <Spinner/>
+      <Spinner />
     </div>
   }
 
@@ -48,16 +48,16 @@ export default function Home() {
         <p className="capitalize font-semibold text-[#001219] mb-6 text-3xl sm:text-5xl ">New animes</p>
       </div>
       <div className="grid grid-cols-[repeat(auto-fit,minmax(250px,1fr))] gap-7">
-      {
-        data.map((anime: AnimeProp) => {
-          return (
-            <AnimeCard key={anime.id} anime={anime}/>
-          )
-        })
-      }
-    </div>
-    <div>
-    </div>
+        {
+          data.map((anime: AnimeProp) => {
+            return (
+              <AnimeCard key={anime.id} anime={anime} />
+            )
+          })
+        }
+      </div>
+      <div>
+      </div>
     </div>
   );
 }

@@ -1,11 +1,11 @@
 'use client'
-import { useAnimeContext } from "@/app/context";
 import Image from "next/image";
 import Link from "next/link";
 import { FaHeart, FaShoppingCart } from "react-icons/fa";
+import { useAnimeStore } from "../animes/store/animeStore";
 
 const Navbar = () => {
-    const {faviourite} = useAnimeContext()
+    const {favourites} = useAnimeStore()
     return (
         <div className="bg-[#708d81] h-20 text-[#1c2321] flex items-center justify-between px-2 sm:px-[5%] md:px-[10%] fixed w-full z-90">
             <div>
@@ -32,10 +32,10 @@ const Navbar = () => {
                         <div className="relative">
                             <FaHeart size={32} />
                             {
-                                faviourite.length > 0 ?
+                                favourites.length > 0 ?
                                 <p className="absolute -right-2 -top-1 text-white px-1.5 py-0.5
                              bg-[#000000e9] text-xs rounded-4xl">
-                                    {faviourite.length}
+                                    {favourites.length}
                                 </p>: ''
                             }
                         </div>

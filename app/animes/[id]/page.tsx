@@ -1,4 +1,4 @@
-import AnimeDetails from "@/components/AnimeDetails";
+import AnimeDetails from "@/app/components/AnimeDetails";
 import { notFound } from "next/navigation";
 
 interface Props {
@@ -17,8 +17,8 @@ const PageAnime = async ({ params }: Props) => {
 
   // 404 handler
   if (!animeData || animeData.error || !animeData.name) {
-  notFound();
-}
+    notFound();
+  }
 
 
   // ✔ Correct return inside the component

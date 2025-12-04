@@ -1,20 +1,21 @@
-import {  useAnimeContext } from '@/app/context';
+
 import {  AnimePropContainer } from '@/app/page';
 import { getFullLink } from '@/app/providers';
 import Image from 'next/image';
 import Link from 'next/link';
 import { BiHeart } from 'react-icons/bi';
 import { FaHeart } from 'react-icons/fa';
+import { useAnimeStore } from '../animes/store/animeStore';
 
 const AnimeCard = ({ anime }: AnimePropContainer) => {
     
-    const {faviourite, setFaviourite} = useAnimeContext()
+    const {favourites, addFavourite, removeFavourite} = useAnimeStore()
+
     function handleCLick(){
-        if (faviourite.includes(anime)) {
-            const newFav = faviourite.filter((anim)=> anim.id !== anime.id)
-            setFaviourite([...newFav])
-        }else{
-            setFaviourite(prev => [...prev, anime])
+        if (favourites.includes(anime)) {
+            removeFavourite(anime.id)
+        }else{ 
+           addFavourite(anime)
         }
     }
    
@@ -37,7 +38,7 @@ const AnimeCard = ({ anime }: AnimePropContainer) => {
                 <Link href={`/animes/${anime.id}`} className=' px-3 py-1.5 cursor-pointer rounded-sm text-white bg-[#1c2321]'>Details</Link>
                 <div onClick={ handleCLick}>
                     {
-                        faviourite.includes(anime) ? <FaHeart size={32} className='cursor-pointer' fill='crimson'/>  :<BiHeart  className='cursor-pointer hover:fill-[crimson]' size={32}/>
+                        favourites.includes(anime) ? <FaHeart size={32} className='cursor-pointer' fill='crimson'/>  :<BiHeart  className='cursor-pointer hover:fill-[crimson]' size={32}/>
                     }
                 </div>
             </div>
