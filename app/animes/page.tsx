@@ -21,6 +21,7 @@ const Animes = () => {
     const val = inputValue.trim().toLowerCase();
     router.push(`/animes?search=${val}`);
     setAnimes([]);
+    setInputValue('');
   }
 
   return (
