@@ -1,10 +1,29 @@
+'use client'
+import {
+  useQuery,
+} from '@tanstack/react-query'
 import AnimeCard from "./AnimeCard";
 import MangaCard from "./MangaCard";
+import { fetchData } from './Fetch';
+import Loading from '@/app/loading';
 
-interface inputProp{
-    limit: number,
-    top: boolean,
-    type: 'anime' | 'manga'
+
+interface inputProp {
+  limit: number,
+  top: boolean,
+  type: 'anime' | 'manga'
+}
+
+
+export interface Manga {
+  mal_id: number,
+  images: AnimeImages,
+  title: string,
+  title_english: string,
+  chapters: number,
+  volumes: number,
+  score: number,
+  favorites: number
 }
 
 
@@ -45,16 +64,10 @@ export interface ImageFormat {
   large_image_url: string | null;
 }
 
-
-
-
-
 export interface Title {
   type: string;
   title: string;
 }
-
-
 
 export interface NameLink {
   mal_id: number;
@@ -64,25 +77,36 @@ export interface NameLink {
 }
 
 
+const FetchAnime = ({ limit = 8, top = false, type = 'anime' }: inputProp) => {
+  let baseURL = 'https://api.jikan.moe/v4/';
 
-const FetchAnime = async ({limit = 8, top=false, type = 'anime'}:inputProp) => {
-    let baseURL = 'https://api.jikan.moe/v4/'
-    if (top) {
-        baseURL = `${baseURL}top/${type}?limit=${limit}`
-    }else{
-        baseURL = `${baseURL}${type}?limit=${limit}`
-    }
+  baseURL = top
+    ? `${baseURL}top/${type}?limit=${limit}`
+    : `${baseURL}${type}?limit=${limit}`;
 
-    const response = await fetch(`${baseURL}`);
-    const data = await response.json();
-    const animes = data.data
-    return (
-        <div className="grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-3">
-            {
-                type === 'anime' ? animes.map((item: Anime)=> <AnimeCard key={item.mal_id} data={item}/>) : <MangaCard/>
-            }
-        </div>
-    );
+  const { isPending, isError, data, error } = useQuery({
+    queryKey: ["anime", type, limit, top],
+    queryFn: () => fetchData(baseURL),
+    staleTime: 60 * 1000 
+  })
+
+  if (isPending) {
+    return <Loading />
+  }
+
+  if (isError) {
+    return <span>Error: {error.message}</span>
+  }
+
+
+  return (
+    <div className="grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-3">
+      {type === "anime"
+        ? data.map((item: Anime) => <AnimeCard key={item.mal_id} data={item} />)
+        : data.map((item: Manga) => <MangaCard key={item.mal_id} data={item} />)
+      }
+    </div>
+  );
 };
 
 export default FetchAnime;

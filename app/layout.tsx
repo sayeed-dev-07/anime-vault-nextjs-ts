@@ -1,3 +1,4 @@
+import React from "react";
 import type { Metadata } from "next";
 import { Fira_Sans_Condensed, Outfit } from "next/font/google";
 import "./globals.css";
@@ -5,6 +6,8 @@ import "./globals.css";
 import Providers from "./providers";
 import { ThemeProvider } from "../components/theme-provider";
 import Navbar from "../components/Navbar";
+import { BreadcrumbSync } from "@/components/BreadCramp";
+import SideBar from "@/components/SideBar";
 
 
 const firaSans = Fira_Sans_Condensed({
@@ -36,15 +39,21 @@ export default function RootLayout({
         className={`${firaSans.variable} ${OutfitFont.variable} antialiased`}
       >
         <Providers>
-
           <ThemeProvider attribute="class"
             defaultTheme="system"
             enableSystem
             disableTransitionOnChange>
             <Navbar />
-            <div className="px-2 pt-[100px] sm:px-[5%] md:px-[10%] min-h-screen font-outfit bg-background text-primary">
-              <div className="max-w-[1400px] mx-auto">
-                {children}
+
+            <div className="pt-[90px] sm:pt-[110px] lg:grid lg:grid-cols-[1fr_5fr]">
+              <div className="hidden  sticky top-[90px] sm:top-[110px] h-[calc(100vh-90px)] sm:h-[calc(100vh-110px)] overflow-y-auto mx-1 lg:block border-r">
+                <SideBar />
+              </div>
+              <div className="px-2 md:px-[2%] min-h-screen font-outfit bg-background text-primary">
+                <div className="">
+                  <BreadcrumbSync />
+                  {children}
+                </div>
               </div>
             </div>
           </ThemeProvider>
