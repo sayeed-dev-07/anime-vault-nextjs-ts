@@ -5,7 +5,7 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "shikimori.one",
+        hostname: "cdn.myanimelist.net",
         pathname: "/**",
       },
     ],

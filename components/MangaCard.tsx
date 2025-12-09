@@ -1,11 +1,11 @@
 import React from 'react';
 
-const Cart = () => {
+const MangaCard = () => {
     return (
         <div>
-            hello from the cart
+            
         </div>
     );
 };
 
-export default Cart;
+export default MangaCard;
