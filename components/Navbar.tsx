@@ -6,7 +6,7 @@ import Link from "next/link";
 const Navbar = () => {
     return (
         <div className="px-2  md:px-[2%] h-20 sm:h-[90px] font-outfit fixed w-full p-6 border-b items-center justify-between gap-x-5 z-10 filter backdrop-blur-sm bg-background/300">
-            <div className="flex items-center justify-between ">
+            <div className="flex items-center justify-between gap-x-1">
                 <div>
                 <Link href="/" className="text-primary sm:text-3xl text-xl font-bold"><span className="text-[crimson]">Ani</span>Search</Link>
             </div>

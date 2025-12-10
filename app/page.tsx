@@ -9,11 +9,11 @@ const page = () => {
   return (
     <div className=''>
       
-      <div className='text-xl border p-3 sm:p-6 rounded-md sm:mt-[5%] mt-[10%]  text-center bg-card-bg'>
-        <p className='text-2xl '><span className='text-5xl font-semibold block mb-3'>
+      <div className='text-xl border p-3 sm:p-6 rounded-md mt-6  text-center bg-card-bg mx-auto'>
+        <p className='text-2xl'><span className='text-5xl font-semibold block mb-6'>
           Welcome to AniSearch
           </span>
-            Your ultimate destination for discovering detailed information about your favorite anime and manga. Explore by title, genre, release year, characters, or studios and dive into ratings, summaries, reviews, trailers, episodes, and more. Start your anime journey with us today!</p>
+            Your ultimate destination for discovering detailed information about your favorite anime and manga. </p>
         <div className='mt-5 flex items-center justify-center gap-x-5'>
           <Link href='/animes'>
             <Button className='cursor-pointer text-2xl'>Anime</Button>

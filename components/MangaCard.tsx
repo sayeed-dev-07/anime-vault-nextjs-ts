@@ -6,11 +6,13 @@ import Image from 'next/image';
 
 const MangaCard = ({ data }: { data: Manga }) => {
     return (
-        <div className='bg-chatgpt-card border border-[#b3b3b3] rounded-xl p-2'>
-            <div className="relative w-full aspect-4/4">
+        <div className='bg-chatgpt-card border border-[#b3b3b3] mb-3 rounded-xl p-2'>
+            <div className="relative w-full aspect-4/4 sm:aspect-3/5">
                 {
                     data.images.jpg.large_image_url ? <Image
                         src={data.images.jpg.large_image_url}
+                        loading="eager"
+                        sizes='100vw 100vh'
                         alt="img"
                         fill
                         className="object-cover rounded-t-xl"
