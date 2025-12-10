@@ -11,41 +11,44 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import { Home } from "lucide-react";
+import FormatSegment from "./Format";
+
+
+
 
 export function BreadcrumbSync() {
   const pathname = usePathname();
-
-  // Split into usable route parts
   const segments = pathname.split("/").filter(Boolean);
 
   return (
     <Breadcrumb>
       <BreadcrumbList>
-        {/* Home always first */}
+        
+        {/* Home link */}
         <BreadcrumbItem>
           <BreadcrumbLink asChild>
-            <Link className="flex items-center text-lg justify-center gap-0.5" href="/"><Home size={16}/> Home</Link>
+            <Link href="/" className="flex items-center gap-1 text-lg">
+              <Home size={16} /> Home
+            </Link>
           </BreadcrumbLink>
         </BreadcrumbItem>
 
+        {/* Dynamic URL segments */}
         {segments.map((segment, index) => {
           const href = `/${segments.slice(0, index + 1).join("/")}`;
           const isLast = index === segments.length - 1;
+          const label = FormatSegment(segment);
 
           return (
             <div key={href} className="flex items-center gap-1 text-lg">
-              <BreadcrumbSeparator/>
+              <BreadcrumbSeparator />
 
               <BreadcrumbItem>
                 {isLast ? (
-                  <BreadcrumbPage className="capitalize">
-                    {segment.replace(/-/g, " ")}
-                  </BreadcrumbPage>
+                  <BreadcrumbPage>{label}</BreadcrumbPage>
                 ) : (
                   <BreadcrumbLink asChild>
-                    <Link href={href} className="capitalize">
-                      {segment.replace(/-/g, " ")}
-                    </Link>
+                    <Link href={href}>{label}</Link>
                   </BreadcrumbLink>
                 )}
               </BreadcrumbItem>

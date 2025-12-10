@@ -17,8 +17,17 @@ const breakpointColumns = {
     768: 2,
     480: 1,
 };
+type nameProp = 'animeData' | 'mangaData'
+type randomIdntProp = 'anime' | 'animeTop' | 'manga' | 'mangaTop' | 'gen-anime' | 'gen-manga'
+interface inftProp{
+    name?: nameProp,
+    top?: boolean,
+    randomIdnt: randomIdntProp,
+    gener?: boolean,
+    genID?: number
+}
 
-const InfinityScroll = ({ name = 'animeData' }) => {
+const InfinityScroll = ({ name = 'animeData', top = false, randomIdnt, gener= false, genID=1}: inftProp) => {
 
     const {
         data,
@@ -28,8 +37,8 @@ const InfinityScroll = ({ name = 'animeData' }) => {
         hasNextPage,
         isFetching,
     } = useInfiniteQuery({
-        queryKey: [name],
-        queryFn: ({ pageParam }) => fetchInf(pageParam, name),
+        queryKey: ['InfinityScroll',name, top, randomIdnt, gener, genID],
+        queryFn: ({ pageParam }) => fetchInf(pageParam, name, top, gener, genID),
         initialPageParam: 1,
         staleTime: 1000 * 60,
         getNextPageParam: (lastPage) => lastPage.pagination.has_next_page ? lastPage.pagination.current_page + 1 : undefined,
@@ -39,7 +48,7 @@ const InfinityScroll = ({ name = 'animeData' }) => {
         if (!isFetchingNextPage && hasNextPage && inView) {
             setTimeout(() => {
                 fetchNextPage()
-            }, 2000);
+            }, 1500);
         }
     }, [fetchNextPage, hasNextPage, inView, isFetchingNextPage])
 

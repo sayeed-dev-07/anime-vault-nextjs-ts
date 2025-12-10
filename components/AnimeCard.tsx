@@ -5,8 +5,94 @@ import Image from 'next/image';
 import { Button } from './ui/button';
 
 
+export const genreEmoji: Record<string, string> = {
+    "Action": "⚔️",
+    "Adventure": "🧭",
+    "Avant Garde": "🎨",
+    "Award Winning": "🏆",
+    "Boys Love": "💙",
+    "Comedy": "😂",
+    "Drama": "🎭",
+    "Fantasy": "🔮",
+    "Girls Love": "💖",
+    "Gourmet": "🍣",
+    "Horror": "👻",
+    "Mystery": "🕵️‍♂️",
+    "Romance": "❤️",
+    "Sci-Fi": "🚀",
+    "Slice of Life": "☕",
+    "Sports": "🏀",
+    "Supernatural": "👁️",
+    "Suspense": "⏳",
+    "Ecchi": "😳",
+    "Erotica": "🔥",
+    "Hentai": "😈",
+    "Adult Cast": "👔",
+    "Anthropomorphic": "🐾",
+    "CGDCT": "🎀",
+    "Childcare": "🍼",
+    "Combat Sports": "🥊",
+    "Crossdressing": "👗",
+    "Delinquents": "😎",
+    "Detective": "🔍",
+    "Educational": "📚",
+    "Gag Humor": "🤣",
+    "Gore": "🩸",
+    "Harem": "👑",
+    "High Stakes Game": "🎲",
+    "Historical": "🏯",
+    "Idols (Female)": "🎤",
+    "Idols (Male)": "🎙️",
+    "Isekai": "🌀",
+    "Iyashikei": "🍃",
+    "Love Polygon": "💞",
+    "Magical Sex Shift": "🪄",
+    "Mahou Shoujo": "✨",
+    "Martial Arts": "🥋",
+    "Mecha": "🤖",
+    "Medical": "🏥",
+    "Military": "👮‍♂️",
+    "Music": "🎶",
+    "Mythology": "🐉",
+    "Organized Crime": "🔫",
+    "Otaku Culture": "🎌",
+    "Parody": "🤡",
+    "Performing Arts": "🎭",
+    "Pets": "🐶",
+    "Psychological": "🧠",
+    "Racing": "🏎️",
+    "Reincarnation": "♻️",
+    "Reverse Harem": "💍",
+    "Love Status Quo": "💬",
+    "Samurai": "🗡️",
+    "School": "🎒",
+    "Showbiz": "🎬",
+    "Space": "🌌",
+    "Strategy Game": "♟️",
+    "Super Power": "💥",
+    "Survival": "🔥",
+    "Team Sports": "🏆",
+    "Time Travel": "⏱️",
+    "Vampire": "🧛‍♂️",
+    "Video Game": "🎮",
+    "Visual Arts": "🖌️",
+    "Workplace": "🏢",
+    "Urban Fantasy": "🏙️✨",
+    "Villainess": "👑🖤",
+    "Josei": "🌸",
+    "Kids": "🧸",
+    "Seinen": "🎴",
+    "Shoujo": "💐",
+    "Shounen": "⚔️"
+};
+
+
+
+
+
 const AnimeCard = ({ data }: { data: Anime }) => {
 
+    const genData = [...data.genres, ...data.themes]
     return (
         <div className='bg-chatgpt-card border border-[#b3b3b3] rounded-xl mb-3 p-2'>
             <div className="relative w-full aspect-4/4 sm:aspect-3/5">
@@ -15,7 +101,7 @@ const AnimeCard = ({ data }: { data: Anime }) => {
                         src={data.images.jpg.large_image_url}
                         sizes='100vw aspect-4/4'
                         alt="img"
-                        fill loading="eager" 
+                        fill loading="eager"
                         className="object-cover rounded-t-xl"
                     /> : <p>No img FOund</p>
                 }
@@ -29,15 +115,21 @@ const AnimeCard = ({ data }: { data: Anime }) => {
 
                 <div className='flex items-center justify-center flex-col gap-y-3'>
                     <p className='px-2 w-fit rounded-md py-0.5 bg-[#306983] text-white'>⭐{data.score}</p>
-                    <p className='px-2 w-fit rounded-md py-0.5 bg-[#19790c] text-white'>📺{data.type}</p>
+                    <p className='px-2 w-fit rounded-md py-0.5 bg-[#19790c] text-white text-center text-nowrap'>📺{data.type}</p>
                 </div>
             </div>
+            <div className='flex items-center flex-wrap justify-center my-4 gap-2'>
+                {
+                    genData.map((item) => <p className='text-nowrap p-2 border rounded-md' key={item.mal_id}>{genreEmoji[item.name] ?? "🎬"} {item.name}</p>)
+                }
+            </div>
+
             <div>
 
                 <div className='flex items-center mt-3 justify-center'>
                     <Button className='cursor-pointer mb-3'>
-                    <Link className='' href={`/animes/${data.mal_id}`}>Details</Link>
-                </Button>
+                        <Link className='' href={`/animes/${data.mal_id}`}>Details</Link>
+                    </Button>
                 </div>
 
             </div>

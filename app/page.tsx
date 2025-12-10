@@ -26,9 +26,9 @@ const page = () => {
       </div>
       <div className='mt-[5%]'>
         <div>
-        <p className='text-3xl sm:text-5xl mb-[2%]'>Random Animes</p>
+        <p className='sm:text-6xl text-3xl mb-[2%]'>Random Animes</p>
         <div className=''>
-          <FetchAnime limit={10} top={false} type={'anime'}/>
+          <FetchAnime limit={4} top={false} type={'anime'}/>
           <div className='mt-12 flex items-center justify-center'>
             <Link href='/animes'>
             <Button variant={'outline'} size={'lg'} className='cursor-pointer text-2xl'>Browse Animes</Button>
@@ -37,9 +37,9 @@ const page = () => {
         </div>
       </div>
       <div className='mt-[5%]'>
-        <p className='text-3xl sm:text-5xl mb-[2%]'>Random Mangas</p>
+        <p className='sm:text-6xl text-3xl mb-[2%]'>Random Mangas</p>
         <div>
-          <FetchAnime limit={10} top={false} type={'manga'}/>
+          <FetchAnime limit={4} top={false} type={'manga'}/>
         </div>
         <div className='mt-12 flex items-center justify-center'>
             <Link href='/mangas'>

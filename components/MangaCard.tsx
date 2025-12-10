@@ -3,8 +3,11 @@ import { Manga } from './FetchAnime';
 import Link from 'next/link';
 import { Button } from './ui/button';
 import Image from 'next/image';
+import { genreEmoji } from './AnimeCard';
+
 
 const MangaCard = ({ data }: { data: Manga }) => {
+    const genData = [...data.genres, ...data.themes]
     return (
         <div className='bg-chatgpt-card border border-[#b3b3b3] mb-3 rounded-xl p-2'>
             <div className="relative w-full aspect-4/4 sm:aspect-3/5">
@@ -30,6 +33,11 @@ const MangaCard = ({ data }: { data: Manga }) => {
                     <p className='px-2 w-fit rounded-md py-0.5 bg-[#306983] text-white'>⭐{data.score}</p>
                     <p className='px-2 w-fit rounded-md py-0.5 bg-[#19790c] text-white'>📄{data.chapters ? data.chapters : 0}</p>
                 </div>
+            </div>
+            <div className='flex items-center flex-wrap justify-center my-4 gap-2'>
+                {
+                    genData.map((item) => <p className='text-nowrap p-2 border rounded-md' key={item.mal_id}>{genreEmoji[item.name] ?? "🎬"} {item.name}</p>)
+                }
             </div>
             <div>
                 <Link className='flex items-center justify-center' href={`/mangas/${data.mal_id}`}>

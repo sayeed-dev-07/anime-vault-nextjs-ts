@@ -6,9 +6,9 @@ import InfinityScroll from '@/components/InfinityScroll';
 const page = () => {
     return (
         <div className='mt-5'>
-            <p className='text-6xl mb-3'>Animes</p>
+            <p className='sm:text-6xl text-3xl mb-3'>Animes</p>
             <div>
-                <InfinityScroll/>
+                <InfinityScroll randomIdnt='anime'/>
             </div>
         </div>
     );

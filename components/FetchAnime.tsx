@@ -4,9 +4,9 @@ import {
 } from '@tanstack/react-query'
 import AnimeCard from "./AnimeCard";
 import MangaCard from "./MangaCard";
-import { fetchData } from './Fetch';
 import Loading from '@/app/loading';
 import Error from './Error';
+import { fetchData } from './Fetch';
 
 
 
@@ -25,7 +25,9 @@ export interface Manga {
   chapters: number,
   volumes: number,
   score: number,
-  favorites: number
+  favorites: number,
+  genres: NameLink[],
+  themes:NameLink[]
 }
 
 
@@ -50,7 +52,7 @@ export interface Anime {
   members: number | null;
   favorites: number | null;
   genres: NameLink[];
-
+  themes:NameLink[]
 }
 
 /* ---- Sub Models ---- */
@@ -86,7 +88,7 @@ const FetchAnime = ({ limit = 8, top = false, type = 'anime' }: inputProp) => {
     ? `${baseURL}top/${type}?limit=${limit}`
     : `${baseURL}${type}?limit=${limit}`;
 
-  const { isPending, isError, data, error } = useQuery({
+  const { isPending, isError, data } = useQuery({
     queryKey: ["anime", type, limit, top],
     queryFn: () => fetchData(baseURL),
     staleTime: 60 * 1000 
