@@ -6,6 +6,8 @@ import AnimeCard from "./AnimeCard";
 import MangaCard from "./MangaCard";
 import { fetchData } from './Fetch';
 import Loading from '@/app/loading';
+import Error from './Error';
+
 
 
 interface inputProp {
@@ -95,7 +97,7 @@ const FetchAnime = ({ limit = 8, top = false, type = 'anime' }: inputProp) => {
   }
 
   if (isError) {
-    return <span>Error: {error.message}</span>
+    return <Error/>
   }
 
 

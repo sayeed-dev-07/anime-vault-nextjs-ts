@@ -15,28 +15,28 @@ const SideBar = () => {
             </Link>
             <p className='text-[17px] mt-3 text-[crimson]'>Anime</p>
             <Link href='/animes' className='flex justify-center items-center gap-x-2'>
-                   <Tv size={22}/> <p>All Anime</p>
+                   <Tv size={22}/> <p>All Animes</p>
             </Link>
             <Link href='/top-animes' className='flex justify-center items-center gap-x-2'>
                    <MedalIcon className='mt-1' size={22}/> <p>Top Animes</p>
             </Link>
-            <Link href='/recommendations' className='flex justify-start items-center gap-x-2 flex-wrap'>
+            <Link href='/recommendations-anime' className='flex justify-start items-center gap-x-2 flex-wrap'>
                    <Sparkles className='mt-1' size={22}/> <p className='wrap-break-word'>Recommendations</p>
             </Link>
-            <Link href='/genres' className='flex justify-start items-center gap-x-2 flex-wrap'>
+            <Link href='/genres-anime' className='flex justify-start items-center gap-x-2 flex-wrap'>
                    <BiCategory className='mt-1' size={22}/> <p className='wrap-break-word'>Genres</p>
             </Link>
             <p className='text-[17px] mt-3 text-[crimson]'>Manga</p>
             <Link href='/mangas' className='flex justify-center items-center gap-x-2'>
-                   <Tv size={22}/> <p>All Manga</p>
+                   <Tv size={22}/> <p>All Mangas</p>
             </Link>
             <Link href='/top-mangas' className='flex justify-center items-center gap-x-2'>
-                   <MedalIcon className='mt-1' size={22}/> <p>Top Manga</p>
+                   <MedalIcon className='mt-1' size={22}/> <p>Top Mangas</p>
             </Link>
-            <Link href='/recommendations' className='flex justify-start items-center gap-x-2 flex-wrap'>
+            <Link href='/recommendations-manga' className='flex justify-start items-center gap-x-2 flex-wrap'>
                    <Sparkles className='mt-1' size={22}/> <p className='wrap-break-word'>Recommendations</p>
             </Link>
-            <Link href='/genres' className='flex justify-start items-center gap-x-2 flex-wrap'>
+            <Link href='/genres-manga' className='flex justify-start items-center gap-x-2 flex-wrap'>
                    <BiCategory className='mt-1' size={22}/> <p className='wrap-break-word'>Genres</p>
             </Link>
             </div>
