@@ -11,7 +11,7 @@ export interface AnimeData {
     images: AnimeImages;
     trailer: AnimeTrailer;
     approved: boolean;
-    titles: AnimeTitle[];
+    titles: AnimeTitle[] | [];
     title: string;
     title_english: string | null;
     title_japanese: string | null;

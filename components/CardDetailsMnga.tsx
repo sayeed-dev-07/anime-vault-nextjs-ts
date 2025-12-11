@@ -82,7 +82,10 @@ import ReadMoreText from './ReadMoreText';
 
 
 const CardDetailsMnga = ({manga}: {manga: MangaData}) => {
-    const Allgenres = [...manga?.genres, ...manga?.themes]
+    const Allgenres = [
+  ...(manga.genres ?? []), 
+  ...(manga.themes ?? [])
+]
     return (
     <div className="max-w-7xl mx-auto py-10 px-4">
       {/* Header */}
