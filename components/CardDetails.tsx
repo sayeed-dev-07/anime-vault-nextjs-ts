@@ -161,14 +161,14 @@ const CardDetails = ({ anime }: { anime: AnimeData }) => {
 
                     <div className="flex flex-wrap gap-5 text-lg">
                         <div>
-                            ⭐ <span className="font-semibold">Score:</span> {anime.score}
+                            ⭐ <span className="font-semibold">Score:</span> {anime.score ? anime.score : '?'}
                         </div>
                         <div>
                             🧮 <span className="font-semibold">Scored by:</span>{" "}
-                            {anime.scored_by}
+                            {anime.scored_by ? anime.scored_by : '?'}
                         </div>
                         <div>
-                            🥇 <span className="font-semibold">Rank:</span> #{anime.rank}
+                            🥇 <span className="font-semibold">Rank:</span> #{anime.rank ? anime.rank : '?'}
                         </div>
                         <div>
                             📈 <span className="font-semibold">Popularity:</span>{" "}
@@ -189,41 +189,41 @@ const CardDetails = ({ anime }: { anime: AnimeData }) => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-10 text-lg">
                 <div className="space-y-3">
                     <p>
-                        🎞️ <span className="font-semibold">Type:</span> {anime.type}
+                        🎞️ <span className="font-semibold">Type:</span> {anime.type ? anime.type : '?'}
                     </p>
                     <p>
-                        📚 <span className="font-semibold">Source:</span> {anime.source}
+                        📚 <span className="font-semibold">Source:</span> {anime.source ? anime.source : '?'}
                     </p>
                     <p>
                         🔢 <span className="font-semibold">Episodes:</span>{" "}
                         {anime.episodes ? anime.episodes : '?'}
                     </p>
                     <p>
-                        📡 <span className="font-semibold">Status:</span> {anime.status}
+                        📡 <span className="font-semibold">Status:</span> {anime.status ? anime.status : '?'}
                     </p>
                     <p>
                         ⏱️ <span className="font-semibold">Duration:</span>{" "}
-                        {anime.duration}
+                        {anime.duration ? anime.duration : '?'}
                     </p>
                     <p>
-                        🧩 <span className="font-semibold">Rating:</span> {anime.rating}
+                        🧩 <span className="font-semibold">Rating:</span> {anime.rating ? anime.rating : '?'}
                     </p>
                 </div>
 
                 <div className="space-y-3">
                     <p>
                         ⏳ <span className="font-semibold">Aired:</span>{" "}
-                        {anime.aired.string}
+                        {anime.aired.string ? anime.aired.string : '?'}
                     </p>
                     <p>
-                        🍁 <span className="font-semibold">Season:</span> {anime.season}
+                        🍁 <span className="font-semibold">Season:</span> {anime.season ? anime.season : '?'}
                     </p>
                     <p>
-                        📆 <span className="font-semibold">Year:</span> {anime.year}
+                        📆 <span className="font-semibold">Year:</span> {anime.year ? anime.year : '?'}
                     </p>
                     <p>
-                        🕒 <span className="font-semibold">Broadcast:</span>{" "}
-                        {anime.broadcast?.string}
+                        🕒 <span className="font-semibold">BroadCast:</span>{" "}
+                        {anime.broadcast?.string ? anime.broadcast.string : '?'}
                     </p>
                 </div>
             </div>

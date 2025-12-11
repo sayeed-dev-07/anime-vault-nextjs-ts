@@ -139,21 +139,21 @@ const CardDetailsMnga = ({manga}: {manga: MangaData}) => {
 
             <div>
               🧮 <span className="font-semibold">Scored by:</span>{" "}
-              {manga.scored_by}
+              {manga.scored_by ? manga.scored_by : '?'}
             </div>
 
             <div>
-              🥇 <span className="font-semibold">Rank:</span> #{manga.rank}
+              🥇 <span className="font-semibold">Rank:</span> #{manga.rank ? manga.rank : '?'}
             </div>
 
             <div>
               📈 <span className="font-semibold">Popularity:</span>{" "}
-              #{manga.popularity}
+              #{manga.popularity ? manga.popularity : '?'}
             </div>
 
             <div>
               ❤️ <span className="font-semibold">Favorites:</span>{" "}
-              {manga.favorites}
+              {manga.favorites ? manga.favorites : '?'}
             </div>
           </div>
         </div>
@@ -168,7 +168,7 @@ const CardDetailsMnga = ({manga}: {manga: MangaData}) => {
 
           <p>
             🎞️ <span className="font-semibold">Type:</span>{" "}
-            {manga.type}
+            {manga.type ? manga.type : '?'}
           </p>
 
           <p>
@@ -183,7 +183,7 @@ const CardDetailsMnga = ({manga}: {manga: MangaData}) => {
 
           <p>
             📡 <span className="font-semibold">Status:</span>{" "}
-            {manga.status}
+            {manga.status ?? '?'}
           </p>
 
           <p>
@@ -195,7 +195,7 @@ const CardDetailsMnga = ({manga}: {manga: MangaData}) => {
         <div className="space-y-3">
           <p>
             ⏳ <span className="font-semibold">Published:</span>{" "}
-            {manga.published.string}
+            {manga.published.string ?? '?'}
           </p>
 
           <p>
@@ -227,7 +227,9 @@ const CardDetailsMnga = ({manga}: {manga: MangaData}) => {
       {/* Genres, Authors, Serialization */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-10 text-lg">
 
-        <div>
+       {
+        Allgenres.length > 0 && 
+         <div>
           <h2 className="font-bold mb-2">🧩 Genres</h2>
           <ul className="list-disc ml-5">
             {Allgenres.map((g) => (
@@ -235,8 +237,11 @@ const CardDetailsMnga = ({manga}: {manga: MangaData}) => {
             ))}
           </ul>
         </div>
+       }
 
-        <div>
+        {
+          manga.authors.length > 0 && 
+          <div>
           <h2 className="font-bold mb-2">✍️ Authors</h2>
           <ul className="list-disc ml-5">
             {manga.authors.map((a) => (
@@ -244,8 +249,11 @@ const CardDetailsMnga = ({manga}: {manga: MangaData}) => {
             ))}
           </ul>
         </div>
+        }
 
-        <div>
+        {
+          manga.serializations.length > 0 && 
+          <div>
           <h2 className="font-bold mb-2">📰 Serialization</h2>
           <ul className="list-disc ml-5">
             {manga.serializations.map((s) => (
@@ -253,6 +261,8 @@ const CardDetailsMnga = ({manga}: {manga: MangaData}) => {
             ))}
           </ul>
         </div>
+        }
+
       </div>
 
       {/* Divider */}

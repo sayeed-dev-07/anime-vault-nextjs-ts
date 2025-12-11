@@ -40,7 +40,7 @@ const InfinityScroll = ({ name = 'animeData', top = false, randomIdnt, gener= fa
         queryKey: ['InfinityScroll',name, top, randomIdnt, gener, genID],
         queryFn: ({ pageParam }) => fetchInf(pageParam, name, top, gener, genID),
         initialPageParam: 1,
-        staleTime: 1000 * 60,
+        staleTime: 1000 * 60 * 5,
         getNextPageParam: (lastPage) => lastPage.pagination.has_next_page ? lastPage.pagination.current_page + 1 : undefined,
     })
     const { ref, inView } = useInView();

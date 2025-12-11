@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { Anime } from './FetchAnime';
 import Image from 'next/image';
 import { Button } from './ui/button';
+import FormatSegment from './Format';
 
 
 export const genreEmoji: Record<string, string> = {
@@ -128,7 +129,7 @@ const AnimeCard = ({ data }: { data: Anime }) => {
 
                 <div className='flex items-center mt-3 justify-center'>
                     <Button className='cursor-pointer mb-3'>
-                        <Link className='' href={`/animes/${data.title}-${data.mal_id}`}>Details</Link>
+                        <Link className='' href={`/animes/${FormatSegment(data.title)}-${data.mal_id}`}>Details</Link>
                     </Button>
                 </div>
 
