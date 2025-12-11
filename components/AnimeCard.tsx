@@ -94,15 +94,15 @@ const AnimeCard = ({ data }: { data: Anime }) => {
 
     const genData = [...data.genres, ...data.themes]
     return (
-        <div className='bg-chatgpt-card border border-[#b3b3b3] rounded-xl mb-3 p-2'>
-            <div className="relative w-full aspect-4/4 sm:aspect-3/5">
+        <div className='bg-chatgpt-card border border-[#b3b3b3] ease-linear will-change-auto duration-200 group rounded-xl mb-3 p-2 shadow-md  hover:shadow-xl  transition-all'>
+            <div className="relative  w-full aspect-4/4 overflow-hidden sm:aspect-3/5">
                 {
                     data.images.jpg.large_image_url ? <Image
                         src={data.images.jpg.large_image_url}
                         sizes='100vw aspect-4/4'
                         alt="img"
                         fill loading="eager"
-                        className="object-cover rounded-t-xl"
+                        className="object-cover rounded-t-xl duration-200 group-hover:scale-105 transition-all  will-change-auto  group-hover:grayscale-0 grayscale-70"
                     /> : <p>No img FOund</p>
                 }
             </div>
@@ -128,7 +128,7 @@ const AnimeCard = ({ data }: { data: Anime }) => {
 
                 <div className='flex items-center mt-3 justify-center'>
                     <Button className='cursor-pointer mb-3'>
-                        <Link className='' href={`/animes/${data.mal_id}`}>Details</Link>
+                        <Link className='' href={`/animes/${data.title}-${data.mal_id}`}>Details</Link>
                     </Button>
                 </div>
 

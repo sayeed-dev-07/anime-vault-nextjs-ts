@@ -7,7 +7,7 @@ import React from 'react';
 
 const page = () => {
   return (
-    <div className=''>
+    <div className='mb-12'>
       
       <div className='text-xl border p-3 sm:p-6 rounded-md mt-6  text-center bg-card-bg mx-auto'>
         <p className='text-2xl'><span className='text-5xl font-semibold block mb-6'>

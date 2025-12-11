@@ -45,12 +45,12 @@ export default function RootLayout({
             disableTransitionOnChange>
             <Navbar />
 
-            <div className="pt-[100px] sm:pt-[110px] lg:grid grid-cols-1 lg:grid-cols-[1fr_4fr]">
-              <div className="  lg:sticky top-[90px] lg:h-[calc(100vh-110px)] overflow-hidden mx-1 lg:block border-r">
+            <div className="pt-[85px] sm:pt-[90px] lg:grid grid-cols-1 lg:grid-cols-[1fr_4fr]">
+              <div className="lg:pt-12 pt-2 lg:sticky top-[90px] lg:h-[calc(100vh-90px)] overflow-hidden mx-1 lg:block border-r">
                 <SideBar />
               </div>
               <div className="px-2 md:px-[2%] min-h-screen font-outfit bg-background text-primary">
-                <div className="">
+                <div className="pt-4">
                   <BreadcrumbSync />
                   {children}
                 </div>

@@ -13,13 +13,13 @@ const SideBar = () => {
     const isRouteActive = path !== "/" && pathname.startsWith(path);
 
     return (isHomeActive || isRouteActive)
-      ? "bg-black text-white font-semibold rounded-md px-3 py-2"
+      ? "bg-foreground text-background font-semibold rounded-md px-3 py-2"
       : "bg-transparent text-black dark:text-white hover:bg-neutral-200 dark:hover:bg-neutral-800 rounded-md px-3 py-2 transition-colors";
   };
 
   return (
-    <div className="w-full mx-1 flex lg:flex-col items-start font-medium text-lg mt-4">
-      <div className="flex flex-col gap-y-4 w-full">
+    <div className="w-full mx-1 flex lg:flex-col items-start font-medium text-lg sm:mt-4 mt-0">
+      <div className="flex flex-col gap-y-1.5 sm:gap-y-4 w-full">
 
 
         {/* Main */}
