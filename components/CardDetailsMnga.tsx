@@ -79,14 +79,20 @@ export interface MalEntity {
 
 import Image from 'next/image';
 import ReadMoreText from './ReadMoreText';
+import CharacterInfo, { CharacterRole } from './CharacterInfo';
+import RecommendationCard, { Recommendation } from './RecommendationCard';
+import { getRecAndCharData } from './Fetch';
 
 
-const CardDetailsMnga = ({manga}: {manga: MangaData}) => {
-    const Allgenres = [
-  ...(manga.genres ?? []), 
-  ...(manga.themes ?? [])
-]
-    return (
+const CardDetailsMnga = async ({ manga }: { manga: MangaData }) => {
+  const Allgenres = [
+    ...(manga.genres ?? []),
+    ...(manga.themes ?? [])
+  ]
+
+  const characterData = await getRecAndCharData('manga', manga.mal_id, 'characters')
+  const recommendationsData = await getRecAndCharData('manga', manga.mal_id, 'recommendations')
+  return (
     <div className="max-w-7xl mx-auto py-10 px-4">
       {/* Header */}
       <div className="flex flex-col md:flex-row gap-10">
@@ -227,40 +233,40 @@ const CardDetailsMnga = ({manga}: {manga: MangaData}) => {
       {/* Genres, Authors, Serialization */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-10 text-lg">
 
-       {
-        Allgenres.length > 0 && 
-         <div>
-          <h2 className="font-bold mb-2">🧩 Genres</h2>
-          <ul className="list-disc ml-5">
-            {Allgenres.map((g) => (
-              <li key={g.mal_id}>{g.name}</li>
-            ))}
-          </ul>
-        </div>
-       }
-
         {
-          manga.authors.length > 0 && 
+          Allgenres.length > 0 &&
           <div>
-          <h2 className="font-bold mb-2">✍️ Authors</h2>
-          <ul className="list-disc ml-5">
-            {manga.authors.map((a) => (
-              <li key={a.mal_id}>{a.name}</li>
-            ))}
-          </ul>
-        </div>
+            <h2 className="font-bold mb-2">🧩 Genres</h2>
+            <ul className="list-disc ml-5">
+              {Allgenres.map((g) => (
+                <li key={g.mal_id}>{g.name}</li>
+              ))}
+            </ul>
+          </div>
         }
 
         {
-          manga.serializations.length > 0 && 
+          manga.authors.length > 0 &&
           <div>
-          <h2 className="font-bold mb-2">📰 Serialization</h2>
-          <ul className="list-disc ml-5">
-            {manga.serializations.map((s) => (
-              <li key={s.mal_id}>{s.name}</li>
-            ))}
-          </ul>
-        </div>
+            <h2 className="font-bold mb-2">✍️ Authors</h2>
+            <ul className="list-disc ml-5">
+              {manga.authors.map((a) => (
+                <li key={a.mal_id}>{a.name}</li>
+              ))}
+            </ul>
+          </div>
+        }
+
+        {
+          manga.serializations.length > 0 &&
+          <div>
+            <h2 className="font-bold mb-2">📰 Serialization</h2>
+            <ul className="list-disc ml-5">
+              {manga.serializations.map((s) => (
+                <li key={s.mal_id}>{s.name}</li>
+              ))}
+            </ul>
+          </div>
         }
 
       </div>
@@ -285,6 +291,30 @@ const CardDetailsMnga = ({manga}: {manga: MangaData}) => {
           <ReadMoreText text={manga.background} maxChars={350} />
         </div>
       )}
+
+      <div>
+
+        <p className="sm:text-4xl text-xl font-bold mt-10">🌌 Characters :</p>
+
+        <div className="my-6 grid grid-cols-[repeat(auto-fit,minmax(250px,1fr))] gap-4">
+          {
+            characterData.map((item: CharacterRole) => <CharacterInfo key={item.character.mal_id} CharacterData={item} />)
+          }
+        </div>
+
+      </div>
+      <div>
+
+        <p className="sm:text-4xl text-xl font-bold sm:mt-12 mt-4">🌟 More Like This Manga :</p>
+
+        <div className="my-6 grid grid-cols-[repeat(auto-fit,minmax(250px,1fr))] gap-4">
+          {
+            recommendationsData.map((item: Recommendation) => <RecommendationCard name='mangas' key={item.entry.mal_id} data={item} />)
+          }
+        </div>
+
+      </div>
+
     </div>
   );
 };

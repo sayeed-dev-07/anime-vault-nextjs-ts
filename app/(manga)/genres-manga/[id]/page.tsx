@@ -6,10 +6,11 @@ import InfinityScroll from '@/components/InfinityScroll';
 const page = async ({params}: {params: Promise<{ id: string }>
 }) => {
     const {id} = await params;
-    const [name, ...genId] = id.split('-')
+    const allParts = id.split('-')
+    const genId = allParts.pop()
     return (
         <div className='mt-5'>
-            <p className='sm:text-6xl text-3xl mb-3'>{FormatSegment(name)}</p>
+            <p className='sm:text-6xl text-3xl mb-3'>{FormatSegment(allParts.join(' '))}</p>
             <div>
                 <InfinityScroll randomIdnt='gen-manga' gener={true} name='mangaData' genID={Number(genId)}/>
             </div>

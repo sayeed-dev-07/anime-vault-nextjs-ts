@@ -9,7 +9,7 @@ import { genreEmoji } from './AnimeCard';
 const MangaCard = ({ data }: { data: Manga }) => {
     const genData = [...data.genres, ...data.themes]
     return (
-        <div className='bg-chatgpt-card border border-[#b3b3b3] mb-3 rounded-xl p-2  ease-linear will-change-auto duration-200 group hadow-md hover:shadow-xl  transition-all'>
+        <div className='bg-chatgpt-card border border-[#b3b3b3] mb-3 rounded-xl p-2  ease-linear will-change-auto duration-200 group shadow-md hover:shadow-xl  transition-all'>
             <div className="relative w-full aspect-4/4 overflow-hidden sm:aspect-3/5">
                 {
                     data.images.jpg.large_image_url ? <Image

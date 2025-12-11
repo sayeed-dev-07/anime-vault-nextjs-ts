@@ -1,5 +1,8 @@
 import Image from "next/image";
 import ReadMoreText from "./ReadMoreText";
+import CharacterInfo, { CharacterRole } from "./CharacterInfo";
+import RecommendationCard, { Recommendation } from "./RecommendationCard";
+import { getRecAndCharData } from "./Fetch";
 
 export interface AnimeResponse {
     data: AnimeData;
@@ -113,7 +116,14 @@ export interface MalEntity {
     url: string;
 }
 
-const CardDetails = ({ anime }: { anime: AnimeData }) => {
+const CardDetails = async({ anime }: { anime: AnimeData }) => {
+
+    
+
+    const characterData = await getRecAndCharData('anime', anime.mal_id, 'characters')
+    const recommendationsData = await getRecAndCharData('anime', anime.mal_id, 'recommendations')
+
+
     const Allgenres = [...anime?.genres, ...anime?.themes]
     return (
         <div className="max-w-7xl mx-auto py-10 px-4">
@@ -124,7 +134,7 @@ const CardDetails = ({ anime }: { anime: AnimeData }) => {
                     {anime.images.jpg.large_image_url && (
                         <Image
                             src={anime.images.jpg.large_image_url}
-                            width={320}
+                            width={320} loading="eager"
                             height={480}
                             alt={anime.title}
                             className="rounded-xl shadow-lg object-cover"
@@ -300,6 +310,30 @@ const CardDetails = ({ anime }: { anime: AnimeData }) => {
                     />
                 </div>
             )}
+
+            <div>
+
+                <p className="sm:text-4xl text-xl font-bold mt-10">🌌 Characters :</p>
+
+                <div className="my-6 grid grid-cols-[repeat(auto-fit,minmax(250px,1fr))] gap-4">
+                    {
+                        characterData.map((item: CharacterRole)=> <CharacterInfo key={item.character.mal_id} CharacterData={item}/>)
+                    }
+                </div>
+
+            </div>
+            <div>
+
+                <p className="sm:text-4xl text-xl font-bold sm:mt-12 mt-4">🌟 More Like This Anime :</p>
+
+                <div className="my-6 grid grid-cols-[repeat(auto-fit,minmax(250px,1fr))] gap-4">
+                    {
+                        recommendationsData.map((item: Recommendation)=> <RecommendationCard key={item.entry.mal_id} data={item}/>)
+                    }
+                </div>
+
+            </div>
+
         </div>
     );
 };
