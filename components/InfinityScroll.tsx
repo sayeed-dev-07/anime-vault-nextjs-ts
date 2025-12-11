@@ -81,10 +81,10 @@ const InfinityScroll = ({ name = 'animeData', top = false, randomIdnt, gener= fa
                         })
                 }
             </Masonry>
-            <div className='mt-3'>
+            <div ref={ref} className='mt-3'>
                 <Spinner />
             </div>
-            <div className='min-h-[50px]' ref={ref}></div>
+            <div className='min-h-[50px]' ></div>
         </div>
     );
 };

@@ -16,7 +16,7 @@ const FetchGenres = async ({ name }: { name: genNameProp }) => {
   );
 
   return (
-    <div className="grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-4">
+    <div className="grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-4 mb-10">
       {uniqueData.map((item) => (
         <GenCard key={item.mal_id} name={name} data={item} />
       ))}
