@@ -196,7 +196,7 @@ const CardDetails = ({ anime }: { anime: AnimeData }) => {
                     </p>
                     <p>
                         🔢 <span className="font-semibold">Episodes:</span>{" "}
-                        {anime.episodes}
+                        {anime.episodes ? anime.episodes : '?'}
                     </p>
                     <p>
                         📡 <span className="font-semibold">Status:</span> {anime.status}
