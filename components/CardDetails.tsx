@@ -1,9 +1,9 @@
 import Image from "next/image";
 import ReadMoreText from "./ReadMoreText";
-import CharacterInfo, { CharacterRole } from "./CharacterInfo";
-import RecommendationCard, { Recommendation } from "./RecommendationCard";
+
+
 import { getRecAndCharData } from "./Fetch";
-import StaffCard, { StaffProp } from "./StaffCard";
+
 import Pagination from "./Pagination";
 
 export interface AnimeResponse {
@@ -124,8 +124,9 @@ const CardDetails = async ({ anime }: { anime: AnimeData }) => {
 
     const characterData = await getRecAndCharData('anime', anime.mal_id, 'characters')
     const recommendationsData = await getRecAndCharData('anime', anime.mal_id, 'recommendations')
-    const staffData = await getRecAndCharData('anime', anime.mal_id, 'staff')
-
+    const staffDataRes = await fetch(`https://api.jikan.moe/v4/anime/${anime.mal_id}/staff`, {next: {revalidate: 86400}})
+    const staffDataJson = await staffDataRes.json()
+    const staffData = staffDataJson.data ?? []
     const Allgenres = [...anime?.genres, ...anime?.themes]
     return (
         <div className="max-w-7xl mx-auto py-10 px-4">
