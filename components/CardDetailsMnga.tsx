@@ -299,7 +299,7 @@ const CardDetailsMnga = async ({ manga }: { manga: MangaData }) => {
         characterData.length > 0 && 
         <div>
 
-        <p className="sm:text-4xl text-xl font-bold mt-10">🌌 Characters :</p>
+        <p className="sm:text-4xl text-2xl font-bold mt-10">🌌 Characters :</p>
 
         <Pagination data={characterData} name="characters" limit={8} />
 
@@ -309,7 +309,7 @@ const CardDetailsMnga = async ({ manga }: { manga: MangaData }) => {
         recommendationsData.length > 0 && 
         <div>
 
-        <p className="sm:text-4xl text-xl font-bold sm:mt-12 mt-4">🌟 More Like This Manga :</p>
+        <p className="sm:text-4xl text-2xl font-bold sm:mt-12 mt-4">🌟 More Like This Manga :</p>
 
         <Pagination data={recommendationsData} name="recommendations" limit={8} />
 

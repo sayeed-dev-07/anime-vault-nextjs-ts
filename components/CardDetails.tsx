@@ -317,7 +317,7 @@ const CardDetails = async ({ anime }: { anime: AnimeData }) => {
                 characterData.length > 0 &&
                 <div>
 
-                    <p className="sm:text-4xl text-xl font-bold mt-10">🌌 Characters :</p>
+                    <p className="sm:text-4xl text-2xl font-bold mt-10">🌌 Characters :</p>
 
                    <Pagination data={characterData} name="characters" limit={8} />
 
@@ -327,7 +327,7 @@ const CardDetails = async ({ anime }: { anime: AnimeData }) => {
                 staffData.length > 0 &&
                 <div>
 
-                    <p className="sm:text-4xl text-xl font-bold mt-10">🌌 Staff :</p>
+                    <p className="sm:text-4xl text-2xl font-bold mt-10">🧑‍💼 Staff :</p>
 
                     <Pagination data={staffData} name="staff" limit={8} />
 
@@ -336,7 +336,7 @@ const CardDetails = async ({ anime }: { anime: AnimeData }) => {
             {
                 recommendationsData.length > 0 && <div>
 
-                    <p className="sm:text-4xl text-xl font-bold sm:mt-12 mt-4">🌟 More Like This Anime :</p>
+                    <p className="sm:text-4xl text-2xl font-bold sm:mt-12 mt-4">🌟 More Like This Anime :</p>
 
                     <Pagination data={recommendationsData} name="recommendations" limit={8} />
                 </div>

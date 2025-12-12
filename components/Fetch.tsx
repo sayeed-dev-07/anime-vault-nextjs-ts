@@ -10,8 +10,7 @@ export type typeProp = 'characters' | 'recommendations' | 'staff'
 
 export async function getRecAndCharData(name: nameProp, id: number, type: typeProp) {
 
-    const charRes = await fetch(`https://api.jikan.moe/v4/${name}/${id}/${type}`, {
-        next: { revalidate: 1000 * 60 * 2 }})
+    const charRes = await fetch(`https://api.jikan.moe/v4/${name}/${id}/${type}`)
     const charData = await charRes.json()
     return charData.data ? charData.data : [];
 }
