@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { Button } from './ui/button';
 import Image from 'next/image';
 import { genreEmoji } from './AnimeCard';
+import ButtonSpin from './Button';
 
 
 const MangaCard = ({ data }: { data: Manga }) => {
@@ -41,7 +42,7 @@ const MangaCard = ({ data }: { data: Manga }) => {
             </div>
             <div>
                 <Link className='flex items-center justify-center' href={`/mangas/${data.title}-${data.mal_id}`}>
-                    <Button className='cursor-pointer'>details</Button>
+                    <ButtonSpin/>
                 </Link>
             </div>
         </div>

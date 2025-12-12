@@ -3,6 +3,7 @@ import ReadMoreText from "./ReadMoreText";
 import CharacterInfo, { CharacterRole } from "./CharacterInfo";
 import RecommendationCard, { Recommendation } from "./RecommendationCard";
 import { getRecAndCharData } from "./Fetch";
+import StaffCard, { StaffProp } from "./StaffCard";
 
 export interface AnimeResponse {
     data: AnimeData;
@@ -116,12 +117,13 @@ export interface MalEntity {
     url: string;
 }
 
-const CardDetails = async({ anime }: { anime: AnimeData }) => {
+const CardDetails = async ({ anime }: { anime: AnimeData }) => {
 
-    
+
 
     const characterData = await getRecAndCharData('anime', anime.mal_id, 'characters')
     const recommendationsData = await getRecAndCharData('anime', anime.mal_id, 'recommendations')
+    const staffData = await getRecAndCharData('anime', anime.mal_id, 'staff')
 
 
     const Allgenres = [...anime?.genres, ...anime?.themes]
@@ -311,28 +313,47 @@ const CardDetails = async({ anime }: { anime: AnimeData }) => {
                 </div>
             )}
 
-            <div>
+            {
+                characterData.length > 0 &&
+                <div>
 
-                <p className="sm:text-4xl text-xl font-bold mt-10">🌌 Characters :</p>
+                    <p className="sm:text-4xl text-xl font-bold mt-10">🌌 Characters :</p>
 
-                <div className="my-6 grid grid-cols-[repeat(auto-fit,minmax(250px,1fr))] gap-4">
-                    {
-                        characterData.map((item: CharacterRole)=> <CharacterInfo key={item.character.mal_id} CharacterData={item}/>)
-                    }
+                    <div className="my-6 grid grid-cols-[repeat(auto-fit,minmax(250px,1fr))] gap-4">
+                        {
+                            characterData.map((item: CharacterRole) => <CharacterInfo key={item.character.mal_id} CharacterData={item} />)
+                        }
+                    </div>
+
                 </div>
+            }
+            {
+                staffData.length > 0 &&
+                <div>
 
-            </div>
-            <div>
+                    <p className="sm:text-4xl text-xl font-bold mt-10">🌌 Staff :</p>
 
-                <p className="sm:text-4xl text-xl font-bold sm:mt-12 mt-4">🌟 More Like This Anime :</p>
+                    <div className="my-6 grid grid-cols-[repeat(auto-fit,minmax(250px,1fr))] gap-4">
+                        {
+                            staffData.map((item: StaffProp) => <StaffCard key={item.person.mal_id} Staff={item} />)
+                        }
+                    </div>
 
-                <div className="my-6 grid grid-cols-[repeat(auto-fit,minmax(250px,1fr))] gap-4">
-                    {
-                        recommendationsData.map((item: Recommendation)=> <RecommendationCard key={item.entry.mal_id} data={item}/>)
-                    }
                 </div>
+            }
+            {
+                recommendationsData.length > 0 && <div>
 
-            </div>
+                    <p className="sm:text-4xl text-xl font-bold sm:mt-12 mt-4">🌟 More Like This Anime :</p>
+
+                    <div className="my-6 grid grid-cols-[repeat(auto-fit,minmax(250px,1fr))] gap-4">
+                        {
+                            recommendationsData.map((item: Recommendation) => <RecommendationCard key={item.entry.mal_id} data={item} />)
+                        }
+                    </div>
+
+                </div>
+            }
 
         </div>
     );

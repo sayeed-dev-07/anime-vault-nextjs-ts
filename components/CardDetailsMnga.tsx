@@ -82,6 +82,7 @@ import ReadMoreText from './ReadMoreText';
 import CharacterInfo, { CharacterRole } from './CharacterInfo';
 import RecommendationCard, { Recommendation } from './RecommendationCard';
 import { getRecAndCharData } from './Fetch';
+import StaffCard, { StaffProp } from './StaffCard';
 
 
 const CardDetailsMnga = async ({ manga }: { manga: MangaData }) => {
@@ -92,6 +93,7 @@ const CardDetailsMnga = async ({ manga }: { manga: MangaData }) => {
 
   const characterData = await getRecAndCharData('manga', manga.mal_id, 'characters')
   const recommendationsData = await getRecAndCharData('manga', manga.mal_id, 'recommendations')
+
   return (
     <div className="max-w-7xl mx-auto py-10 px-4">
       {/* Header */}
@@ -292,7 +294,9 @@ const CardDetailsMnga = async ({ manga }: { manga: MangaData }) => {
         </div>
       )}
 
-      <div>
+      {
+        characterData.length > 0 && 
+        <div>
 
         <p className="sm:text-4xl text-xl font-bold mt-10">🌌 Characters :</p>
 
@@ -303,7 +307,10 @@ const CardDetailsMnga = async ({ manga }: { manga: MangaData }) => {
         </div>
 
       </div>
-      <div>
+      }
+      {
+        recommendationsData.length > 0 && 
+        <div>
 
         <p className="sm:text-4xl text-xl font-bold sm:mt-12 mt-4">🌟 More Like This Manga :</p>
 
@@ -314,6 +321,7 @@ const CardDetailsMnga = async ({ manga }: { manga: MangaData }) => {
         </div>
 
       </div>
+      }
 
     </div>
   );
