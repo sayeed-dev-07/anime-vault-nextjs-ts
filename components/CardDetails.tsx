@@ -1,8 +1,9 @@
+
 import Image from "next/image";
 import ReadMoreText from "./ReadMoreText";
 
 
-import { getRecAndCharData } from "./Fetch";
+import { batchFetchAnimeData, getRecAndCharData } from "./Fetch";
 
 import Pagination from "./Pagination";
 
@@ -122,11 +123,7 @@ const CardDetails = async ({ anime }: { anime: AnimeData }) => {
 
 
 
-    const characterData = await getRecAndCharData('anime', anime.mal_id, 'characters')
-    const recommendationsData = await getRecAndCharData('anime', anime.mal_id, 'recommendations')
-    const staffDataRes = await fetch(`https://api.jikan.moe/v4/anime/${anime.mal_id}/staff`, {next: {revalidate: 86400}})
-    const staffDataJson = await staffDataRes.json()
-    const staffData = staffDataJson.data ?? []
+    const { characters, staff, recommendations } = await batchFetchAnimeData(anime.mal_id);
     const Allgenres = [...anime?.genres, ...anime?.themes]
     return (
         <div className="max-w-7xl mx-auto py-10 px-4">
@@ -315,31 +312,31 @@ const CardDetails = async ({ anime }: { anime: AnimeData }) => {
             )}
 
             {
-                characterData.length > 0 &&
+                characters.length > 0 &&
                 <div>
 
                     <p className="sm:text-4xl text-2xl font-bold mt-10">🌌 Characters :</p>
 
-                   <Pagination data={characterData} name="characters" limit={8} />
+                   <Pagination data={characters} type="characters" limit={8} />
 
                 </div>
             }
             {
-                staffData.length > 0 &&
+                staff.length > 0 &&
                 <div>
 
                     <p className="sm:text-4xl text-2xl font-bold mt-10">🧑‍💼 Staff :</p>
 
-                    <Pagination data={staffData} name="staff" limit={8} />
+                    <Pagination data={staff} type="staff" limit={8} />
 
                 </div>
             }
             {
-                recommendationsData.length > 0 && <div>
+                recommendations.length > 0 && <div>
 
                     <p className="sm:text-4xl text-2xl font-bold sm:mt-12 mt-4">🌟 More Like This Anime :</p>
 
-                    <Pagination data={recommendationsData} name="recommendations" limit={8} />
+                    <Pagination data={recommendations} type="recommendations" limit={8} />
                 </div>
             }
 

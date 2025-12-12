@@ -4,11 +4,12 @@ import CharacterInfo, { CharacterRole } from './CharacterInfo';
 import RecommendationCard, { Recommendation } from './RecommendationCard';
 import StaffCard, { StaffProp } from './StaffCard';
 import { typeProp } from './Fetch';
-import ButtonSpin from './Button';
+
 import { Button } from './ui/button';
+
 type dataProp = CharacterRole | Recommendation | StaffProp;
 
-const Pagination = ({ data, limit = 8, name }: { data: dataProp[], limit?: number, name: typeProp }) => {
+const Pagination = ({ data, limit = 8, name='animes', type}: { data: dataProp[], limit?: number, type: typeProp , name?:  'animes' | 'mangas'}) => {
   const [length, setLength] = useState(limit)
   const [visible, setVisible] = useState(data.slice(0, limit));
   useEffect(() => {
@@ -18,7 +19,7 @@ const Pagination = ({ data, limit = 8, name }: { data: dataProp[], limit?: numbe
     <>
       <div className="my-6 grid grid-cols-[repeat(auto-fit,minmax(250px,1fr))] gap-4">
         {
-          name === "characters" &&
+          type === "characters" &&
           visible.map((item) => {
             const character = item as CharacterRole;
             return (
@@ -30,11 +31,11 @@ const Pagination = ({ data, limit = 8, name }: { data: dataProp[], limit?: numbe
           })
         }
         {
-          name === "recommendations" &&
+          type === "recommendations" &&
           visible.map((item) => {
             const recomData = item as Recommendation;
             return (
-              <RecommendationCard
+              <RecommendationCard name={name}
                 key={recomData.entry.mal_id}
                 data={recomData}
               />
@@ -42,7 +43,7 @@ const Pagination = ({ data, limit = 8, name }: { data: dataProp[], limit?: numbe
           })
         }
         {
-          name === "staff" &&
+          type === "staff" &&
           visible.map((item) => {
             const staffData = item as StaffProp;
             return (
