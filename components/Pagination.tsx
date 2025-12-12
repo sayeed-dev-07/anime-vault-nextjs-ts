@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import CharacterInfo, { CharacterRole } from './CharacterInfo';
 import RecommendationCard, { Recommendation } from './RecommendationCard';
 import StaffCard, { StaffProp } from './StaffCard';
-import { typeProp } from './Fetch';
+type typeProp = 'characters' | 'recommendations' | 'staff';
 
 import { Button } from './ui/button';
 

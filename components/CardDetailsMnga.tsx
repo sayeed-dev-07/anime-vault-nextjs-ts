@@ -79,10 +79,9 @@ export interface MalEntity {
 
 import Image from 'next/image';
 import ReadMoreText from './ReadMoreText';
-import CharacterInfo, { CharacterRole } from './CharacterInfo';
-import RecommendationCard, { Recommendation } from './RecommendationCard';
+
 import { getRecAndCharData } from './Fetch';
-import StaffCard, { StaffProp } from './StaffCard';
+
 import Pagination from './Pagination';
 
 

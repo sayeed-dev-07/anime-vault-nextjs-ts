@@ -3,7 +3,7 @@ import Image from "next/image";
 import ReadMoreText from "./ReadMoreText";
 
 
-import { batchFetchAnimeData, getRecAndCharData } from "./Fetch";
+import { batchFetchAnimeData } from "./Fetch";
 
 import Pagination from "./Pagination";
 
