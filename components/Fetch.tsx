@@ -6,7 +6,7 @@ export const fetchData = async (baseURL: string) => {
 }
 
 type nameProp = 'anime' | 'manga'
-type typeProp = 'characters' | 'recommendations' | 'staff'
+export type typeProp = 'characters' | 'recommendations' | 'staff'
 
 export async function getRecAndCharData(name: nameProp, id: number, type: typeProp) {
 

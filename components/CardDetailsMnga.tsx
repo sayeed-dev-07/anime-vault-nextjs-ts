@@ -83,6 +83,7 @@ import CharacterInfo, { CharacterRole } from './CharacterInfo';
 import RecommendationCard, { Recommendation } from './RecommendationCard';
 import { getRecAndCharData } from './Fetch';
 import StaffCard, { StaffProp } from './StaffCard';
+import Pagination from './Pagination';
 
 
 const CardDetailsMnga = async ({ manga }: { manga: MangaData }) => {
@@ -300,11 +301,7 @@ const CardDetailsMnga = async ({ manga }: { manga: MangaData }) => {
 
         <p className="sm:text-4xl text-xl font-bold mt-10">🌌 Characters :</p>
 
-        <div className="my-6 grid grid-cols-[repeat(auto-fit,minmax(250px,1fr))] gap-4">
-          {
-            characterData.map((item: CharacterRole) => <CharacterInfo key={item.character.mal_id} CharacterData={item} />)
-          }
-        </div>
+        <Pagination data={characterData} name="characters" limit={8} />
 
       </div>
       }
@@ -314,11 +311,7 @@ const CardDetailsMnga = async ({ manga }: { manga: MangaData }) => {
 
         <p className="sm:text-4xl text-xl font-bold sm:mt-12 mt-4">🌟 More Like This Manga :</p>
 
-        <div className="my-6 grid grid-cols-[repeat(auto-fit,minmax(250px,1fr))] gap-4">
-          {
-            recommendationsData.map((item: Recommendation) => <RecommendationCard name='mangas' key={item.entry.mal_id} data={item} />)
-          }
-        </div>
+        <Pagination data={recommendationsData} name="recommendations" limit={8} />
 
       </div>
       }
