@@ -126,7 +126,6 @@ const CardDetails = async ({ anime }: { anime: AnimeData }) => {
     const recommendationsData = await getRecAndCharData('anime', anime.mal_id, 'recommendations')
     const staffData = await getRecAndCharData('anime', anime.mal_id, 'staff')
 
-
     const Allgenres = [...anime?.genres, ...anime?.themes]
     return (
         <div className="max-w-7xl mx-auto py-10 px-4">
