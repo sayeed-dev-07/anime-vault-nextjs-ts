@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 // Better fetching utility with retry logic and error handling
 const wait = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 

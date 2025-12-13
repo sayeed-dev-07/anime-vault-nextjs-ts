@@ -17,14 +17,14 @@ const breakpointColumns = {
     768: 2,
     480: 1,
 };
-type nameProp = 'animeData' | 'mangaData'
+export type nameProp = 'animeData' | 'mangaData'
 type randomIdntProp = 'anime' | 'animeTop' | 'manga' | 'mangaTop' | 'gen-anime' | 'gen-manga'
 interface inftProp{
     name?: nameProp,
     top?: boolean,
     randomIdnt: randomIdntProp,
     gener?: boolean,
-    genID?: number
+    genID?: number,
 }
 
 const InfinityScroll = ({ name = 'animeData', top = false, randomIdnt, gener= false, genID=1}: inftProp) => {

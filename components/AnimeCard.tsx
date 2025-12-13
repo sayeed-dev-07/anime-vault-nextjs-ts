@@ -2,9 +2,10 @@
 import Link from 'next/link';
 import { Anime } from './FetchAnime';
 import Image from 'next/image';
-import { Button } from './ui/button';
+
 import FormatSegment from './Format';
 import ButtonSpin from './Button';
+
 
 
 export const genreEmoji: Record<string, string> = {
@@ -97,7 +98,7 @@ const AnimeCard = ({ data }: { data: Anime }) => {
     const genData = [...data.genres, ...data.themes]
     return (
         <div className='bg-chatgpt-card border border-[#b3b3b3] ease-linear will-change-auto duration-200 group rounded-xl mb-3 p-2 shadow-md  hover:shadow-xl  transition-all'>
-            <div className="relative  w-full aspect-4/4 overflow-hidden sm:aspect-3/5">
+            <div style={{backgroundImage: "linear-gradient(rgba(23, 23, 23, 0.1), rgb(23, 23, 23) 70%)", backgroundSize: "cover"}} className="relative  w-full aspect-4/4 overflow-hidden sm:aspect-3/5">
                 {
                     data.images.jpg.large_image_url ? <Image
                         src={data.images.jpg.large_image_url}
