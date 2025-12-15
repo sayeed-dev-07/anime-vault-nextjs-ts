@@ -1,16 +1,18 @@
 import React from 'react';
 import { Manga } from './FetchAnime';
 import Link from 'next/link';
-import { Button } from './ui/button';
+
 import Image from 'next/image';
 import { genreEmoji } from './AnimeCard';
 import ButtonSpin from './Button';
+import FavButton from './FavButton';
 
 
 const MangaCard = ({ data }: { data: Manga }) => {
     const genData = [...data.genres, ...data.themes]
     return (
-        <div className='bg-chatgpt-card border border-[#b3b3b3] mb-3 rounded-xl p-2  ease-linear will-change-auto duration-200 group shadow-md hover:shadow-xl  transition-all'>
+        <div className='bg-chatgpt-card border border-[#b3b3b3] mb-3 rounded-xl p-2  ease-linear will-change-auto duration-200 group shadow-md hover:shadow-xl  transition-all relative'>
+            <div className='absolute top-3 right-4 z-5'> <FavButton type='Manga' data={data}/> </div>
             <div className="relative w-full aspect-4/4 overflow-hidden sm:aspect-3/5">
                 {
                     data.images.jpg.large_image_url ? <Image

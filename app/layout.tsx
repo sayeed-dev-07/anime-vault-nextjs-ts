@@ -8,6 +8,7 @@ import { ThemeProvider } from "../components/theme-provider";
 import Navbar from "../components/Navbar";
 import { BreadcrumbSync } from "@/components/BreadCramp";
 import SideBar from "@/components/SideBar";
+import BackButton from "@/components/BackButton";
 
 
 const firaSans = Fira_Sans_Condensed({
@@ -55,6 +56,9 @@ export default function RootLayout({
                   {children}
                 </div>
               </div>
+            </div>
+            <div className="fixed bottom-10 right-10 z-20">
+              <BackButton/>
             </div>
           </ThemeProvider>
         </Providers>

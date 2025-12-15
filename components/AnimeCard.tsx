@@ -5,6 +5,7 @@ import Image from 'next/image';
 
 import FormatSegment from './Format';
 import ButtonSpin from './Button';
+import FavButton from './FavButton';
 
 
 
@@ -97,15 +98,16 @@ const AnimeCard = ({ data }: { data: Anime }) => {
 
     const genData = [...data.genres, ...data.themes]
     return (
-        <div className='bg-chatgpt-card border border-[#b3b3b3] ease-linear will-change-auto duration-200 group rounded-xl mb-3 p-2 shadow-md  hover:shadow-xl  transition-all'>
-            <div style={{backgroundImage: "linear-gradient(rgba(23, 23, 23, 0.1), rgb(23, 23, 23) 70%)", backgroundSize: "cover"}} className="relative  w-full aspect-4/4 overflow-hidden sm:aspect-3/5">
+        <div className='bg-chatgpt-card border border-[#b3b3b3]  ease-linear will-change-auto duration-200 group rounded-xl mb-3 p-2 shadow-md  hover:shadow-xl transition-all relative'>
+            <div className='absolute top-3 right-4 z-5'> <FavButton type='Anime' data={data}/> </div>
+            <div className="relative  w-full aspect-4/4 overflow-hidden sm:aspect-3/5">
                 {
                     data.images.jpg.large_image_url ? <Image
                         src={data.images.jpg.large_image_url}
                         sizes='100vw aspect-4/4'
                         alt="img"
                         fill loading="eager"
-                        className="object-cover rounded-t-xl duration-200 group-hover:scale-105 transition-all  will-change-auto  group-hover:grayscale-0 grayscale-70"
+                        className="object-cover duration-200  group-hover:scale-105 transition-all  will-change-auto  group-hover:grayscale-0 grayscale-70"
                     /> : <p>No img FOund</p>
                 }
             </div>

@@ -5,7 +5,7 @@ import SearchFetch from '@/components/SearchFetch';
 const page = async ({ searchParams }: { searchParams: Promise<{ name: string }> }) => {
     const { name } = await searchParams;
     return (
-        <div className='mt-5'>
+        <div className='mt-5 max-w-[1600px] mx-auto py-10 px-4'>
             <p className='sm:text-6xl text-3xl mb-3'>Search Result for &quot;{name}&quot;</p>
             <div className='mt-6 w-full '>
                 <SearchFetch searchName={name} />

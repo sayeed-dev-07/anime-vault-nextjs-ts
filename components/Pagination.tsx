@@ -17,7 +17,7 @@ const Pagination = ({ data, limit = 8, name='animes', type}: { data: dataProp[],
   }, [data, length]);
   return (
     <>
-      <div className="my-6 grid grid-cols-[repeat(auto-fit,minmax(250px,1fr))] gap-4">
+      <div className="my-6 grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-4">
         {
           type === "characters" &&
           visible.map((item) => {

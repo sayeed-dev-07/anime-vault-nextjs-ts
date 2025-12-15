@@ -95,7 +95,7 @@ const CardDetailsMnga = async ({ manga }: { manga: MangaData }) => {
   const recommendationsData = await getRecAndCharData('manga', manga.mal_id, 'recommendations')
 
   return (
-    <div className="max-w-7xl mx-auto py-10 px-4">
+    <div className="max-w-[1600px] mx-auto py-10 px-4">
       {/* Header */}
       <div className="flex flex-col md:flex-row gap-10">
         {/* Cover */}
@@ -295,24 +295,24 @@ const CardDetailsMnga = async ({ manga }: { manga: MangaData }) => {
       )}
 
       {
-        characterData.length > 0 && 
+        characterData.length > 0 &&
         <div>
 
-        <p className="sm:text-4xl text-2xl font-bold mt-10">🌌 Characters :</p>
+          <p className="sm:text-4xl text-2xl font-bold mt-10">🌌 Characters :</p>
 
-        <Pagination name='animes' data={characterData} type="characters" limit={8} />
+          <Pagination name='animes' data={characterData} type="characters" limit={8} />
 
-      </div>
+        </div>
       }
       {
-        recommendationsData.length > 0 && 
+        recommendationsData.length > 0 &&
         <div>
 
-        <p className="sm:text-4xl text-2xl font-bold sm:mt-12 mt-4">🌟 More Like This Manga :</p>
+          <p className="sm:text-4xl text-2xl font-bold sm:mt-12 mt-4">🌟 More Like This Manga :</p>
 
-        <Pagination name='mangas' data={recommendationsData} type="recommendations" limit={8} />
+          <Pagination name='mangas' data={recommendationsData} type="recommendations" limit={8} />
 
-      </div>
+        </div>
       }
 
     </div>
