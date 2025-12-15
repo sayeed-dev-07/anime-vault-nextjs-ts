@@ -2,6 +2,7 @@
 import FetchAnime from '@/components/FetchAnime';
 
 import { Button } from '@/components/ui/button';
+
 import Link from 'next/link';
 import React from 'react';
 
@@ -24,6 +25,7 @@ const page = () => {
 
         </div>
       </div>
+
       <div className='mt-[5%]'>
         <div>
           <p className='sm:text-6xl text-3xl mb-[2%]'>Random Animes</p>

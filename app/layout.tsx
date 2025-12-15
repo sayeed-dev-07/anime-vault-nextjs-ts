@@ -47,7 +47,7 @@ export default function RootLayout({
             <Navbar />
 
             <div className="pt-[85px] sm:pt-[90px] lg:grid grid-cols-1 lg:grid-cols-[1fr_4fr]">
-              <div className="lg:pt-12 pt-2 lg:sticky top-[90px] lg:h-[calc(100vh-90px)] overflow-hidden mx-1 lg:block border-r">
+              <div className="lg:pt-12 pt-2 lg:sticky top-[90px] lg:h-[calc(100vh-90px)] overflow-hidden mx-1 lg:block lg:border-r">
                 <SideBar />
               </div>
               <div className="px-2 md:px-[2%] min-h-screen font-outfit bg-background text-primary">
@@ -57,7 +57,7 @@ export default function RootLayout({
                 </div>
               </div>
             </div>
-            <div className="fixed bottom-10 right-10 z-20">
+            <div className="fixed sm:bottom-10 bottom-4 right-2 sm:right-10 z-20">
               <BackButton/>
             </div>
           </ThemeProvider>
