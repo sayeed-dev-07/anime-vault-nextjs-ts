@@ -2,7 +2,7 @@
 
 import { ArrowLeft } from 'lucide-react'
 import { useRouter, usePathname } from 'next/navigation'
-
+import { motion } from 'motion/react';
 export default function BackButton() {
   const router = useRouter()
   const pathname = usePathname()
@@ -11,7 +11,7 @@ export default function BackButton() {
   if (pathname === '/') return null
 
   return (
-    <button
+    <motion.button initial={{opacity:0, x:20}} animate={{opacity:1, x:0}} transition={{duration:0.2, type:'spring', damping:20, stiffness:200, delay:0.2}}
       onClick={() => router.back()}
       className="px-3 py-3 cursor-pointer
       hover:bg-foreground
@@ -21,6 +21,6 @@ export default function BackButton() {
                  rounded-4xl"
     >
       <ArrowLeft />
-    </button>
+    </motion.button>
   )
 }

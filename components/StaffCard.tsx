@@ -1,3 +1,5 @@
+'use client';
+import { motion } from "motion/react"; 
 import Image from "next/image";
 
 export interface StaffProp {
@@ -17,7 +19,7 @@ export interface StaffPerson {
 
 const StaffCard = ({ Staff }: { Staff: StaffProp }) => {
     return (
-        <div className='max-w-[400px] p-4 border rounded-xl ease-linear will-change-auto duration-200 group shadow-md hover:shadow-xl  transition-all'>
+        <motion.div initial={{opacity:0, y:30}} whileInView={{opacity:1, y:0}} transition={{duration:0.3, type:'spring', damping:20, stiffness:200, delay:0.2}} className='max-w-[400px] p-4 border rounded-xl ease-linear will-change-auto duration-200 group shadow-md hover:shadow-xl  transition-all'>
             <div className='w-full overflow-hidden h-[300px] relative mb-6'>
                 <Image fill className='object-cover h-auto w-auto duration-200 will-change-auto  group-hover:grayscale-0 grayscale-70 group-hover:scale-105 transition-all  rounded-xl' src={Staff.person.images.jpg.image_url ?? '/placeholder.png'} loading="eager" sizes='100' alt={`${Staff.person.name}`} />
             </div>
@@ -29,7 +31,7 @@ const StaffCard = ({ Staff }: { Staff: StaffProp }) => {
                     <span className='font-semibold'>🎬 Position: </span>{Staff.positions.join(' | ')}
                 </p>
             </div>
-        </div>
+        </motion.div>
     );
 };
 
