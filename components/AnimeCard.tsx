@@ -6,11 +6,9 @@ import Image from 'next/image';
 import FormatSegment from './Format';
 import ButtonSpin from './Button';
 import FavButton from './FavButton';
-import { motion, stagger } from 'motion/react';
+import { motion } from 'motion/react';
 import React from 'react';
-import { type } from 'os';
-import { delay } from 'motion';
-import { div } from 'motion/react-client';
+
 
 
 export const genreEmoji: Record<string, string> = {
@@ -117,7 +115,7 @@ const AnimeCard = ({ data }: { data: Anime }) => {
     return (
         <div  className='bg-chatgpt-card overflow-hidden border border-[#b3b3b3]  ease-linear will-change-auto duration-200 group rounded-xl mb-3 p-2 shadow-md  hover:shadow-xl transition-all relative'>
             <div className='absolute top-3 right-4 z-5'> <FavButton type='Anime' data={data} /> </div>
-            <motion.div initial={{y:-4, opacity:0}} animate={{y:0, opacity: 1}} transition={{duration: 0.3, type:'spring', delay:0.1}} className="relative  w-full aspect-4/4 overflow-hidden sm:aspect-3/5">
+            <motion.div  viewport={{ once: true }} initial={{y:-4, opacity:0}} whileInView={{y:0, opacity: 1}} transition={{duration: 0.3, type:'spring', delay:0.1}} className="relative  w-full aspect-4/4 overflow-hidden sm:aspect-3/5">
                 {
                     data.images.jpg.large_image_url ? <Image
                         src={data.images.jpg.large_image_url}
@@ -130,17 +128,17 @@ const AnimeCard = ({ data }: { data: Anime }) => {
             </motion.div>
 
             <div className='flex items-center justify-between px-2 gap-y-2 mt-3 '>
-                <motion.div initial={{x:-12, opacity:0}} whileInView={{x:0, opacity: 1}} transition={{duration: 0.3, type:'spring', delay:0.2}} className='flex gap-x-2 gap-y-3 flex-col'>
+                <motion.div  viewport={{ once: true }} initial={{x:-12, opacity:0}} whileInView={{x:0, opacity: 1}} transition={{duration: 0.3, type:'spring', delay:0.2}} className='flex gap-x-2 gap-y-3 flex-col'>
                     <p className='text-xl'>{data.title}</p>
                     <p className='px-2 w-fit rounded-md py-0.5 bg-[#22333b] text-white'>❤️{data.favorites}</p>
                 </motion.div>
 
-                <motion.div initial={{x:12, opacity:0}} whileInView={{x:0, opacity: 1}} transition={{duration: 0.3, type:'spring', delay:0.4}} className='flex items-center justify-center flex-col gap-y-3'>
+                <motion.div  viewport={{ once: true }} initial={{x:12, opacity:0}}  whileInView={{x:0, opacity: 1}} transition={{duration: 0.3, type:'spring', delay:0.4}} className='flex items-center justify-center flex-col gap-y-3'>
                     <p className='px-2 w-fit rounded-md py-0.5 bg-[#306983] text-white'>⭐{data.score}</p>
                     <p className='px-2 w-fit rounded-md py-0.5 bg-[#19790c] text-white text-center text-nowrap'>📺{data.type}</p>
                 </motion.div>
             </div>
-            <motion.div className='flex items-center flex-wrap justify-center my-4 gap-2' variants={parent} initial="hidden" whileInView="show">
+            <motion.div  viewport={{ once: true }} className='flex items-center flex-wrap justify-center my-4 gap-2' variants={parent} initial="hidden" whileInView="show">
                 {
                     genData.map((item) => <motion.p className='text-nowrap p-2 border rounded-md' key={item.mal_id} variants={child}>{genreEmoji[item.name] ?? "🎬"} {item.name}</motion.p>)
                 }
@@ -148,7 +146,7 @@ const AnimeCard = ({ data }: { data: Anime }) => {
 
             <div>
 
-                <motion.div initial={{x:12, opacity:0}} whileInView={{x:0, opacity: 1}} transition={{duration: 0.5, type:'spring', delay:1}} className='flex items-center mt-3 justify-center'>
+                <motion.div  viewport={{ once: true }} initial={{x:12, opacity:0}} whileInView={{x:0, opacity: 1}} transition={{duration: 0.5, type:'spring', delay:1}} className='flex items-center mt-3 justify-center'>
 
                     <Link href={`/animes/${FormatSegment(data.title)}-${data.mal_id}`}>
                         <ButtonSpin />
