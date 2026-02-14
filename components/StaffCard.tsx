@@ -1,6 +1,9 @@
 'use client';
-import { motion } from "motion/react"; 
+
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
 import Image from "next/image";
+import { useRef } from "react";
 
 export interface StaffProp {
     person: StaffPerson;
@@ -17,11 +20,16 @@ export interface StaffPerson {
 }
 
 
+gsap.registerPlugin(useGSAP)
+
+
 const StaffCard = ({ Staff }: { Staff: StaffProp }) => {
+    
+
     return (
-        <div  className='max-w-[400px] p-4 border rounded-xl ease-linear will-change-auto duration-200 group shadow-md hover:shadow-xl  transition-all'>
+        <div className='max-w-[400px] smallCard p-4 border  opacity-0'>
             <div className='w-full overflow-hidden h-[300px] relative mb-6'>
-                <Image fill className='object-cover h-auto w-auto duration-200 will-change-auto  group-hover:grayscale-0 grayscale-70 group-hover:scale-105 transition-all  rounded-xl' src={Staff.person.images.jpg.image_url ?? '/placeholder.png'} loading="eager" sizes='100' alt={`${Staff.person.name}`} />
+                <Image fill className='object-cover h-auto w-auto ' src={Staff.person.images.jpg.image_url ?? '/placeholder.png'} loading="eager" sizes='100' alt={`${Staff.person.name}`} />
             </div>
             <div className='text-lg flex flex-col items-start justify-center gap-y-3'>
                 <p>

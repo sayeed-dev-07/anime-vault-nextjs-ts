@@ -1,6 +1,7 @@
 'use client';
 
 import { ReactNode, useEffect, useRef } from 'react';
+import { usePathname } from 'next/navigation';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Lenis from 'lenis';
@@ -13,9 +14,10 @@ type Props = {
 
 const LenisProvider = ({ children }: Props) => {
   const lenisRef = useRef<Lenis | null>(null);
+  const pathname = usePathname();
 
   useEffect(() => {
-    // 1. Initialize Lenis
+    // Initialize Lenis and wire it to GSAP
     const lenis = new Lenis({
       duration: 1.2,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // Standard easeOutExpo
@@ -24,15 +26,15 @@ const LenisProvider = ({ children }: Props) => {
 
     lenisRef.current = lenis;
 
-    // 2. Sync ScrollTrigger with Lenis
+    // Sync ScrollTrigger with Lenis
     lenis.on('scroll', ScrollTrigger.update);
 
-    // 3. Hook Lenis into GSAP's ticker
+    // Hook Lenis into GSAP's ticker
     gsap.ticker.add((time) => {
       lenis.raf(time * 1000); // Convert seconds to milliseconds
     });
 
-    // 4. Disable GSAP's default lag smoothing (improves sync)
+    // Disable GSAP's default lag smoothing (improves sync)
     gsap.ticker.lagSmoothing(0);
 
     return () => {
@@ -43,6 +45,16 @@ const LenisProvider = ({ children }: Props) => {
       });
     };
   }, []);
+
+  useEffect(() => {
+    // Reset scroll to top whenever the route changes
+    const lenis = lenisRef.current;
+    if (lenis) {
+      lenis.scrollTo(0, { immediate: true });
+    } else if (typeof window !== 'undefined') {
+      window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+    }
+  }, [pathname]);
 
   return (
     // Lenis doesn't require specific wrappers, 
