@@ -3,9 +3,9 @@ import GenCard, { genDatProp } from "./GenCard";
 export type genNameProp = 'anime' | 'manga';
 
 const FetchGenres = async ({ name }: { name: genNameProp }) => {
-  const res = await fetch(`https://api.jikan.moe/v4/genres/${name}`, {
-  next: { revalidate: 60 * 3 } 
-});
+  const res = await fetch(`https://api.tenrai.org/v1/genres/${name}`, {
+    next: { revalidate: 60 * 3 }
+  });
   const resJson = await res.json();
 
   const rawData: genDatProp[] = resJson.data;

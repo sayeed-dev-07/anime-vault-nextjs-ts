@@ -78,7 +78,8 @@ const AnimeCard = ({ data }: { data: Anime }) => {
     { scope: cardRef }
   );
 
-  const genData = [...data.genres, ...data.themes];
+  // Fallbacks added here just in case the API returns null for genres/themes
+  const genData = [...(data.genres || []), ...(data.themes || [])];
 
   return (
     <div
@@ -91,18 +92,20 @@ const AnimeCard = ({ data }: { data: Anime }) => {
 
       <div className='relative w-full aspect-square overflow-hidden sm:aspect-4/5'>
         <div data-card-reveal className='absolute inset-0 z-10 dark:bg-[crimson] bg-[skyblue]' />
-        {data.images.jpg.large_image_url ? (
+        {data.images?.jpg?.large_image_url ? (
           <Image
             src={data.images.jpg.large_image_url}
             sizes='100vw'
             data-card-image
-            alt='img'
+            alt={data.title || 'Anime Image'}
             fill
             loading='eager'
             className='object-cover scale-110 opacity-0'
           />
         ) : (
-          <p>No img found</p>
+          <div className="w-full h-full flex items-center justify-center bg-gray-200 text-gray-500">
+            No img found
+          </div>
         )}
       </div>
 
@@ -112,19 +115,16 @@ const AnimeCard = ({ data }: { data: Anime }) => {
             {data.title}
           </p>
           <p data-card-meta className='px-2 w-fit rounded-md py-0.5 bg-[#22333b] text-white'>
-            {'\u2764\uFE0F'}
-            {data.favorites}
+            ❤️ {data.favorites ?? 0}
           </p>
         </div>
 
         <div className='flex items-center justify-center flex-col gap-y-3'>
           <p data-card-meta className='px-2 w-fit rounded-md py-0.5 bg-[#306983] text-white'>
-            {'\u2B50'}
-            {data.score}
+            ⭐ {data.score ?? 'N/A'}
           </p>
           <p data-card-meta className='px-2 w-fit rounded-md py-0.5 bg-[#19790c] text-white text-center text-nowrap'>
-            {'\u{1F4FA}'}
-            {data.type}
+            📺 {data.type ?? 'Unknown'}
           </p>
         </div>
       </div>
@@ -132,7 +132,7 @@ const AnimeCard = ({ data }: { data: Anime }) => {
       <div className='flex items-center flex-wrap justify-center my-4 gap-2'>
         {genData.map((item) => (
           <p data-card-tag className='text-nowrap p-2 border rounded-md' key={item.mal_id}>
-            {genreEmoji[item.name] ?? '\u{1F3AC}'} {item.name}
+            {genreEmoji[item.name] ?? '🎬'} {item.name}
           </p>
         ))}
       </div>

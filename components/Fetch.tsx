@@ -9,7 +9,7 @@ interface FetchOptions {
 }
 
 export async function fetchWithRetry(
-  url: string, 
+  url: string,
   options: FetchOptions = {}
 ): Promise<any> {
   const {
@@ -37,9 +37,9 @@ export async function fetchWithRetry(
       if (response.status === 429) {
         const retryAfter = response.headers.get('Retry-After');
         const delay = retryAfter ? parseInt(retryAfter) * 1000 : retryDelay * Math.pow(2, attempt);
-        
+
         console.warn(`Rate limited. Retrying after ${delay}ms (attempt ${attempt + 1}/${maxRetries + 1})`);
-        
+
         if (attempt < maxRetries) {
           await wait(delay);
           continue;
@@ -56,7 +56,7 @@ export async function fetchWithRetry(
 
     } catch (error) {
       const isLastAttempt = attempt === maxRetries;
-      
+
       if (isLastAttempt) {
         console.error(`Failed to fetch ${url} after ${maxRetries + 1} attempts:`, error);
         throw error;
@@ -89,17 +89,17 @@ export type TypeProp = 'characters' | 'recommendations' | 'staff';
 
 // Improved function with better error handling
 export async function getRecAndCharData(
-  name: NameProp, 
-  id: number, 
+  name: NameProp,
+  id: number,
   type: TypeProp
 ): Promise<any[]> {
   try {
-    const url = `https://api.jikan.moe/v4/${name}/${id}/${type}`;
+    const url = `https://api.tenrai.org/v1/${name}/${id}/${type}`;
     const data = await fetchWithRetry(url, {
       maxRetries: 3,
       retryDelay: 1000
     });
-    
+
     return data.data || [];
   } catch (error) {
     console.error(`Error fetching ${type} for ${name} ${id}:`, error);
@@ -115,12 +115,12 @@ export async function batchFetchAnimeData(animeId: number) {
   try {
     const [characters, staff, recommendations] = await Promise.all([
       getRecAndCharData('anime', animeId, 'characters'),
-      wait(delayBetweenCalls).then(() => 
-        fetchWithRetry(`https://api.jikan.moe/v4/anime/${animeId}/staff`)
+      wait(delayBetweenCalls).then(() =>
+        fetchWithRetry(`https://api.tenrai.org/v1/anime/${animeId}/staff`)
           .then(res => res.data || [])
           .catch(() => [])
       ),
-      wait(delayBetweenCalls * 2).then(() => 
+      wait(delayBetweenCalls * 2).then(() =>
         getRecAndCharData('anime', animeId, 'recommendations')
       ),
     ]);
