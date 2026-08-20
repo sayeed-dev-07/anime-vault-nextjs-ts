@@ -11,15 +11,18 @@ import MangaCard from './MangaCard';
 
 import Masonry from 'react-masonry-css';
 
+// Updated to match standard Tailwind CSS breakpoints
 const breakpointColumns = {
-    default: 4,
-    1250: 3,
-    768: 2,
-    480: 1,
+    default: 4, // 2xl and above (1536px+)
+    1536: 3,    // lg to xl (1024px - 1535px)
+    1024: 2,    // sm to md (640px - 1023px)
+    640: 1,     // Mobile (Below 640px)
 };
+
 export type nameProp = 'animeData' | 'mangaData'
 type randomIdntProp = 'anime' | 'animeTop' | 'manga' | 'mangaTop' | 'gen-anime' | 'gen-manga'
-interface inftProp{
+
+interface inftProp {
     name?: nameProp,
     top?: boolean,
     randomIdnt: randomIdntProp,
@@ -27,7 +30,7 @@ interface inftProp{
     genID?: number,
 }
 
-const InfinityScroll = ({ name = 'animeData', top = false, randomIdnt, gener= false, genID=1}: inftProp) => {
+const InfinityScroll = ({ name = 'animeData', top = false, randomIdnt, gener = false, genID = 1 }: inftProp) => {
 
     const {
         data,
@@ -37,13 +40,15 @@ const InfinityScroll = ({ name = 'animeData', top = false, randomIdnt, gener= fa
         hasNextPage,
         isFetching,
     } = useInfiniteQuery({
-        queryKey: ['InfinityScroll',name, top, randomIdnt, gener, genID],
+        queryKey: ['InfinityScroll', name, top, randomIdnt, gener, genID],
         queryFn: ({ pageParam }) => fetchInf(pageParam, name, top, gener, genID),
         initialPageParam: 1,
         staleTime: 1000 * 60 * 5,
         getNextPageParam: (lastPage) => lastPage.pagination.has_next_page ? lastPage.pagination.current_page + 1 : undefined,
     })
+    
     const { ref, inView } = useInView();
+    
     useEffect(() => {
         if (!isFetchingNextPage && hasNextPage && inView) {
             setTimeout(() => {
@@ -52,12 +57,12 @@ const InfinityScroll = ({ name = 'animeData', top = false, randomIdnt, gener= fa
         }
     }, [fetchNextPage, hasNextPage, inView, isFetchingNextPage])
 
-
-
     if (isFetching && !data) {
-        return <div>
-            <Spinner />
-        </div>
+        return (
+            <div>
+                <Spinner />
+            </div>
+        )
     }
 
     if (error) {
@@ -65,6 +70,7 @@ const InfinityScroll = ({ name = 'animeData', top = false, randomIdnt, gener= fa
     }
 
     const fetchData = data?.pages.flatMap(item => item.data)
+    
     return (
         <div>
             <Masonry
@@ -84,7 +90,7 @@ const InfinityScroll = ({ name = 'animeData', top = false, randomIdnt, gener= fa
             <div ref={ref} className='mt-3'>
                 <Spinner />
             </div>
-            <div className='min-h-[50px]' ></div>
+            <div className='min-h-[50px]'></div>
         </div>
     );
 };

@@ -1,11 +1,13 @@
-
 import Image from "next/image";
 import ReadMoreText from "./ReadMoreText";
-
-
 import { batchFetchAnimeData } from "./Fetch";
-
 import Pagination from "./Pagination";
+import { 
+    Star, Trophy, TrendingUp, Heart, Calendar, 
+    Tv, Clock, Info, PlayCircle, Film, Building2, Tags 
+} from "lucide-react";
+
+// ... [Keep all your existing TypeScript Interfaces here exactly as they are] ...
 
 export interface AnimeResponse {
     data: AnimeData;
@@ -120,226 +122,235 @@ export interface MalEntity {
 }
 
 const CardDetails = async ({ anime }: { anime: AnimeData }) => {
-
-
-
     const { characters, staff, recommendations } = await batchFetchAnimeData(anime.mal_id);
-    const Allgenres = [...anime?.genres, ...anime?.themes]
+    const Allgenres = [...anime?.genres, ...anime?.themes];
+
     return (
-        <div className="max-w-[1600px] mx-auto py-10 px-4">
-            {/* Header section */}
-            <div className="flex flex-col md:flex-row gap-10">
-                {/* Left: Cover image */}
-                <div className="shrink-0">
+        <div className="max-w-[1400px] mx-auto py-3 lg:py-5 px-4 sm:px-6">
+            
+            {/* --- Hero Section --- */}
+            <div className="flex flex-col lg:flex-row gap-8 lg:gap-12">
+                
+                {/* Left: Cover Image */}
+                <div className="shrink-0 mx-auto lg:mx-0 w-64 sm:w-72 lg:w-[320px]">
                     {anime.images.jpg.large_image_url && (
-                        <Image
-                            src={anime.images.jpg.large_image_url}
-                            width={320} loading="eager"
-                            height={480}
-                            alt={anime.title}
-                            className="rounded-xl shadow-lg object-cover"
-                        />
+                        <div className="relative aspect-[2/3] w-full rounded-2xl overflow-hidden shadow-2xl border border-border">
+                            <Image
+                                src={anime.images.jpg.large_image_url}
+                                fill
+                                sizes="(max-width: 768px) 100vw, 320px"
+                                loading="eager"
+                                alt={anime.title}
+                                className="object-cover"
+                            />
+                        </div>
                     )}
                 </div>
 
-                {/* Right: Titles and score */}
-                <div className="flex flex-col gap-4 w-full">
-                    <h1 className="text-4xl font-bold">{anime.title}</h1>
-
-                    <div className="space-y-2 text-lg">
-                        {anime.title_english && (
-                            <p>
-                                ➤ <span className="font-semibold">English:</span>{" "}
-                                {anime.title_english}
-                            </p>
-                        )}
-
-                        {anime.title_japanese && (
-                            <p>
-                                ➤ <span className="font-semibold">Japanese:</span>{" "}
-                                {anime.title_japanese}
-                            </p>
-                        )}
-
-                        {anime.title_synonyms.length > 0 && (
-                            <p>
-                                ➤ <span className="font-semibold">Synonyms:</span>{" "}
-                                {anime.title_synonyms.join(", ")}
-                            </p>
-                        )}
-                    </div>
-
-                    <div className="flex flex-wrap gap-5 text-lg">
-                        <div>
-                            ⭐ <span className="font-semibold">Score:</span> {anime.score ? anime.score : '?'}
-                        </div>
-                        <div>
-                            🧮 <span className="font-semibold">Scored by:</span>{" "}
-                            {anime.scored_by ? anime.scored_by : '?'}
-                        </div>
-                        <div>
-                            🥇 <span className="font-semibold">Rank:</span> #{anime.rank ? anime.rank : '?'}
-                        </div>
-                        <div>
-                            📈 <span className="font-semibold">Popularity:</span>{" "}
-                            #{anime.popularity}
-                        </div>
-                        <div>
-                            ❤️ <span className="font-semibold">Favorites:</span>{" "}
-                            {anime.favorites}
+                {/* Right: Titles and Main Stats */}
+                <div className="flex flex-col gap-6 w-full flex-1">
+                    
+                    {/* Titles */}
+                    <div>
+                        <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-foreground tracking-tight mb-2">
+                            {anime.title}
+                        </h1>
+                        <div className="flex flex-col gap-1 text-sm sm:text-base text-muted-foreground font-medium">
+                            {anime.title_english && <p>English: {anime.title_english}</p>}
+                            {anime.title_japanese && <p>Japanese: {anime.title_japanese}</p>}
+                            {anime.title_synonyms.length > 0 && (
+                                <p className="truncate" title={anime.title_synonyms.join(", ")}>
+                                    Synonyms: {anime.title_synonyms.join(", ")}
+                                </p>
+                            )}
                         </div>
                     </div>
+
+                    {/* Stats Grid */}
+                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-2">
+                        <div className="bg-secondary/60 p-4 rounded-xl flex flex-col items-center text-center justify-center border border-border/50">
+                            <Star className="w-6 h-6 text-yellow-500 mb-2" />
+                            <span className="text-sm text-muted-foreground font-semibold uppercase tracking-wider">Score</span>
+                            <span className="text-xl font-bold text-foreground">{anime.score ? anime.score : 'N/A'}</span>
+                            <span className="text-[11px] text-muted-foreground mt-0.5">{anime.scored_by ? anime.scored_by.toLocaleString() : '0'} users</span>
+                        </div>
+                        <div className="bg-secondary/60 p-4 rounded-xl flex flex-col items-center text-center justify-center border border-border/50">
+                            <Trophy className="w-6 h-6 text-amber-600 mb-2" />
+                            <span className="text-sm text-muted-foreground font-semibold uppercase tracking-wider">Rank</span>
+                            <span className="text-xl font-bold text-foreground">#{anime.rank ? anime.rank : '?'}</span>
+                        </div>
+                        <div className="bg-secondary/60 p-4 rounded-xl flex flex-col items-center text-center justify-center border border-border/50">
+                            <TrendingUp className="w-6 h-6 text-emerald-500 mb-2" />
+                            <span className="text-sm text-muted-foreground font-semibold uppercase tracking-wider">Popularity</span>
+                            <span className="text-xl font-bold text-foreground">#{anime.popularity ? anime.popularity : '?'}</span>
+                        </div>
+                        <div className="bg-secondary/60 p-4 rounded-xl flex flex-col items-center text-center justify-center border border-border/50">
+                            <Heart className="w-6 h-6 text-[crimson] mb-2" />
+                            <span className="text-sm text-muted-foreground font-semibold uppercase tracking-wider">Favorites</span>
+                            <span className="text-xl font-bold text-foreground">{anime.favorites ? anime.favorites.toLocaleString() : '0'}</span>
+                        </div>
+                    </div>
+
                 </div>
             </div>
 
-            {/* Divider */}
-            <div className="w-full h-px bg-gray-300 my-10" />
+            <div className="w-full h-px bg-border my-10" />
 
-            {/* Grid of metadata */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-10 text-lg">
-                <div className="space-y-3">
-                    <p>
-                        🎞️ <span className="font-semibold">Type:</span> {anime.type ? anime.type : '?'}
-                    </p>
-                    <p>
-                        📚 <span className="font-semibold">Source:</span> {anime.source ? anime.source : '?'}
-                    </p>
-                    <p>
-                        🔢 <span className="font-semibold">Episodes:</span>{" "}
-                        {anime.episodes ? anime.episodes : '?'}
-                    </p>
-                    <p>
-                        📡 <span className="font-semibold">Status:</span> {anime.status ? anime.status : '?'}
-                    </p>
-                    <p>
-                        ⏱️ <span className="font-semibold">Duration:</span>{" "}
-                        {anime.duration ? anime.duration : '?'}
-                    </p>
-                    <p>
-                        🧩 <span className="font-semibold">Rating:</span> {anime.rating ? anime.rating : '?'}
-                    </p>
+            {/* --- Info & Tags Section --- */}
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-10 lg:gap-16">
+                
+                {/* Left Column: Info Grid */}
+                <div className="lg:col-span-1 space-y-6 bg-secondary/30 p-6 rounded-2xl border border-border/50 h-fit">
+                    <h2 className="text-xl font-bold flex items-center gap-2 mb-4">
+                        <Info className="w-5 h-5 text-[crimson]" /> Information
+                    </h2>
+                    
+                    <ul className="space-y-4 text-sm sm:text-base">
+                        <li className="flex justify-between items-center border-b border-border/50 pb-2">
+                            <span className="text-muted-foreground font-medium flex items-center gap-2"><Tv className="w-4 h-4"/> Type</span>
+                            <span className="font-semibold">{anime.type ? anime.type : '?'}</span>
+                        </li>
+                        <li className="flex justify-between items-center border-b border-border/50 pb-2">
+                            <span className="text-muted-foreground font-medium flex items-center gap-2"><Film className="w-4 h-4"/> Episodes</span>
+                            <span className="font-semibold">{anime.episodes ? anime.episodes : '?'}</span>
+                        </li>
+                        <li className="flex justify-between items-center border-b border-border/50 pb-2">
+                            <span className="text-muted-foreground font-medium flex items-center gap-2"><PlayCircle className="w-4 h-4"/> Status</span>
+                            <span className="font-semibold">{anime.status ? anime.status : '?'}</span>
+                        </li>
+                        <li className="flex justify-between items-center border-b border-border/50 pb-2">
+                            <span className="text-muted-foreground font-medium flex items-center gap-2"><Clock className="w-4 h-4"/> Duration</span>
+                            <span className="font-semibold">{anime.duration ? anime.duration : '?'}</span>
+                        </li>
+                        <li className="flex justify-between items-center border-b border-border/50 pb-2">
+                            <span className="text-muted-foreground font-medium flex items-center gap-2"><Calendar className="w-4 h-4"/> Aired</span>
+                            <span className="font-semibold text-right max-w-[150px]">{anime.aired.string ? anime.aired.string : '?'}</span>
+                        </li>
+                        <li className="flex justify-between items-center border-b border-border/50 pb-2">
+                            <span className="text-muted-foreground font-medium flex items-center gap-2"><Calendar className="w-4 h-4"/> Season</span>
+                            <span className="font-semibold capitalize">{anime.season ? `${anime.season} ${anime.year || ''}` : '?'}</span>
+                        </li>
+                    </ul>
                 </div>
 
-                <div className="space-y-3">
-                    <p>
-                        ⏳ <span className="font-semibold">Aired:</span>{" "}
-                        {anime.aired.string ? anime.aired.string : '?'}
-                    </p>
-                    <p>
-                        🍁 <span className="font-semibold">Season:</span> {anime.season ? anime.season : '?'}
-                    </p>
-                    <p>
-                        📆 <span className="font-semibold">Year:</span> {anime.year ? anime.year : '?'}
-                    </p>
-                    <p>
-                        🕒 <span className="font-semibold">BroadCast:</span>{" "}
-                        {anime.broadcast?.string ? anime.broadcast.string : '?'}
-                    </p>
+                {/* Right Column: Synopsis, Background, Tags */}
+                <div className="lg:col-span-2 space-y-10">
+                    
+                    {/* Badges / Tags */}
+                    <div className="space-y-6">
+                        {Allgenres.length > 0 && (
+                            <div>
+                                <h3 className="text-sm font-bold uppercase tracking-wider text-muted-foreground mb-3 flex items-center gap-2">
+                                    <Tags className="w-4 h-4"/> Genres & Themes
+                                </h3>
+                                <div className="flex flex-wrap gap-2">
+                                    {Allgenres.map((g) => (
+                                        <span key={g.mal_id} className="bg-[crimson]/10 text-[crimson] font-semibold px-3 py-1 rounded-full text-sm">
+                                            {g.name}
+                                        </span>
+                                    ))}
+                                </div>
+                            </div>
+                        )}
+                        
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                            {anime.studios.length > 0 && (
+                                <div>
+                                    <h3 className="text-sm font-bold uppercase tracking-wider text-muted-foreground mb-3 flex items-center gap-2">
+                                        <Building2 className="w-4 h-4"/> Studios
+                                    </h3>
+                                    <div className="flex flex-wrap gap-2">
+                                        {anime.studios.map((s) => (
+                                            <span key={s.mal_id} className="bg-secondary text-secondary-foreground font-medium px-3 py-1 rounded-full text-sm border border-border">
+                                                {s.name}
+                                            </span>
+                                        ))}
+                                    </div>
+                                </div>
+                            )}
+                            {anime.producers.length > 0 && (
+                                <div>
+                                    <h3 className="text-sm font-bold uppercase tracking-wider text-muted-foreground mb-3 flex items-center gap-2">
+                                        <Building2 className="w-4 h-4"/> Producers
+                                    </h3>
+                                    <div className="flex flex-wrap gap-2">
+                                        {anime.producers.map((p) => (
+                                            <span key={p.mal_id} className="bg-secondary text-secondary-foreground font-medium px-3 py-1 rounded-full text-sm border border-border">
+                                                {p.name}
+                                            </span>
+                                        ))}
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+                    </div>
+
+                    {/* Synopsis */}
+                    {anime.synopsis && (
+                        <div>
+                            <h2 className="text-2xl font-bold mb-4">Synopsis</h2>
+                            <div className="text-base sm:text-lg leading-relaxed text-muted-foreground">
+                                <ReadMoreText text={anime.synopsis} maxChars={400} />
+                            </div>
+                        </div>
+                    )}
+
+                    {/* Background */}
+                    {anime.background && (
+                        <div>
+                            <h2 className="text-2xl font-bold mb-4">Background</h2>
+                            <div className="text-base sm:text-lg leading-relaxed text-muted-foreground">
+                                <ReadMoreText text={anime.background} maxChars={300} />
+                            </div>
+                        </div>
+                    )}
                 </div>
             </div>
 
-            {/* Divider */}
-            <div className="w-full h-px bg-gray-300 my-10" />
+            <div className="w-full h-px bg-border my-12" />
 
-            {/* Genres, studios, producers */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-10 text-lg">
-                {
-                    Allgenres.length > 0 ?
-                        <div>
-                            <h2 className="font-bold mb-2">🧩 Genres</h2>
-                            <ul className="list-disc ml-5">
-                                {Allgenres.map((g) => (
-                                    <li key={g.mal_id}>{g.name}</li>
-                                ))}
-                            </ul>
-                        </div> : ''
-                }
+            {/* --- Media & Additional Data --- */}
+            <div className="space-y-16">
+                
+                {/* Trailer */}
+                {anime.trailer.embed_url && (
+                    <section>
+                        <h2 className="text-2xl sm:text-3xl font-bold mb-6 flex items-center gap-2">
+                            <PlayCircle className="w-7 h-7 text-[crimson]"/> Official Trailer
+                        </h2>
+                        <div className="w-full max-w-4xl rounded-2xl overflow-hidden border border-border shadow-lg">
+                            <iframe
+                                src={anime.trailer.embed_url}
+                                className="w-full aspect-video"
+                                allowFullScreen
+                            />
+                        </div>
+                    </section>
+                )}
 
-                {
-                    anime.producers.length > 0 ?
-                        <div>
-                            <h2 className="font-bold mb-2">🏭 Producers</h2>
-                            <ul className="list-disc ml-5">
-                                {anime.producers.map((p) => (
-                                    <li key={p.mal_id}>{p.name}</li>
-                                ))}
-                            </ul>
-                        </div> : ''
-                }
+                {/* Paginated Sections */}
+                {characters.length > 0 && (
+                    <section>
+                        <h2 className="text-2xl sm:text-3xl font-bold mb-6">Characters</h2>
+                        <Pagination data={characters} type="characters" limit={8} />
+                    </section>
+                )}
 
-                {
-                    anime.studios.length > 0 ?
-                        <div>
-                            <h2 className="font-bold mb-2">🎥 Studios</h2>
-                            <ul className="list-disc ml-5">
-                                {anime.studios.map((s) => (
-                                    <li key={s.mal_id}>{s.name}</li>
-                                ))}
-                            </ul>
-                        </div> : ''
-                }
+                {staff.length > 0 && (
+                    <section>
+                        <h2 className="text-2xl sm:text-3xl font-bold mb-6">Staff</h2>
+                        <Pagination data={staff} type="staff" limit={8} />
+                    </section>
+                )}
+
+                {recommendations.length > 0 && (
+                    <section>
+                        <h2 className="text-2xl sm:text-3xl font-bold mb-6">More Like This</h2>
+                        <Pagination data={recommendations} type="recommendations" limit={8} />
+                    </section>
+                )}
+                
             </div>
-
-            {/* Divider */}
-            <div className="w-full h-px bg-gray-300 my-10" />
-
-            {/* Synopsis */}
-            {
-                anime.synopsis ? <div>
-                    <h2 className="text-2xl font-bold mb-3">📖 Synopsis</h2>
-                    <div className="text-lg leading-relaxed"><ReadMoreText text={anime.synopsis} maxChars={300} /></div>
-                </div> : ''
-            }
-
-            {/* Background */}
-            {anime.background && (
-                <div className="mt-10">
-                    <h2 className="text-2xl font-bold mb-3">🧾 Background</h2>
-                    <div className="text-lg leading-relaxed"><ReadMoreText text={anime.background} maxChars={300} /></div>
-                </div>
-            )}
-
-            {/* Trailer */}
-            {anime.trailer.embed_url && (
-                <div className="mt-10">
-                    <h2 className="text-2xl font-bold mb-3">🎬 Trailer</h2>
-                    <iframe
-                        src={anime.trailer.embed_url}
-                        className="w-full aspect-video rounded-xl border"
-                        allowFullScreen
-                    />
-                </div>
-            )}
-
-            {
-                characters.length > 0 &&
-                <div>
-
-                    <p className="sm:text-4xl text-2xl font-bold mt-10">🌌 Characters :</p>
-
-                    <Pagination data={characters} type="characters" limit={8} />
-
-                </div>
-            }
-            {
-                staff.length > 0 &&
-                <div>
-
-                    <p className="sm:text-4xl text-2xl font-bold mt-10">🧑‍💼 Staff :</p>
-
-                    <Pagination data={staff} type="staff" limit={8} />
-
-                </div>
-            }
-            {
-                recommendations.length > 0 && <div>
-
-                    <p className="sm:text-4xl text-2xl font-bold sm:mt-12 mt-4">🌟 More Like This Anime :</p>
-
-                    <Pagination data={recommendations} type="recommendations" limit={8} />
-                </div>
-            }
-
         </div>
     );
 };

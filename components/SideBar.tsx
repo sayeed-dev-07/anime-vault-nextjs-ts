@@ -13,60 +13,52 @@ const SideBar = () => {
     const isRouteActive = path !== "/" && pathname.startsWith(path);
 
     return (isHomeActive || isRouteActive)
-      ? "bg-foreground text-background font-semibold rounded-md px-3 py-2"
-      : "bg-transparent text-black dark:text-white hover:bg-neutral-200 dark:hover:bg-neutral-800 rounded-md px-3 py-2 transition-colors";
+      ? "bg-[crimson]/10 text-[crimson] font-bold"
+      : "text-muted-foreground hover:bg-black/5 dark:hover:bg-white/10 hover:text-foreground font-medium transition-colors duration-200";
   };
 
+  // shrink-0 prevents the buttons from compressing on mobile screens
+  const linkBaseClass = "flex items-center gap-2 xl:gap-3 px-3 xl:px-4 py-2 xl:py-2.5 rounded-lg text-sm xl:text-[15px] whitespace-nowrap shrink-0";
+
+  // Headers only show on desktop
+  const sectionHeaderClass = "hidden xl:block text-[11px] font-extrabold uppercase tracking-widest text-slate-500 dark:text-slate-400 mb-1 px-4 mt-6 first:mt-0";
+
   return (
-    <div className="w-full mx-1 flex lg:flex-col items-start font-medium text-lg sm:mt-4 mt-0">
-      <div className="flex flex-col gap-y-1.5 sm:gap-y-4 w-full">
+    <nav className="w-full flex xl:flex-col gap-2 xl:gap-1.5 overflow-x-auto xl:overflow-visible no-scrollbar px-2 xl:px-4 pb-3 xl:pb-8 items-center xl:items-stretch border-b xl:border-none border-border mb-4 xl:mb-0 flex-wrap">
 
+      {/* Main Section */}
+      <Link href="/" className={`${linkBaseClass} ${activeClass("/")}`}>
+        <Home size={18} /> Home
+      </Link>
+      <Link href="/favourite" className={`${linkBaseClass} ${activeClass("/favourite")}`}>
+        <Heart size={18} /> Favourite
+      </Link>
 
-        {/* Main */}
-        <div className="flex flex-wrap lg:flex-col gap-2">
-          <Link href="/" className={`${activeClass("/")} flex items-center gap-2`}>
-            <Home size={20} /> Home
-          </Link>
+      {/* Anime Section */}
+      <p className={sectionHeaderClass}>Anime</p>
+      <Link href="/animes" className={`${linkBaseClass} ${activeClass("/animes")}`}>
+        <Tv size={18} /> All Animes
+      </Link>
+      <Link href="/top-animes" className={`${linkBaseClass} ${activeClass("/top-animes")}`}>
+        <MedalIcon size={18} /> Top Animes
+      </Link>
+      <Link href="/genres-anime" className={`${linkBaseClass} ${activeClass("/genres-anime")}`}>
+        <BiCategory size={18} /> Genres
+      </Link>
 
-          <Link href="/favourite" className={`${activeClass("/favourite")} flex items-center gap-2`}>
-            <Heart size={20} /> Favourite
-          </Link>
-        </div>
+      {/* Manga Section */}
+      <p className={sectionHeaderClass}>Manga</p>
+      <Link href="/mangas" className={`${linkBaseClass} ${activeClass("/mangas")}`}>
+        <Tv size={18} /> All Mangas
+      </Link>
+      <Link href="/top-mangas" className={`${linkBaseClass} ${activeClass("/top-mangas")}`}>
+        <MedalIcon size={18} /> Top Mangas
+      </Link>
+      <Link href="/genres-manga" className={`${linkBaseClass} ${activeClass("/genres-manga")}`}>
+        <BiCategory size={18} /> Genres
+      </Link>
 
-        {/* Anime Section */}
-        <p className="text-[15px] text-red-500 font-semibold">Anime</p>
-        <div className="flex flex-wrap lg:flex-col gap-2">
-          <Link href="/animes" className={`${activeClass("/animes")} flex items-center gap-2`}>
-            <Tv size={20} /> All Animes
-          </Link>
-
-          <Link href="/top-animes" className={`${activeClass("/top-animes")} flex items-center gap-2`}>
-            <MedalIcon size={20} /> Top Animes
-          </Link>
-
-          <Link href="/genres-anime" className={`${activeClass("/genres-anime")} flex items-center gap-2`}>
-            <BiCategory size={20} /> Genres
-          </Link>
-        </div>
-
-        {/* Manga Section */}
-        <p className="text-[15px] text-red-500 font-semibold">Manga</p>
-        <div className="flex flex-wrap lg:flex-col gap-2 mb-6">
-          <Link href="/mangas" className={`${activeClass("/mangas")} flex items-center gap-2`}>
-            <Tv size={20} /> All Mangas
-          </Link>
-
-          <Link href="/top-mangas" className={`${activeClass("/top-mangas")} flex items-center gap-2`}>
-            <MedalIcon size={20} /> Top Mangas
-          </Link>
-
-          <Link href="/genres-manga" className={`${activeClass("/genres-manga")} flex items-center gap-2`}>
-            <BiCategory size={20} /> Genres
-          </Link>
-        </div>
-
-      </div>
-    </div>
+    </nav>
   );
 };
 

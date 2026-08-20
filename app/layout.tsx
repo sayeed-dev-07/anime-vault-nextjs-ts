@@ -10,12 +10,12 @@ import { BreadcrumbSync } from "@/components/BreadCramp";
 import SideBar from "@/components/SideBar";
 import BackButton from "@/components/BackButton";
 
-
 const firaSans = Fira_Sans_Condensed({
   variable: "--font-fira-sans-cond",
   subsets: ["latin"],
   weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"]
 });
+
 const OutfitFont = Outfit({
   variable: "--font-outfit",
   subsets: ["latin"],
@@ -24,10 +24,8 @@ const OutfitFont = Outfit({
 
 export const metadata: Metadata = {
   title: "AniSearch",
-  description: "Discover detailed information about your favorite anime and manga. Search by title, genre, release year, characters, or studios and explore ratings, summaries, reviews, trailers, episodes, and more. Your one-stop platform for discovering new anime, tracking what you watch, and learning about the latest releases",
+  description: "Discover detailed information about your favorite anime and manga.",
 };
-
-
 
 export default function RootLayout({
   children,
@@ -36,27 +34,33 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body
-        className={`${firaSans.variable} ${OutfitFont.variable} antialiased`}
-      >
+      <body className={`${firaSans.variable} ${OutfitFont.variable} antialiased`}>
         <Providers>
-          <ThemeProvider attribute="class"
+          <ThemeProvider 
+            attribute="class"
             defaultTheme="system"
             enableSystem
-            disableTransitionOnChange>
+            disableTransitionOnChange
+          >
             <Navbar />
 
-            <div className="pt-[85px] sm:pt-[90px] lg:grid grid-cols-1 lg:grid-cols-[1fr_4fr]">
-              <div className="lg:pt-12 pt-2 lg:sticky top-[90px] lg:h-[calc(100vh-90px)] overflow-hidden mx-1 lg:block lg:border-r">
+            {/* Adjusted grid to use a fixed sidebar width of 260px on large screens */}
+            <div className="pt-[85px] sm:pt-[90px] xl:grid grid-cols-1 xl:grid-cols-[260px_1fr]">
+              
+              {/* FIX: Changed overflow-hidden to overflow-y-auto */}
+              <aside className="xl:pt-8 pt-2 xl:sticky top-[90px] xl:h-[calc(100vh-90px)] overflow-y-auto xl:border-r border-border custom-scrollbar">
                 <SideBar />
-              </div>
-              <div className="px-2 md:px-[2%] min-h-screen font-outfit bg-background text-primary">
-                <div className="pt-4">
+              </aside>
+              
+              <main className="px-4 md:px-8 min-h-screen font-outfit bg-background text-foreground">
+                <div className="pt-4 max-w-[1600px] mx-auto">
                   <BreadcrumbSync />
                   {children}
                 </div>
-              </div>
+              </main>
+              
             </div>
+            
             <div className="fixed sm:bottom-10 bottom-4 right-2 sm:right-10 z-20">
               <BackButton/>
             </div>

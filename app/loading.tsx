@@ -3,8 +3,8 @@ import Spinner from "@/components/Spinner";
 
 const Loading = () => {
     return (
-        <div className="min-h-[20vh] w-full flex items-center justify-center">
-            <Spinner />
+        <div className="min-h-[50vh] flex items-center justify-center">
+            <Spinner size="xl" />
         </div>
     );
 };

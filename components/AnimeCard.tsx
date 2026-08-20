@@ -6,6 +6,7 @@ import Image from 'next/image';
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { Star, Heart, Tv } from 'lucide-react';
 
 import { Anime } from './FetchAnime';
 import FormatSegment from './Format';
@@ -20,127 +21,132 @@ const AnimeCard = ({ data }: { data: Anime }) => {
 
   useGSAP(
     () => {
-      const image = cardRef.current?.querySelector('[data-card-image]');
-      const revealLayer = cardRef.current?.querySelector('[data-card-reveal]');
-      const metaItems = gsap.utils.toArray<HTMLElement>('[data-card-meta]', cardRef.current);
-      const tags = gsap.utils.toArray<HTMLElement>('[data-card-tag]', cardRef.current);
+      const card = cardRef.current;
+      if (!card) return;
+
+      const imageWrapper = card.querySelector('[data-image-wrapper]');
+      const image = card.querySelector('[data-card-image]');
+      
+      // Grab all text, stats, and tags to stagger them together
+      const contentElements = gsap.utils.toArray<HTMLElement>('[data-reveal-element]', card);
 
       const tl = gsap.timeline({
         scrollTrigger: {
-          trigger: cardRef.current,
-          start: 'top 88%',
+          trigger: card,
+          start: 'top 92%', // Triggers slightly before scrolling fully into view
           once: true,
         },
       });
 
+      // 1. Initial Card Fade & Slight Slide
       tl.fromTo(
-        cardRef.current,
-        { autoAlpha: 0, y: 26 },
-        { autoAlpha: 1, y: 0, duration: 0.32, ease: 'power2.out' },
-        0
+        card,
+        { autoAlpha: 0, y: 30 },
+        { autoAlpha: 1, y: 0, duration: 0.6, ease: 'power3.out' }
       );
 
-      if (image) {
+      // 2. Modern Clip-Path Image Reveal
+      if (imageWrapper && image) {
         tl.fromTo(
+          imageWrapper,
+          { clipPath: 'inset(100% 0% 0% 0% round 12px)' },
+          { clipPath: 'inset(0% 0% 0% 0% round 12px)', duration: 0.8, ease: 'power4.inOut' },
+          "-=0.4" // Overlap with the card fade
+        ).fromTo(
           image,
-          { autoAlpha: 0, scale: 1.14 },
-          { autoAlpha: 1, scale: 1, duration: 0.72, ease: 'power3.out' },
-          0.05
+          { scale: 1.25 },
+          { scale: 1, duration: 0.8, ease: 'power3.out' },
+          "-=0.8" // Sync exactly with the clip-path
         );
       }
 
-      if (revealLayer) {
-        tl.to(
-          revealLayer,
-          { xPercent: 102, duration: 0.74, ease: 'power3.inOut' },
-          0.08
-        );
-      }
-
-      if (metaItems.length) {
+      // 3. Springy Stagger for all content
+      if (contentElements.length) {
         tl.fromTo(
-          metaItems,
-          { autoAlpha: 0, y: 12 },
-          { autoAlpha: 1, y: 0, duration: 0.3, stagger: 0.1, ease: 'power2.out' },
-          0.28
-        );
-      }
-
-      if (tags.length) {
-        tl.fromTo(
-          tags,
-          { autoAlpha: 0, y: 12 },
-          { autoAlpha: 1, y: 0, duration: 0.4, stagger: 0.1, ease: 'power2.out' },
-          0.35
+          contentElements,
+          { autoAlpha: 0, y: 15 },
+          { autoAlpha: 1, y: 0, duration: 0.5, stagger: 0.06, ease: 'back.out(1.4)' },
+          "-=0.5" // Start while image is still revealing
         );
       }
     },
     { scope: cardRef }
   );
 
-  // Fallbacks added here just in case the API returns null for genres/themes
   const genData = [...(data.genres || []), ...(data.themes || [])];
 
   return (
     <div
       ref={cardRef}
-      className='bg-chatgpt-card overflow-hidden border border-[#b3b3b3] rounded-xl mb-3 p-2 shadow-md relative'
+      className='bg-card text-card-foreground overflow-hidden border border-border rounded-2xl mb-4 p-3 shadow-sm hover:shadow-md transition-shadow duration-300 relative flex flex-col group invisible'
     >
-      <div className='absolute top-3 right-4 z-5'>
+      <div className='absolute top-5 right-5 z-20'>
         <FavButton type='Anime' data={data} />
       </div>
 
-      <div className='relative w-full aspect-square overflow-hidden sm:aspect-4/5'>
-        <div data-card-reveal className='absolute inset-0 z-10 dark:bg-[crimson] bg-[skyblue]' />
+      {/* Image Wrapper target for the Clip-Path animation */}
+      <div data-image-wrapper className='relative w-full aspect-[3/4] max-h-[280px] sm:max-h-[320px] md:max-h-[380px] overflow-hidden rounded-xl bg-muted'>
+        
         {data.images?.jpg?.large_image_url ? (
           <Image
             src={data.images.jpg.large_image_url}
-            sizes='100vw'
+            sizes='(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw'
             data-card-image
             alt={data.title || 'Anime Image'}
             fill
             loading='eager'
-            className='object-cover scale-110 opacity-0'
+            className='object-cover group-hover:scale-[1.10] transition-transform duration-700 ease-out'
           />
         ) : (
-          <div className="w-full h-full flex items-center justify-center bg-gray-200 text-gray-500">
-            No img found
+          <div className="w-full h-full flex items-center justify-center text-muted-foreground text-sm font-medium">
+            No image available
           </div>
         )}
+        
+        <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-transparent z-10 pointer-events-none" />
       </div>
 
-      <div className='flex items-center justify-between px-2 gap-y-2 mt-3'>
-        <div className='flex gap-x-2 gap-y-3 flex-col'>
-          <p data-card-meta className='text-xl'>
-            {data.title}
-          </p>
-          <p data-card-meta className='px-2 w-fit rounded-md py-0.5 bg-[#22333b] text-white'>
-            ❤️ {data.favorites ?? 0}
-          </p>
+      <div className='flex flex-col px-1 mt-4'>
+        
+        <h3 data-reveal-element className='text-lg font-bold leading-tight line-clamp-2 mb-3'>
+          {data.title}
+        </h3>
+
+        <div className='flex flex-wrap items-center gap-2 mb-4'>
+          <span data-reveal-element className='flex items-center gap-1.5 px-2 py-1 rounded-md bg-secondary border border-border/50 text-xs font-semibold text-muted-foreground'>
+            <Star className="w-3.5 h-3.5 text-yellow-500" />
+            {data.score ?? 'N/A'}
+          </span>
+          
+          <span data-reveal-element className='flex items-center gap-1.5 px-2 py-1 rounded-md bg-secondary border border-border/50 text-xs font-semibold text-muted-foreground'>
+            <Heart className="w-3.5 h-3.5 text-[crimson]" />
+            {data.favorites ?? 0}
+          </span>
+          
+          <span data-reveal-element className='flex items-center gap-1.5 px-2 py-1 rounded-md bg-secondary border border-border/50 text-xs font-semibold text-muted-foreground'>
+            <Tv className="w-3.5 h-3.5 text-blue-500" />
+            {data.type ?? 'Unknown'}
+          </span>
         </div>
 
-        <div className='flex items-center justify-center flex-col gap-y-3'>
-          <p data-card-meta className='px-2 w-fit rounded-md py-0.5 bg-[#306983] text-white'>
-            ⭐ {data.score ?? 'N/A'}
-          </p>
-          <p data-card-meta className='px-2 w-fit rounded-md py-0.5 bg-[#19790c] text-white text-center text-nowrap'>
-            📺 {data.type ?? 'Unknown'}
-          </p>
+        <div className='flex items-center flex-wrap gap-1.5 mb-5'>
+          {genData.slice(0, 4).map((item) => (
+            <span 
+              data-reveal-element 
+              className='text-[11px] font-medium px-2 py-0.5 bg-background border border-border rounded-full text-foreground/80 flex items-center gap-1' 
+              key={item.mal_id}
+            >
+              {genreEmoji[item.name] ?? '🎬'} {item.name}
+            </span>
+          ))}
         </div>
-      </div>
 
-      <div className='flex items-center flex-wrap justify-center my-4 gap-2'>
-        {genData.map((item) => (
-          <p data-card-tag className='text-nowrap p-2 border rounded-md' key={item.mal_id}>
-            {genreEmoji[item.name] ?? '🎬'} {item.name}
-          </p>
-        ))}
-      </div>
-
-      <div data-card-meta className='flex items-center mt-3 justify-center'>
-        <Link href={`/animes/${FormatSegment(data.title)}-${data.mal_id}`}>
-          <ButtonSpin />
-        </Link>
+        <div data-reveal-element className='mt-2 flex items-center justify-center'>
+          <Link href={`/animes/${FormatSegment(data.title)}-${data.mal_id}`} className="w-full">
+            <ButtonSpin />
+          </Link>
+        </div>
+        
       </div>
     </div>
   );
