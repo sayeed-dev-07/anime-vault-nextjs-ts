@@ -86,7 +86,7 @@ const MangaCard = ({ data }: { data: Manga }) => {
       </div>
 
       {/* Image Wrapper target for the Clip-Path animation */}
-      <div data-image-wrapper className='relative w-full aspect-[4/5] overflow-hidden rounded-xl bg-muted'>
+      <div data-image-wrapper className='relative w-full aspect-[3/4] max-h-[280px] sm:max-h-[320px] md:max-h-[380px] overflow-hidden rounded-xl bg-muted'>
         
         {data.images?.jpg?.large_image_url ? (
           <Image

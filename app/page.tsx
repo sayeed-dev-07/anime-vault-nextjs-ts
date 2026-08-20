@@ -7,8 +7,8 @@ export default function HomePage() {
     <div className="min-h-screen pb-16">
       
       {/* Hero Section */}
-      <section className="relative px-4 sm:px-6 pt-8 pb-8 md:pt-12 md:pb-12 max-w-[1600px] mx-auto">
-        <div className="relative flex flex-col items-center text-center px-4 py-16 md:py-24 rounded-3xl bg-secondary/30 border border-border shadow-sm overflow-hidden">
+      <section className="relative  sm:px-6  pb-8  md:pb-12 max-w-[1600px] mx-auto">
+        <div className="relative flex flex-col items-center text-center px-2 py-6 md:py-12 rounded-3xl bg-secondary/30 border border-border shadow-sm overflow-hidden">
           
           {/* Subtle Background Glow inside the container */}
           <div className="absolute inset-0 -z-10 h-full w-full bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(220,20,60,0.15),rgba(255,255,255,0))] dark:bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(220,20,60,0.15),rgba(0,0,0,0))]" />
@@ -23,11 +23,11 @@ export default function HomePage() {
             Welcome to <span className="text-[crimson]">Ani</span>Search
           </h1>
           
-          <p className="max-w-[650px] text-lg sm:text-xl text-muted-foreground mb-10 leading-relaxed font-medium px-4">
+          <p className="max-w-[650px] text-lg sm:text-xl text-muted-foreground mb-10 leading-relaxed font-medium px-2">
             Your ultimate destination for discovering detailed information about your favorite anime and manga. Track, explore, and curate your personal database.
           </p>
 
-          <div className="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto px-4">
+          <div className="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto px-2">
             {/* Primary CTA (Raw Tailwind) */}
             <Link 
               href="/animes" 
@@ -50,12 +50,12 @@ export default function HomePage() {
       </section>
 
       {/* Content Sections - Tightened space-y to pull content up */}
-      <main className="max-w-[1600px] mx-auto px-4 sm:px-6 md:px-8 space-y-12 md:space-y-16 mt-4">
+      <main className="max-w-[1600px] mx-auto  sm:px-6 md:px-8 space-y-12 md:space-y-16 mt-4">
         
         {/* Anime Section */}
         <section className="space-y-6">
           {/* Section Header */}
-          <div className="flex flex-col sm:flex-row justify-between items-end gap-4 border-b border-border pb-4">
+          <div className="flex flex-col sm:flex-row justify-between sm:items-end gap-4 border-b border-border pb-4">
             <div>
               <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight">Trending Animes</h2>
               <p className="text-muted-foreground mt-1.5 text-sm sm:text-base">Discover what everyone is watching right now.</p>
@@ -85,7 +85,7 @@ export default function HomePage() {
         {/* Manga Section */}
         <section className="space-y-6">
           {/* Section Header */}
-          <div className="flex flex-col sm:flex-row justify-between items-end gap-4 border-b border-border pb-4">
+          <div className="flex flex-col sm:flex-row justify-between sm:items-end gap-4 border-b border-border pb-4">
             <div>
               <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight">Popular Mangas</h2>
               <p className="text-muted-foreground mt-1.5 text-sm sm:text-base">Dive into the latest chapters and classic volumes.</p>

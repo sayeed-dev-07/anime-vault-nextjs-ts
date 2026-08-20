@@ -11,7 +11,7 @@ const Error = ({
     message = "Something went wrong while fetching the data. Please check your connection and try again later." 
 }: ErrorProps) => {
     return (
-        <div className="w-full flex flex-col items-center justify-center py-12 sm:py-16 px-4 text-center bg-destructive/5 border-2 border-dashed border-destructive/20 rounded-2xl my-6">
+        <div className="w-full flex flex-col items-center justify-center py-12 sm:py-16  text-center bg-destructive/5 border-2 border-dashed border-destructive/20 rounded-2xl my-6">
             
             {/* Icon Container */}
             <div className="p-4 bg-destructive/10 rounded-full mb-4">

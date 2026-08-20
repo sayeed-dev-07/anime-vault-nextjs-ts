@@ -13,7 +13,7 @@ const Page = () => {
   const mangaFavs = favs.filter((f) => f.kind === 'manga')
 
   return (
-    <div className="max-w-[1600px] mb-10 mx-auto  px-4 sm:px-6 min-h-screen">
+    <div className="max-w-[1600px] mb-10 mx-auto   sm:px-6 min-h-screen">
 
       {/* Page Header */}
       <header className="mb-12">

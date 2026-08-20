@@ -5,7 +5,7 @@ const Page = async ({ searchParams }: { searchParams: Promise<{ name: string }> 
     const { name } = await searchParams;
     
     return (
-        <div className="max-w-[1600px] mx-auto py-8 md:py-12 px-4 sm:px-6 min-h-screen">
+        <div className="max-w-[1600px] mx-auto  sm:px-6 min-h-screen">
             
             {/* Page Header */}
             <header className="mb-10 md:mb-16 border-b border-border pb-6 md:pb-8">

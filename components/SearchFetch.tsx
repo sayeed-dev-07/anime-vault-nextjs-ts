@@ -85,7 +85,7 @@ const SearchFetch = ({ name = 'search-anime', searchName }: PageProp) => {
             {/* Content Area */}
             {fetchData?.length === 0 ? (
                 // Premium Empty State
-                <div className="flex flex-col items-center justify-center py-16 px-4 border-2 border-dashed border-border rounded-2xl bg-secondary/10 text-center">
+                <div className="flex flex-col items-center justify-center py-16 border-2 border-dashed border-border rounded-2xl bg-secondary/10 text-center">
                     <SearchX className="w-12 h-12 sm:w-16 sm:h-16 text-muted-foreground mb-4 opacity-40" />
                     <h3 className="text-xl sm:text-2xl font-bold mb-2">No {sectionTitle} Found</h3>
                     <p className="text-muted-foreground max-w-md">

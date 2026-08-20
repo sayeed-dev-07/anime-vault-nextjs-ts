@@ -126,7 +126,7 @@ const CardDetails = async ({ anime }: { anime: AnimeData }) => {
     const Allgenres = [...anime?.genres, ...anime?.themes];
 
     return (
-        <div className="max-w-[1400px] mx-auto py-3 lg:py-5 px-4 sm:px-6">
+        <div className="max-w-[1400px] mx-auto py-3 lg:py-5  sm:px-6">
             
             {/* --- Hero Section --- */}
             <div className="flex flex-col lg:flex-row gap-8 lg:gap-12">

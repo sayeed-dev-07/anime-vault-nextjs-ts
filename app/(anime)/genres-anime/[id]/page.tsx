@@ -9,7 +9,7 @@ const page = async ({params}: {params: Promise<{ id: string }>
     const allParts = id.split('-')
     const genId = allParts.pop()
     return (
-        <div className=' max-w-[1600px] mx-auto  px-4'>
+        <div className=' max-w-[1600px] mx-auto'>
             <p className='sm:text-6xl text-3xl mb-3'>{FormatSegment(allParts.join(' '))}</p>
             <div>
                 <InfinityScroll randomIdnt='gen-anime' gener={true} name='animeData' genID={Number(genId)}/>

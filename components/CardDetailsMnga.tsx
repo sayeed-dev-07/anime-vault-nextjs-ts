@@ -97,7 +97,7 @@ const CardDetailsMnga = async ({ manga }: { manga: MangaData }) => {
     const recommendationsData = await getRecAndCharData('manga', manga.mal_id, 'recommendations');
 
     return (
-        <div className="max-w-[1400px] py-3 lg:py-5 mx-auto  px-4 sm:px-6 overflow-x-hidden">
+        <div className="max-w-[1400px] py-3 lg:py-5 mx-auto   sm:px-6 overflow-x-hidden">
             
             {/* --- Hero Section --- */}
             <div className="flex flex-col lg:flex-row gap-6 lg:gap-12 items-center lg:items-start">
