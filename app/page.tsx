@@ -63,7 +63,7 @@ export default function HomePage() {
             {/* Desktop 'View All' Ghost Button */}
             <Link 
               href="/animes"
-              className="hidden sm:inline-flex items-center justify-center gap-1 h-10 px-4 py-2 rounded-md font-semibold text-sm hover:bg-secondary hover:text-[crimson] transition-colors"
+              className="hidden sm:inline-flex items-center justify-center gap-1 h-10 px-4 py-2 rounded-md font-semibold text-sm  hover:text-[crimson] transition-colors"
             >
               View all <ChevronRight className="w-4 h-4" />
             </Link>
@@ -93,7 +93,7 @@ export default function HomePage() {
             {/* Desktop 'View All' Ghost Button */}
             <Link 
               href="/mangas"
-              className="hidden sm:inline-flex items-center justify-center gap-1 h-10 px-4 py-2 rounded-md font-semibold text-sm hover:bg-secondary hover:text-[crimson] transition-colors"
+              className="hidden sm:inline-flex items-center justify-center gap-1 h-10 px-4 py-2 rounded-md font-semibold text-sm  hover:text-[crimson] transition-colors"
             >
               View all <ChevronRight className="w-4 h-4" />
             </Link>
