@@ -22,7 +22,7 @@ const FavButton = ({ data, type }: Props) => {
     // Prevent the click from bubbling up if the card itself is clickable
     e.preventDefault();
     e.stopPropagation();
-    
+
     toggleFav({ ...data, kind } as FavItem)
   }
 
@@ -34,11 +34,10 @@ const FavButton = ({ data, type }: Props) => {
     >
       <Heart
         size={22}
-        className={`transition-all duration-300 ease-out ${
-          exists
-            ? 'fill-[crimson] stroke-[crimson] scale-100'
-            : 'fill-transparent stroke-white/90 group-hover:stroke-[crimson] scale-95 group-hover:scale-100'
-        }`}
+        className={`transition-all duration-300 ease-out ${exists
+          ? 'fill-[crimson] stroke-[crimson] scale-100'
+          : 'fill-transparent stroke-white/90 group-hover:stroke-[crimson] scale-95 group-hover:scale-100'
+          }`}
       />
     </button>
   )

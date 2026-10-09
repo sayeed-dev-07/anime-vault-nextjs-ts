@@ -31,45 +31,41 @@ const Pagination = ({ data, limit = 12, name = 'animes', type }: { data: dataPro
 
       ScrollTrigger.batch(newCards, {
         onEnter: (batch) => {
-          gsap.fromTo(batch, 
-            { 
-              autoAlpha: 0, 
-              y: 30,
-              scale: 0.95
+          // STRICTLY opacity-only animation, no scaling or translation
+          gsap.fromTo(batch,
+            {
+              autoAlpha: 0
             },
-            { 
-              autoAlpha: 1, 
-              y: 0,
-              scale: 1, 
-              stagger: 0.08, 
-              duration: 0.6,
-              ease: "back.out(1.2)",
-              overwrite: true 
+            {
+              autoAlpha: 1,
+              stagger: 0.1,
+              duration: 0.8,
+              ease: "power2.out",
+              overwrite: true
             }
           );
-          
+
           batch.forEach((el) => el.classList.add('revealed'));
         },
-        once: true 
+        once: true
       });
-      
+
       ScrollTrigger.refresh();
     });
 
     addNewAnimations();
-  }, [visible, contextSafe]); 
+  }, [visible, contextSafe]);
 
   return (
     <>
-      {/* Fully responsive grid for smaller cards */}
-      <div ref={cardContainerRef} className="my-6 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4 sm:gap-6 items-start">
+      <div ref={cardContainerRef} className="my-6 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3 sm:gap-6 items-start">
         {
           type === "characters" &&
           visible.map((item) => {
             const character = item as CharacterRole;
             return (
               <CharacterInfo
-                key={character.character.mal_id} 
+                key={character.character.mal_id}
                 CharacterData={character}
               />
             );
@@ -80,7 +76,7 @@ const Pagination = ({ data, limit = 12, name = 'animes', type }: { data: dataPro
           visible.map((item) => {
             const recomData = item as Recommendation;
             return (
-              <RecommendationCard 
+              <RecommendationCard
                 name={name}
                 key={recomData.entry.mal_id}
                 data={recomData}
@@ -102,16 +98,23 @@ const Pagination = ({ data, limit = 12, name = 'animes', type }: { data: dataPro
         }
       </div>
 
-      {/* Styled Load More Button */}
+      {/* Styled Load More Button - Brutalist / Editorial Style */}
       {
-        visible.length < data.length && 
-        <div className='pt-6 pb-10 w-full flex items-center justify-center'>
-          <Button 
+        visible.length < data.length &&
+        <div className='pt-8 pb-12 w-full flex items-center justify-center'>
+          <Button
             onClick={() => setLength((prev) => prev + limit)}
-            size="lg"
-            className='cursor-pointer gap-2 font-semibold px-8 bg-secondary text-secondary-foreground hover:bg-secondary/80 border border-border shadow-sm'
+            className='
+              cursor-pointer group flex items-center justify-center gap-3
+              w-full sm:w-[300px] h-12 
+              rounded-none border border-foreground bg-transparent text-foreground 
+              transition-all duration-300 ease-out
+              hover:bg-foreground hover:text-background
+              uppercase tracking-[0.2em] text-[10px] font-bold
+            '
           >
-            Load More <ChevronDown className="w-5 h-5" />
+            Load More
+            <ChevronDown className="w-4 h-4 transition-transform duration-300 group-hover:translate-y-1 group-hover:text-[crimson]" />
           </Button>
         </div>
       }

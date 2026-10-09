@@ -4,7 +4,7 @@ import AnimeCard from '@/components/AnimeCard'
 import MangaCard from '@/components/MangaCard'
 import { useStore } from '@/components/store/zustand'
 import Link from 'next/link'
-import { Heart, Tv, Book, Ghost, Search } from 'lucide-react'
+import { ArrowRight } from 'lucide-react'
 
 const Page = () => {
   const { favs } = useStore()
@@ -13,48 +13,49 @@ const Page = () => {
   const mangaFavs = favs.filter((f) => f.kind === 'manga')
 
   return (
-    <div className="max-w-[1600px] mb-10 mx-auto   sm:px-6 min-h-screen">
+    <div className="max-w-[1600px] mx-auto  md:px-8 min-h-screen pt-8 md:pt-16 pb-24">
 
-      {/* Page Header */}
-      <header className="mb-12">
-        <h1 className="text-4xl sm:text-5xl font-extrabold flex items-center gap-3 sm:gap-4 tracking-tight">
-          <Heart className="w-10 h-10 sm:w-12 sm:h-12 text-[crimson] fill-[crimson]/20" />
-          My Favorites
+      {/* Editorial Page Header */}
+      <header className="mb-16 border-b-2 border-border pb-6">
+
+        <h1 className="text-5xl md:text-7xl lg:text-[6rem]  uppercase tracking-tighter text-foreground leading-[0.85]">
+          Favorites.
         </h1>
-        <p className="text-muted-foreground mt-3 text-base sm:text-lg max-w-2xl">
-          Your personal collection of saved anime and manga. Access all your top picks in one place.
-        </p>
       </header>
 
       {/* --- Anime Section --- */}
-      <section className="mb-16">
-        {/* Section Header */}
-        <div className="flex items-center gap-3 mb-6 border-b border-border pb-4">
-          <Tv className="w-6 h-6 sm:w-7 sm:h-7 text-blue-500" />
-          <h2 className="text-2xl sm:text-3xl font-bold tracking-tight">Anime</h2>
-          <span className="bg-secondary border border-border/50 text-muted-foreground px-3 py-0.5 rounded-full text-sm font-bold ml-2">
-            {animeFavs.length}
+      <section className="mb-24">
+        {/* Minimalist Section Header */}
+        <div className="flex items-end justify-between mb-8 border-b border-border/50 pb-3">
+          <h2 className="text-xl sm:text-2xl font-bold uppercase tracking-tight text-foreground">
+            Anime
+          </h2>
+          <span className=" text-xs sm:text-sm tracking-[0.2em] text-muted-foreground">
+            {animeFavs.length.toString().padStart(2, '0')}
           </span>
+
         </div>
 
         {animeFavs.length === 0 ? (
-          /* Anime Empty State */
-          <div className="flex flex-col items-center justify-center py-16 px-4 border-2 border-dashed border-border rounded-2xl bg-secondary/10 text-center">
-            <Ghost className="w-16 h-16 text-muted-foreground mb-4 opacity-40" />
-            <h3 className="text-xl sm:text-2xl font-bold mb-2">No Anime Saved Yet</h3>
-            <p className="text-muted-foreground max-w-md mb-8">
-              You haven&apos;t added any anime to your favorites. Explore our collection and click the heart icon to save them here!
-            </p>
+          /* Brutalist Empty State */
+          <div className="w-full flex flex-col items-center justify-center py-20 px-4 border border-border bg-muted/10 text-center">
+            <span className="text-[14px] tracking-[0.2em] uppercase text-muted-foreground mb-2">
+              Empty
+            </span>
+            <h3 className="text-lg font-bold uppercase tracking-wider mb-8">
+              No Anime  Found
+            </h3>
             <Link
               href="/animes"
-              className="inline-flex items-center justify-center gap-2 h-11 px-8 rounded-md bg-[crimson] text-white font-medium hover:bg-[crimson]/90 transition-colors shadow-sm"
+              className="group flex items-center justify-center gap-3 w-[240px] h-12 border border-foreground bg-foreground text-background font-bold uppercase tracking-[0.2em] text-[10px] hover:bg-transparent hover:text-foreground transition-all duration-300"
             >
-              <Search className="w-4 h-4" /> Browse Anime
+              Browse
+              <ArrowRight className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1 group-hover:text-[crimson]" />
             </Link>
           </div>
         ) : (
-          /* Anime Grid (Uses items-start to prevent vertical stretching) */
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6 items-start">
+          /* Gallery Grid */
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3 sm:gap-5 items-start">
             {animeFavs.map((item) => (
               <AnimeCard key={item.mal_id} data={item} />
             ))}
@@ -64,33 +65,36 @@ const Page = () => {
 
       {/* --- Manga Section --- */}
       <section>
-        {/* Section Header */}
-        <div className="flex items-center gap-3 mb-6 border-b border-border pb-4">
-          <Book className="w-6 h-6 sm:w-7 sm:h-7 text-emerald-500" />
-          <h2 className="text-2xl sm:text-3xl font-bold tracking-tight">Manga</h2>
-          <span className="bg-secondary border border-border/50 text-muted-foreground px-3 py-0.5 rounded-full text-sm font-bold ml-2">
-            {mangaFavs.length}
+        {/* Minimalist Section Header */}
+        <div className="flex items-end justify-between mb-8 border-b border-border/50 pb-3">
+          <h2 className="text-xl sm:text-2xl font-bold uppercase tracking-tight text-foreground">
+            Manga
+          </h2>
+          <span className=" text-xs sm:text-sm tracking-[0.2em] text-muted-foreground">
+            {mangaFavs.length.toString().padStart(2, '0')}
           </span>
         </div>
 
         {mangaFavs.length === 0 ? (
-          /* Manga Empty State */
-          <div className="flex flex-col items-center justify-center py-16 px-4 border-2 border-dashed border-border rounded-2xl bg-secondary/10 text-center">
-            <Ghost className="w-16 h-16 text-muted-foreground mb-4 opacity-40" />
-            <h3 className="text-xl sm:text-2xl font-bold mb-2">No Manga Saved Yet</h3>
-            <p className="text-muted-foreground max-w-md mb-8">
-              Your manga library is currently empty. Dive into the manga catalog to find your next great read.
-            </p>
+          /* Brutalist Empty State */
+          <div className="w-full flex flex-col items-center justify-center py-20 px-4 border border-border bg-muted/10 text-center">
+            <span className=" text-[14px] tracking-[0.2em] uppercase text-muted-foreground mb-2">
+              Empty
+            </span>
+            <h3 className="text-lg font-bold uppercase tracking-wider mb-8">
+              No Manga Found
+            </h3>
             <Link
               href="/mangas"
-              className="inline-flex items-center justify-center gap-2 h-11 px-8 rounded-md bg-[crimson] text-white font-medium hover:bg-[crimson]/90 transition-colors shadow-sm"
+              className="group flex items-center justify-center gap-3 w-[240px] h-12 border border-foreground bg-foreground text-background font-bold uppercase tracking-[0.2em] text-[10px] hover:bg-transparent hover:text-foreground transition-all duration-300"
             >
-              <Search className="w-4 h-4" /> Browse Manga
+              Browse
+              <ArrowRight className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1 group-hover:text-[crimson]" />
             </Link>
           </div>
         ) : (
-          /* Manga Grid (Uses items-start to prevent vertical stretching) */
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6 items-start">
+          /* Gallery Grid */
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3 sm:gap-5 items-start">
             {mangaFavs.map((item) => (
               <MangaCard key={item.mal_id} data={item} />
             ))}

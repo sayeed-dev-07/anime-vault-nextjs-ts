@@ -126,7 +126,7 @@ const CardDetails = async ({ anime }: { anime: AnimeData }) => {
             <div className="max-w-[1400px] mx-auto  sm:px-6 md:px-12">
 
                 {/* --- Editorial 3-Column Layout --- */}
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-0">
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-0">
 
                     {/* Left Column: Image & Main Title */}
                     <div className="lg:col-span-5 lg:pr-12">

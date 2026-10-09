@@ -6,7 +6,7 @@ const FetchGenres = async ({ name }: { name: genNameProp }) => {
   const res = await fetch(`https://api.tenrai.org/v1/genres/${name}`, {
     next: { revalidate: 60 * 3 }
   });
-  
+
   const resJson = await res.json();
   const rawData: genDatProp[] = resJson.data || [];
 
@@ -16,12 +16,14 @@ const FetchGenres = async ({ name }: { name: genNameProp }) => {
   );
 
   return (
-    // Replaced auto-fit with explicit breakpoints for perfect scaling across devices
-    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4 sm:gap-6 mb-12">
-      {uniqueData.map((item) => (
-        <GenCard key={item.mal_id} name={name} data={item} />
-      ))}
-    </div>
+    <section className="max-w-[1600px] mx-auto pt-6 pb-16">
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-2 sm:gap-4">
+        {uniqueData.map((item) => (
+          <GenCard key={item.mal_id} name={name} data={item} />
+        ))}
+      </div>
+
+    </section>
   );
 };
 

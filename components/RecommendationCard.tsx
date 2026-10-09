@@ -1,43 +1,74 @@
+'use client';
+
+import React, { useRef } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import gsap from 'gsap';
+import { useGSAP } from '@gsap/react';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Heart } from 'lucide-react';
 import FormatSegment from './Format';
 import ButtonSpin from './Button';
 
+gsap.registerPlugin(useGSAP, ScrollTrigger);
+
 export interface Recommendation {
-  entry: RecommendationEntry;
-  votes: number;
+    entry: RecommendationEntry;
+    votes: number;
 }
 
 export interface RecommendationEntry {
-  mal_id: number;
-  url: string;
-  images: RecommendationImages;
-  title: string;
+    mal_id: number;
+    url: string;
+    images: RecommendationImages;
+    title: string;
 }
 
 export interface RecommendationImages {
-  jpg: RecommendationImageSet;
-  webp: RecommendationImageSet;
+    jpg: RecommendationImageSet;
+    webp: RecommendationImageSet;
 }
 
 export interface RecommendationImageSet {
-  image_url: string;
-  small_image_url: string;
-  large_image_url: string;
+    image_url: string;
+    small_image_url: string;
+    large_image_url: string;
 }
 
 export type linkName = 'animes' | 'mangas';
 
-
 const RecommendationCard = ({ data, name = 'animes' }: { data: Recommendation, name?: linkName }) => {
-    return (
-        <div className='smallCard opacity-0 bg-card border border-border rounded-2xl overflow-hidden flex flex-col group hover:shadow-md transition-shadow duration-300 h-full'>
+    const cardRef = useRef<HTMLDivElement>(null);
 
-            <div className='relative w-full aspect-[3/4] bg-muted overflow-hidden'>
+    useGSAP(() => {
+        const card = cardRef.current;
+        if (!card) return;
+
+        // Pure opacity fade, no translation
+        gsap.fromTo(
+            card,
+            { autoAlpha: 0 },
+            {
+                autoAlpha: 1,
+                duration: 1,
+                ease: 'power2.out',
+                scrollTrigger: {
+                    trigger: card,
+                    start: 'top 90%',
+                    once: true,
+                },
+            }
+        );
+    }, { scope: cardRef });
+
+    return (
+        <div ref={cardRef} className='invisible flex flex-col group h-full w-full'>
+
+            {/* Sleek Image Container */}
+            <div className='relative w-full aspect-[3/4] bg-muted overflow-hidden mb-3 ring-1 ring-border/50'>
                 <Image
                     fill
-                    className='object-cover transition-transform duration-500 ease-out group-hover:scale-110'
+                    className='object-cover'
                     src={data.entry.images.jpg.large_image_url}
                     loading="lazy"
                     sizes='(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 20vw'
@@ -45,20 +76,21 @@ const RecommendationCard = ({ data, name = 'animes' }: { data: Recommendation, n
                 />
             </div>
 
-            <div className='p-3 sm:p-4 flex flex-col gap-3 flex-grow'>
-                <h4 className='font-bold text-sm sm:text-base leading-tight line-clamp-2 text-foreground' title={data.entry.title}>
+            {/* Editorial Content */}
+            <div className='flex flex-col gap-2 px-1 flex-grow'>
+                <h4 className='font-bold text-sm sm:text-base leading-tight line-clamp-2 text-foreground transition-colors group-hover:text-[crimson]' title={data.entry.title}>
                     {data.entry.title}
                 </h4>
 
-                <span className='flex items-center gap-1.5 text-xs font-medium text-muted-foreground bg-secondary px-2 py-1 rounded-md border border-border/50 w-fit'>
-                    <Heart className="w-3.5 h-3.5 text-[crimson]" />
+                <span className='flex items-center gap-1.5 text-[10px]   tracking-widest uppercase text-muted-foreground'>
+                    <Heart className="w-3 h-3 text-[crimson]" />
                     {data.votes.toLocaleString()} Votes
                 </span>
 
-                {/* Pushes the button to the bottom if title is only 1 line */}
-                <div className='mt-auto pt-2'>
-                    <Link href={`/${name}/${FormatSegment(data.entry.title)}-${data.entry.mal_id}`} className="w-full">
-                        <ButtonSpin />
+                {/* Uses your new brutalist ButtonSpin */}
+                <div className='mt-auto pt-3'>
+                    <Link href={`/${name}/${FormatSegment(data.entry.title)}-${data.entry.mal_id}`} className="w-full block">
+                        <ButtonSpin text="View Entry" />
                     </Link>
                 </div>
             </div>

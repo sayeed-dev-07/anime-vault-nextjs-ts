@@ -1,26 +1,30 @@
-
 import Link from "next/link";
 import { ModeToggle } from "./ModeToggle";
 import SearchBar from "./Searchbar";
-
-
+import MobileMenu from "./MobileMenu";
 
 const Navbar = () => {
   return (
-    <div className="px-2 md:px-[2%] h-20 sm:h-[90px] fixed w-full p-6 border-b z-10 backdrop-blur-sm bg-background/300">
-      <div className="flex items-center justify-between gap-x-5">
+    <div className="px-4 md:px-8 h-20 sm:h-[90px] fixed top-0 w-full flex items-center justify-between border-b-2 border-border z-50 bg-background/95 backdrop-blur-md">
+      
+      <div className="flex items-center">
+        {/* Mobile Hamburger Trigger */}
+        <MobileMenu />
 
-        <Link href="/" className="text-primary sm:text-3xl text-xl font-bold">
-          <span className="text-[crimson]">Ani</span>Search
+        {/* Logo */}
+        <Link href="/" className="text-2xl sm:text-4xl font-black uppercase tracking-tighter text-foreground group">
+          <span className="text-[crimson]">Ani</span>Search<span className="text-[crimson] opacity-0 group-hover:opacity-100 transition-opacity">.</span>
         </Link>
-
-        <div className="flex items-center gap-x-2">
-          {/* Search is isolated */}
-          <SearchBar />
-          <ModeToggle />
-        </div>
-
       </div>
+
+      <div className="flex items-center gap-x-3 sm:gap-x-4">
+        {/* Hide search bar on mobile (it lives in the MobileMenu now) */}
+        <div className="hidden md:block">
+          <SearchBar />
+        </div>
+        <ModeToggle />
+      </div>
+
     </div>
   );
 };

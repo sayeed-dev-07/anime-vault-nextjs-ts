@@ -1,38 +1,48 @@
-'use client'
+'use client';
 
-import { ArrowLeft } from 'lucide-react'
-import { useRouter, usePathname } from 'next/navigation'
-import { motion } from 'motion/react'
+import React, { useRef } from 'react';
+import { ArrowLeft } from 'lucide-react';
+import { useRouter, usePathname } from 'next/navigation';
+import gsap from 'gsap';
+import { useGSAP } from '@gsap/react';
 
 export default function BackButton() {
-  const router = useRouter()
-  const pathname = usePathname()
+  const router = useRouter();
+  const pathname = usePathname();
+  const btnRef = useRef<HTMLButtonElement>(null);
+
+  useGSAP(() => {
+    if (!btnRef.current) return;
+
+    // Strict opacity-only entrance animation, no translation/bounce
+    gsap.fromTo(
+      btnRef.current,
+      { autoAlpha: 0 },
+      { autoAlpha: 1, duration: 1, ease: 'power2.out', delay: 0.2 }
+    );
+  }, [pathname]); // Re-triggers the clean fade if the route changes
 
   // Hide back button on root
-  if (pathname === '/') return null
+  if (pathname === '/') return null;
 
   return (
-    <motion.button 
-      // Enhanced entrance animation: pops up and scales in smoothly
-      initial={{ opacity: 0, scale: 0.5, y: 20 }} 
-      animate={{ opacity: 1, scale: 1, y: 0 }} 
-      transition={{ duration: 0.3, type: 'spring', damping: 15, stiffness: 200, delay: 0.1 }}
-      
+    <button
+      ref={btnRef}
       onClick={() => router.back()}
       aria-label="Go back"
-      
       className="
-        group flex items-center cursor-pointer justify-center 
-        p-3 sm:p-4 rounded-full 
-        bg-foreground text-background 
-        shadow-lg hover:shadow-xl hover:scale-110 active:scale-95 
-        transition-all duration-300 ease-out
-        focus:outline-none focus:ring-2 focus:ring-[crimson]/50 focus:ring-offset-2 focus:ring-offset-background
+        group invisible flex items-center justify-center 
+        w-12 h-12 sm:w-14 sm:h-14 
+        bg-foreground text-background border border-foreground 
+        rounded-none cursor-pointer
+        transition-colors duration-300 ease-out
+        hover:bg-background hover:text-foreground
+        focus:outline-none focus:ring-1 focus:ring-[crimson] focus:ring-offset-2 focus:ring-offset-background
       "
     >
-      <ArrowLeft 
-        className="w-5 h-5 sm:w-6 sm:h-6 transition-transform duration-300 ease-out group-hover:-translate-x-1" 
+      <ArrowLeft
+        className="w-5 h-5 sm:w-6 sm:h-6 transition-transform duration-300 ease-out group-hover:-translate-x-1"
       />
-    </motion.button>
-  )
+    </button>
+  );
 }

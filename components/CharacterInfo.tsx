@@ -1,6 +1,13 @@
+'use client';
+
+import React, { useRef } from 'react';
 import Image from 'next/image';
-import React from 'react';
+import gsap from 'gsap';
+import { useGSAP } from '@gsap/react';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Heart, UserCircle } from 'lucide-react';
+
+gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 export interface CharacterRole {
     character: Character;
@@ -45,14 +52,37 @@ export interface PersonImages {
 }
 
 const CharacterInfo = ({ CharacterData }: { CharacterData: CharacterRole }) => {
-    return (
-        <div className='smallCard opacity-0 bg-card border border-border rounded-2xl overflow-hidden flex flex-col group hover:shadow-md transition-shadow duration-300'>
+    const cardRef = useRef<HTMLDivElement>(null);
 
-            {/* Aspect Ratio Image Container */}
-            <div className='relative w-full aspect-[3/4] bg-muted overflow-hidden'>
+    useGSAP(() => {
+        const card = cardRef.current;
+        if (!card) return;
+
+        // Pure opacity fade, no translation
+        gsap.fromTo(
+            card,
+            { autoAlpha: 0 },
+            {
+                autoAlpha: 1,
+                duration: 1,
+                ease: 'power2.out',
+                scrollTrigger: {
+                    trigger: card,
+                    start: 'top 90%',
+                    once: true,
+                },
+            }
+        );
+    }, { scope: cardRef });
+
+    return (
+        <div ref={cardRef} className='invisible flex flex-col group w-full'>
+
+            {/* Minimalist Image Container with Grayscale Effect */}
+            <div className='relative w-full aspect-[3/4] bg-muted overflow-hidden mb-3 ring-1 ring-border/50'>
                 <Image
                     fill
-                    className='object-cover transition-transform duration-500 ease-out group-hover:scale-110'
+                    className='object-cover'
                     src={CharacterData.character.images.jpg.image_url}
                     loading="lazy"
                     sizes='(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 20vw'
@@ -60,19 +90,19 @@ const CharacterInfo = ({ CharacterData }: { CharacterData: CharacterRole }) => {
                 />
             </div>
 
-            {/* Card Content */}
-            <div className='p-3 sm:p-4 flex flex-col gap-2.5'>
-                <h4 className='font-bold text-sm sm:text-base leading-tight line-clamp-1 text-foreground' title={CharacterData.character.name}>
+            {/* Editorial Typography */}
+            <div className='flex flex-col gap-1 px-1'>
+                <h4 className='font-bold text-sm sm:text-base leading-tight line-clamp-1 text-foreground transition-colors group-hover:text-[crimson]' title={CharacterData.character.name}>
                     {CharacterData.character.name}
                 </h4>
 
-                <div className="flex flex-col gap-2">
-                    <span className='flex items-center gap-1.5 text-xs font-medium text-muted-foreground bg-secondary px-2 py-1 rounded-md border border-border/50 w-fit'>
-                        <UserCircle className="w-3.5 h-3.5" />
+                <div className="flex items-center gap-3 mt-1">
+                    <span className='flex items-center gap-1 text-[10px]   tracking-widest uppercase text-muted-foreground'>
+                        <UserCircle className="w-3 h-3" />
                         {CharacterData.role}
                     </span>
-                    <span className='flex items-center gap-1.5 text-xs font-medium text-muted-foreground bg-secondary px-2 py-1 rounded-md border border-border/50 w-fit'>
-                        <Heart className="w-3.5 h-3.5 text-[crimson]" />
+                    <span className='flex items-center gap-1 text-[10px]   tracking-widest uppercase text-muted-foreground'>
+                        <Heart className="w-3 h-3 text-[crimson]" />
                         {CharacterData.favorites.toLocaleString()}
                     </span>
                 </div>

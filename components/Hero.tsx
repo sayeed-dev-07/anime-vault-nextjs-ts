@@ -33,7 +33,7 @@ export default function HeroSection() {
       */}
             <div className="absolute inset-0 z-0">
                 <img
-                    src="https://i.pinimg.com/736x/f7/16/6c/f7166c99984e9870ad249f8f55c5c8ad.jpg"
+                    src="https://i.pinimg.com/736x/9a/77/ca/9a77ca09599e9f214864a326117751e5.jpg"
                     alt="Aesthetic Anime Background"
                     className="w-full h-full object-cover"
                 />
@@ -49,7 +49,7 @@ export default function HeroSection() {
             {/* Main Center Content */}
             <div className="relative z-20 flex flex-col items-center justify-center text-center w-full px-4">
 
-                <p className="fade-element text-white/80 font-mono text-sm sm:text-base tracking-[0.4em] uppercase mb-4">
+                <p className="fade-element text-white/80   text-sm sm:text-base tracking-[0.4em] uppercase mb-4">
                     A Personal Collection
                 </p>
 
@@ -84,7 +84,7 @@ export default function HeroSection() {
         Mimics the dense text block seen at the bottom of the reference poster.
       */}
             <div className="fade-element absolute bottom-6 z-20 w-full px-8 flex flex-col items-center opacity-70">
-                <p className="text-[8px] sm:text-[10px] text-white/70 font-mono tracking-widest text-center max-w-3xl leading-relaxed uppercase">
+                <p className="text-[8px] sm:text-[10px] text-white/70   tracking-widest text-center max-w-3xl leading-relaxed uppercase">
                     Directed by Sayeed • Produced in Next.js • Animated with GSAP <br />
                     Featuring Top Anime • Trending Manga • Detailed Character Profiles • Global Search Engine <br />
                     © 2026 AniSearch Database. All rights reserved. Do not distribute without authorization.

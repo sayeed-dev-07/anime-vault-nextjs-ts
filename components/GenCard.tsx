@@ -1,7 +1,16 @@
+'use client'
+
+import React, { useRef } from 'react';
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
+import gsap from 'gsap';
+import { useGSAP } from '@gsap/react';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
 import { genNameProp } from "./FetchGenres";
-import { genreEmoji } from "@/public/data/EmojiData"; // Importing your emoji list!
+import { genreEmoji } from "@/public/data/EmojiData";
+
+gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 interface genDataFullProp {
     data: genDatProp;
@@ -15,37 +24,73 @@ export interface genDatProp {
 }
 
 const GenCard = ({ data, name }: genDataFullProp) => {
-    // Automatically match the genre name to an emoji, fallback to a default icon
+    const cardRef = useRef<HTMLAnchorElement>(null);
     const emoji = genreEmoji[data.name] || "🎬";
 
+    useGSAP(() => {
+        const card = cardRef.current;
+        if (!card) return;
+
+        const mm = gsap.matchMedia();
+
+        mm.add("(prefers-reduced-motion: no-preference)", () => {
+            gsap.fromTo(
+                card,
+                { autoAlpha: 0, y: 20 },
+                {
+                    autoAlpha: 1,
+                    y: 0,
+                    duration: 0.6,
+                    ease: 'power2.out',
+                    scrollTrigger: {
+                        trigger: card,
+                        start: 'top 95%',
+                        once: true,
+                    },
+                }
+            );
+        });
+
+        mm.add("(prefers-reduced-motion: reduce)", () => {
+            gsap.to(card, {
+                autoAlpha: 1,
+                duration: 0.4,
+                scrollTrigger: { trigger: card, start: 'top 95%', once: true },
+            });
+        });
+
+        return () => mm.revert();
+    }, { scope: cardRef });
+
     return (
-        <Link 
-            href={`/genres-${name}/${data.name.toLowerCase()}-${data.mal_id}`} 
-            className="group relative flex flex-col items-center justify-center gap-3 rounded-2xl border border-border bg-secondary/30 p-6 text-center transition-all duration-300 hover:border-[crimson]/50 hover:bg-secondary hover:shadow-md hover:-translate-y-1 overflow-hidden"
+        <Link
+            href={`/genres-${name}/${data.name.toLowerCase()}-${data.mal_id}`}
+            ref={cardRef}
+            className="group relative flex flex-col justify-between p-4 sm:p-5 h-28 sm:h-36 border border-border/50 bg-background transition-colors duration-300 md:hover:bg-foreground md:hover:text-background invisible"
         >
-            {/* Genre Emoji */}
-            <span className="text-4xl sm:text-5xl transition-transform duration-300 group-hover:scale-110">
-                {emoji}
-            </span>
-            
-            {/* Text Content */}
-            <div className="flex flex-col gap-1">
-                <h3 className="text-lg sm:text-xl font-bold tracking-tight text-foreground line-clamp-1">
-                    {data.name}
-                </h3>
-                <p className="text-xs sm:text-sm font-medium text-muted-foreground">
-                    {/* toLocaleString adds nice commas to large numbers (e.g. 10,432 items) */}
-                    {data.count.toLocaleString()} items
-                </p>
+            {/* Top Row: Emoji & Count */}
+            <div className="flex justify-between items-start">
+                <span className="text-2xl sm:text-3xl opacity-80 transition-transform duration-500 ease-out md:group-hover:scale-110">
+                    {emoji}
+                </span>
+                <span className="  text-[9px] sm:text-[10px] uppercase tracking-widest text-muted-foreground transition-colors duration-300 md:group-hover:text-background/70">
+                    [{data.count.toLocaleString()}]
+                </span>
             </div>
 
-            {/* Hover Arrow Indicator */}
-            <div className="absolute bottom-3 right-3 opacity-0 transition-all duration-300 group-hover:opacity-100 group-hover:translate-x-0 -translate-x-3">
-                <ArrowRight className="w-5 h-5 text-[crimson]" />
+            {/* Bottom Row: Title & Arrow */}
+            <div className="flex justify-between items-end">
+                <h3 className="text-sm sm:text-base md:text-lg font-bold tracking-tight line-clamp-1 pr-2">
+                    {data.name}
+                </h3>
+
+                {/* 
+                    Arrow logic: 
+                    - Mobile: Statically visible, standard color.
+                    - Desktop (md+): Hidden by default, slides in and turns crimson on hover.
+                */}
+                <ArrowUpRight className="w-4 h-4 text-muted-foreground flex-shrink-0 transition-all duration-300 opacity-100 translate-x-0 translate-y-0 md:opacity-0 md:-translate-x-2 md:translate-y-2 md:group-hover:opacity-100 md:group-hover:translate-x-0 md:group-hover:translate-y-0 md:group-hover:text-[crimson]" />
             </div>
-            
-            {/* Subtle Top Gradient for depth */}
-            <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-[crimson]/20 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
         </Link>
     );
 };

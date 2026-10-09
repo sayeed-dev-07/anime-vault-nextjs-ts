@@ -4,20 +4,19 @@
 import React, { useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 import { Button } from './ui/button';
-import Spinner from './Spinner'; // Using your newly created custom spinner
-import { ChevronRight } from 'lucide-react';
+import Spinner from './Spinner';
+import { ArrowRight } from 'lucide-react';
 
 interface ButtonSpinProps {
     text?: string;
+    className?: string;
 }
 
-const ButtonSpin = ({ text = 'Details' }: ButtonSpinProps) => {
+const ButtonSpin = ({ text = 'Details', className = '' }: ButtonSpinProps) => {
     const [loading, setLoading] = useState(false);
     const pathname = usePathname();
 
     // Automatically reset the loading state whenever the URL path changes.
-    // This prevents the button from being permanently stuck on "Loading..." 
-    // if the user navigates away and then presses the browser's Back button.
     useEffect(() => {
         setLoading(false);
     }, [pathname]);
@@ -27,20 +26,21 @@ const ButtonSpin = ({ text = 'Details' }: ButtonSpinProps) => {
     };
 
     return (
-        <Button 
-            className="w-full cursor-pointer group transition-all duration-300 font-semibold bg-primary text-primary-foreground hover:bg-primary/90" 
-            disabled={loading} 
+        <Button
+            className={`w-full h-11 cursor-pointer group transition-all duration-500 rounded-none border border-foreground bg-foreground text-background hover:bg-transparent hover:text-foreground uppercase tracking-[0.2em] text-[10px] font-bold ${className}`}
+            disabled={loading}
             onClick={handleClick}
         >
             {loading ? (
-                <span className="flex items-center justify-center gap-2">
-                    <Spinner size="sm" className="text-primary-foreground" /> 
+                <span className="flex items-center justify-center gap-3">
+                    <Spinner size="sm" className="text-current" />
                     <span>Loading...</span>
                 </span>
             ) : (
-                <span className="flex items-center justify-center gap-1.5 w-full">
+                <span className="flex items-center justify-center gap-2 w-full">
                     {text}
-                    <ChevronRight className="w-4 h-4 opacity-70 group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-300" />
+                    {/* The arrow starts neutral and turns crimson while sliding right on hover */}
+                    <ArrowRight className="w-3.5 h-3.5 transition-all duration-300 group-hover:translate-x-1 group-hover:text-[crimson]" />
                 </span>
             )}
         </Button>

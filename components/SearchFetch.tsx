@@ -9,9 +9,8 @@ import { PageFetch } from './PageFetch';
 import AnimeCard from './AnimeCard';
 import MangaCard from './MangaCard';
 import { Button } from './ui/button';
-import { Tv, Book, SearchX, ChevronDown } from 'lucide-react';
+import { SearchX, ChevronDown } from 'lucide-react';
 
-// Updated to standard Tailwind breakpoints
 const breakpointColumns = {
     default: 4,
     1536: 3,
@@ -49,20 +48,19 @@ const SearchFetch = ({ name = 'search-anime', searchName }: PageProp) => {
     }
 
     const isAnime = name === 'search-anime';
-    const SectionIcon = isAnime ? Tv : Book;
     const sectionTitle = isAnime ? 'Anime' : 'Manga';
 
-    // Initial Loading State
     if (isFetching && !data) {
         return (
             <div className="w-full min-h-[30vh] flex flex-col items-center justify-center gap-4">
                 <Spinner size="lg" />
-                <p className="text-muted-foreground font-medium animate-pulse">Searching {sectionTitle}...</p>
+                <p className="  text-xs tracking-[0.2em] uppercase text-muted-foreground animate-pulse">
+                    Curating {sectionTitle}...
+                </p>
             </div>
         );
     }
 
-    // Error State
     if (error) {
         return <Error />;
     }
@@ -71,34 +69,40 @@ const SearchFetch = ({ name = 'search-anime', searchName }: PageProp) => {
 
     return (
         <div>
-            {/* Section Header */}
-            <div className="flex items-center gap-3 mb-6 border-b border-border pb-4">
-                <SectionIcon className={`w-6 h-6 sm:w-7 sm:h-7 ${isAnime ? 'text-blue-500' : 'text-emerald-500'}`} />
-                <h2 className="text-2xl sm:text-3xl font-bold tracking-tight">{sectionTitle}</h2>
+            {/* Minimalist Section Header */}
+            <div className="flex items-end justify-between mb-8 border-b border-border/50 pb-3">
+                <h2 className="text-xl sm:text-2xl font-bold uppercase tracking-tight text-foreground">
+                    {sectionTitle} Collection
+                </h2>
                 {fetchData && (
-                    <span className="bg-secondary border border-border/50 text-muted-foreground px-3 py-0.5 rounded-full text-sm font-bold ml-2">
-                        {data?.pages[0].pagination.items.total || 0} Results
+                    <span className="  text-xs sm:text-sm tracking-[0.2em] text-muted-foreground">
+                        [ {(data?.pages[0].pagination.items.total || 0).toString().padStart(2, '0')} found ]
                     </span>
                 )}
             </div>
 
             {/* Content Area */}
             {fetchData?.length === 0 ? (
-                // Premium Empty State
-                <div className="flex flex-col items-center justify-center py-16 border-2 border-dashed border-border rounded-2xl bg-secondary/10 text-center">
-                    <SearchX className="w-12 h-12 sm:w-16 sm:h-16 text-muted-foreground mb-4 opacity-40" />
-                    <h3 className="text-xl sm:text-2xl font-bold mb-2">No {sectionTitle} Found</h3>
-                    <p className="text-muted-foreground max-w-md">
-                        We couldn&apos;t find any {sectionTitle.toLowerCase()} matching &quot;{searchName}&quot;. Try adjusting your keywords.
+                // Brutalist Empty State
+                <div className="w-full flex flex-col items-center justify-center py-20 px-4 border border-border bg-muted/10 text-center">
+                    <SearchX className="w-12 h-12 text-muted-foreground mb-6 opacity-40" />
+                    <span className="  text-[10px] tracking-[0.2em] uppercase text-muted-foreground mb-2">
+                        Blank Canvas
+                    </span>
+                    <h3 className="text-lg font-bold uppercase tracking-wider mb-4">
+                        No {sectionTitle} Found
+                    </h3>
+                    <p className="text-xs font-medium text-muted-foreground max-w-sm uppercase tracking-widest leading-relaxed">
+                        We couldn&apos;t locate any {sectionTitle.toLowerCase()} matching &quot;{searchName}&quot;. Try a different title.
                     </p>
                 </div>
             ) : (
                 <>
-                    {/* Masonry Grid (items-start ensures natural card heights) */}
+                    {/* Masonry Grid */}
                     <div className="items-start">
                         <Masonry
                             breakpointCols={breakpointColumns}
-                            className="flex gap-4 sm:gap-6"
+                            className="flex gap-3 sm:gap-5"
                             columnClassName="bg-transparent"
                         >
                             {isAnime
@@ -108,22 +112,28 @@ const SearchFetch = ({ name = 'search-anime', searchName }: PageProp) => {
                         </Masonry>
                     </div>
 
-                    {/* Load More Button Area */}
+                    {/* Brutalist Load More Button */}
                     {hasNextPage && (
                         <div className="mt-8 sm:mt-12 w-full flex items-center justify-center">
-                            <Button 
-                                onClick={handleClick} 
+                            <Button
+                                onClick={handleClick}
                                 disabled={isFetchingNextPage}
-                                size="lg"
-                                className="cursor-pointer gap-2 font-semibold px-8 h-12 bg-secondary text-secondary-foreground hover:bg-secondary/80 border border-border"
+                                className='
+                                    cursor-pointer group flex items-center justify-center gap-3
+                                    w-full sm:w-[300px] h-12 
+                                    rounded-none border border-foreground bg-transparent text-foreground 
+                                    transition-all duration-300 ease-out
+                                    hover:bg-foreground hover:text-background disabled:opacity-50 disabled:hover:bg-transparent disabled:hover:text-foreground
+                                    uppercase tracking-[0.2em] text-[10px] font-bold
+                                '
                             >
                                 {isFetchingNextPage ? (
                                     <>
-                                        <Spinner size="sm" /> Loading...
+                                        <Spinner size="sm" className="text-current" /> Loading...
                                     </>
                                 ) : (
                                     <>
-                                        Load More <ChevronDown className="w-5 h-5" />
+                                        Expand Gallery <ChevronDown className="w-4 h-4 transition-transform duration-300 group-hover:translate-y-1 group-hover:text-[crimson]" />
                                     </>
                                 )}
                             </Button>
