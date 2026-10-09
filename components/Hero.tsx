@@ -25,12 +25,10 @@ export default function HeroSection() {
     }, { scope: containerRef });
 
     return (
-        <section ref={containerRef} className="relative w-full h-[80vh] min-h-[600px] mb-16 overflow-hidden flex flex-col justify-center items-center select-none rounded-3xl mt-4">
 
-            {/* 
-        Aesthetic Background Image 
-        Replace this URL with your chosen Pinterest aesthetic background.
-      */}
+        <section ref={containerRef} className="relative w-full h-[60vh] min-h-[450px] md:h-[80vh] md:min-h-[600px] mb-16 overflow-hidden flex flex-col justify-center items-center select-none rounded-3xl mt-4">
+
+
             <div className="absolute inset-0 z-0">
                 <img
                     src="https://i.pinimg.com/736x/9a/77/ca/9a77ca09599e9f214864a326117751e5.jpg"
@@ -63,35 +61,34 @@ export default function HeroSection() {
                 </h1>
 
                 {/* Simple, flat buttons with no hover animations */}
-                <div className="fade-element flex-wrap justify-center flex items-center gap-6">
+                <div className="fade-element flex-wrap justify-center flex items-center gap-4 sm:gap-6">
                     <Link
                         href="/animes"
-                        className="px-8 py-3 bg-white text-black font-bold uppercase tracking-widest text-xs"
+                        className="px-6 sm:px-8 py-3 bg-white text-black font-bold uppercase tracking-widest text-xs"
                     >
                         Explore Anime
                     </Link>
                     <Link
                         href="/mangas"
-                        className="px-8 py-3 border border-white text-white font-bold uppercase tracking-widest text-xs"
+                        className="px-6 sm:px-8 py-3 border border-white text-white font-bold uppercase tracking-widest text-xs"
                     >
                         Read Manga
                     </Link>
                 </div>
             </div>
 
-            {/* 
-        Cinematic Footer / Credits Block 
-        Mimics the dense text block seen at the bottom of the reference poster.
-      */}
-            <div className="fade-element absolute bottom-6 z-20 w-full px-8 flex flex-col items-center opacity-70">
-                <p className="text-[8px] sm:text-[10px] text-white/70   tracking-widest text-center max-w-3xl leading-relaxed uppercase">
+
+            <div className="fade-element absolute bottom-4 sm:bottom-6 z-20 w-full px-4 sm:px-8 flex flex-col items-center opacity-70">
+                <p className="text-[7px] sm:text-[10px] text-white/70   tracking-widest text-center max-w-3xl leading-relaxed uppercase hidden sm:block">
                     Directed by Sayeed • Produced in Next.js • Animated with GSAP <br />
                     Featuring Top Anime • Trending Manga • Detailed Character Profiles • Global Search Engine <br />
                     © 2026 AniSearch Database. All rights reserved. Do not distribute without authorization.
                 </p>
-
-                {/* Fake Logos / Icons for the bottom corners */}
-
+                {/* A shorter version of the text for mobile devices so it doesn't clutter the small screen */}
+                <p className="text-[7px] text-white/70 tracking-widest text-center leading-relaxed uppercase sm:hidden">
+                    Directed by Sayeed • Produced in Next.js <br />
+                    © 2026 AniSearch Database.
+                </p>
             </div>
 
         </section>
