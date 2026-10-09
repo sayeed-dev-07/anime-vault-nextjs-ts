@@ -2,12 +2,7 @@ import Image from "next/image";
 import ReadMoreText from "./ReadMoreText";
 import { batchFetchAnimeData } from "./Fetch";
 import Pagination from "./Pagination";
-import { 
-    Star, Trophy, TrendingUp, Heart, Calendar, 
-    Tv, Clock, Info, PlayCircle, Film, Building2, Tags 
-} from "lucide-react";
-
-// ... [Keep all your existing TypeScript Interfaces here exactly as they are] ...
+import { PlayCircle } from "lucide-react";
 
 export interface AnimeResponse {
     data: AnimeData;
@@ -122,234 +117,209 @@ export interface MalEntity {
 }
 
 const CardDetails = async ({ anime }: { anime: AnimeData }) => {
+    // Explicitly typing the fetched data based on Jikan API structure for characters
     const { characters, staff, recommendations } = await batchFetchAnimeData(anime.mal_id);
-    const Allgenres = [...anime?.genres, ...anime?.themes];
+    const Allgenres = [...(anime?.genres || []), ...(anime?.themes || [])];
 
     return (
-        <div className="max-w-[1400px] mx-auto py-3 lg:py-5  sm:px-6">
-            
-            {/* --- Hero Section --- */}
-            <div className="flex flex-col lg:flex-row gap-8 lg:gap-12">
-                
-                {/* Left: Cover Image */}
-                <div className="shrink-0 mx-auto lg:mx-0 w-64 sm:w-72 lg:w-[320px]">
-                    {anime.images.jpg.large_image_url && (
-                        <div className="relative aspect-[2/3] w-full rounded-2xl overflow-hidden shadow-2xl border border-border">
-                            <Image
-                                src={anime.images.jpg.large_image_url}
-                                fill
-                                sizes="(max-width: 768px) 100vw, 320px"
-                                loading="eager"
-                                alt={anime.title}
-                                className="object-cover"
-                            />
-                        </div>
-                    )}
-                </div>
+        <div className="w-full min-h-screen bg-background text-foreground pb-24 pt-8 md:pt-16">
+            <div className="max-w-[1400px] mx-auto  sm:px-6 md:px-12">
 
-                {/* Right: Titles and Main Stats */}
-                <div className="flex flex-col gap-6 w-full flex-1">
-                    
-                    {/* Titles */}
-                    <div>
-                        <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-foreground tracking-tight mb-2">
-                            {anime.title}
-                        </h1>
-                        <div className="flex flex-col gap-1 text-sm sm:text-base text-muted-foreground font-medium">
-                            {anime.title_english && <p>English: {anime.title_english}</p>}
-                            {anime.title_japanese && <p>Japanese: {anime.title_japanese}</p>}
-                            {anime.title_synonyms.length > 0 && (
-                                <p className="truncate" title={anime.title_synonyms.join(", ")}>
-                                    Synonyms: {anime.title_synonyms.join(", ")}
-                                </p>
+                {/* --- Editorial 3-Column Layout --- */}
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-0">
+
+                    {/* Left Column: Image & Main Title */}
+                    <div className="lg:col-span-5 lg:pr-12">
+                        <div className="w-full max-w-[350px] aspect-4/5 relative mb-8 bg-muted">
+                            {anime.images?.jpg?.large_image_url ? (
+                                <Image
+                                    src={anime.images.jpg.large_image_url}
+                                    fill
+                                    sizes="(max-width: 1024px) 100vw, 40vw"
+                                    loading="eager"
+                                    alt={anime.title}
+                                    className="object-cover  "
+                                />
+                            ) : (
+                                <div className="w-full h-full flex items-center justify-center text-muted-foreground text-sm">No Image Available</div>
                             )}
                         </div>
+
+                        <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground mb-4 border-b border-border pb-2 inline-block">
+                            anime info
+                        </p>
+
+                        <h1 className="text-4xl md:text-5xl font-light tracking-tight leading-tight text-foreground mb-3">
+                            {anime.title}
+                        </h1>
+
+                        <div className="text-sm text-muted-foreground font-medium flex flex-col gap-1">
+                            {anime.title_japanese && <span>{anime.title_japanese}</span>}
+                            {anime.title_english && <span className="opacity-70">{anime.title_english}</span>}
+                        </div>
+                        {/* 01: Synopsis */}
+                        {anime.synopsis && (
+                            <div className="flex items-start my-6">
+                                <span className="text-2xl font-light text-muted-foreground w-12 shrink-0">01</span>
+                                <div className="h-px bg-border w-10 mt-4 mr-6 shrink-0 hidden sm:block" />
+                                <div className="flex-1 pt-1.5">
+                                    <h3 className="text-[10px] font-bold uppercase tracking-[0.2em] mb-4 text-foreground">Synopsis</h3>
+                                    <div className="text-sm text-muted-foreground leading-relaxed">
+                                        <ReadMoreText text={anime.synopsis} maxChars={280} />
+                                    </div>
+                                </div>
+                            </div>
+                        )}
                     </div>
 
-                    {/* Stats Grid */}
-                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-2">
-                        <div className="bg-secondary/60 p-4 rounded-xl flex flex-col items-center text-center justify-center border border-border/50">
-                            <Star className="w-6 h-6 text-yellow-500 mb-2" />
-                            <span className="text-sm text-muted-foreground font-semibold uppercase tracking-wider">Score</span>
-                            <span className="text-xl font-bold text-foreground">{anime.score ? anime.score : 'N/A'}</span>
-                            <span className="text-[11px] text-muted-foreground mt-0.5">{anime.scored_by ? anime.scored_by.toLocaleString() : '0'} users</span>
-                        </div>
-                        <div className="bg-secondary/60 p-4 rounded-xl flex flex-col items-center text-center justify-center border border-border/50">
-                            <Trophy className="w-6 h-6 text-amber-600 mb-2" />
-                            <span className="text-sm text-muted-foreground font-semibold uppercase tracking-wider">Rank</span>
-                            <span className="text-xl font-bold text-foreground">#{anime.rank ? anime.rank : '?'}</span>
-                        </div>
-                        <div className="bg-secondary/60 p-4 rounded-xl flex flex-col items-center text-center justify-center border border-border/50">
-                            <TrendingUp className="w-6 h-6 text-emerald-500 mb-2" />
-                            <span className="text-sm text-muted-foreground font-semibold uppercase tracking-wider">Popularity</span>
-                            <span className="text-xl font-bold text-foreground">#{anime.popularity ? anime.popularity : '?'}</span>
-                        </div>
-                        <div className="bg-secondary/60 p-4 rounded-xl flex flex-col items-center text-center justify-center border border-border/50">
-                            <Heart className="w-6 h-6 text-[crimson] mb-2" />
-                            <span className="text-sm text-muted-foreground font-semibold uppercase tracking-wider">Favorites</span>
-                            <span className="text-xl font-bold text-foreground">{anime.favorites ? anime.favorites.toLocaleString() : '0'}</span>
-                        </div>
-                    </div>
+                    {/* Middle Column: Numbered Content List */}
+                    <div className="lg:col-span-5 lg:border-l lg:border-border lg:pl-12 pt-4 lg:pt-0">
 
-                </div>
-            </div>
 
-            <div className="w-full h-px bg-border my-10" />
 
-            {/* --- Info & Tags Section --- */}
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-10 lg:gap-16">
-                
-                {/* Left Column: Info Grid */}
-                <div className="lg:col-span-1 space-y-6 bg-secondary/30 p-6 rounded-2xl border border-border/50 h-fit">
-                    <h2 className="text-xl font-bold flex items-center gap-2 mb-4">
-                        <Info className="w-5 h-5 text-[crimson]" /> Information
-                    </h2>
-                    
-                    <ul className="space-y-4 text-sm sm:text-base">
-                        <li className="flex justify-between items-center border-b border-border/50 pb-2">
-                            <span className="text-muted-foreground font-medium flex items-center gap-2"><Tv className="w-4 h-4"/> Type</span>
-                            <span className="font-semibold">{anime.type ? anime.type : '?'}</span>
-                        </li>
-                        <li className="flex justify-between items-center border-b border-border/50 pb-2">
-                            <span className="text-muted-foreground font-medium flex items-center gap-2"><Film className="w-4 h-4"/> Episodes</span>
-                            <span className="font-semibold">{anime.episodes ? anime.episodes : '?'}</span>
-                        </li>
-                        <li className="flex justify-between items-center border-b border-border/50 pb-2">
-                            <span className="text-muted-foreground font-medium flex items-center gap-2"><PlayCircle className="w-4 h-4"/> Status</span>
-                            <span className="font-semibold">{anime.status ? anime.status : '?'}</span>
-                        </li>
-                        <li className="flex justify-between items-center border-b border-border/50 pb-2">
-                            <span className="text-muted-foreground font-medium flex items-center gap-2"><Clock className="w-4 h-4"/> Duration</span>
-                            <span className="font-semibold">{anime.duration ? anime.duration : '?'}</span>
-                        </li>
-                        <li className="flex justify-between items-center border-b border-border/50 pb-2">
-                            <span className="text-muted-foreground font-medium flex items-center gap-2"><Calendar className="w-4 h-4"/> Aired</span>
-                            <span className="font-semibold text-right max-w-[150px]">{anime.aired.string ? anime.aired.string : '?'}</span>
-                        </li>
-                        <li className="flex justify-between items-center border-b border-border/50 pb-2">
-                            <span className="text-muted-foreground font-medium flex items-center gap-2"><Calendar className="w-4 h-4"/> Season</span>
-                            <span className="font-semibold capitalize">{anime.season ? `${anime.season} ${anime.year || ''}` : '?'}</span>
-                        </li>
-                    </ul>
-                </div>
+                        {/* 02: Technical Specs */}
+                        <div className="flex items-start mb-6">
+                            <span className="text-2xl font-light text-muted-foreground w-12 shrink-0">02</span>
+                            <div className="h-px bg-border w-10 mt-4 mr-6 shrink-0 hidden sm:block" />
+                            <div className="flex-1 pt-1.5">
+                                <h3 className="text-[10px] font-bold uppercase tracking-[0.2em] mb-4 text-foreground">Data File</h3>
+                                <ul className="space-y-2 text-sm text-muted-foreground">
+                                    <li className="flex justify-between border-b border-border/50 pb-1">
+                                        <span>Format</span> <span className="text-foreground">{anime.type || '?'}</span>
+                                    </li>
+                                    <li className="flex justify-between border-b border-border/50 pb-1">
+                                        <span>Episodes</span> <span className="text-foreground">{anime.episodes || '?'}</span>
+                                    </li>
+                                    <li className="flex justify-between border-b border-border/50 pb-1">
+                                        <span>Status</span> <span className="text-foreground">{anime.status || '?'}</span>
+                                    </li>
+                                    <li className="flex justify-between border-b border-border/50 pb-1">
+                                        <span>Aired</span> <span className="text-foreground">{anime.aired?.string || '?'}</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
 
-                {/* Right Column: Synopsis, Background, Tags */}
-                <div className="lg:col-span-2 space-y-10">
-                    
-                    {/* Badges / Tags */}
-                    <div className="space-y-6">
-                        {Allgenres.length > 0 && (
-                            <div>
-                                <h3 className="text-sm font-bold uppercase tracking-wider text-muted-foreground mb-3 flex items-center gap-2">
-                                    <Tags className="w-4 h-4"/> Genres & Themes
-                                </h3>
-                                <div className="flex flex-wrap gap-2">
+                        {/* 03: Reception */}
+                        <div className="flex items-start mb-6">
+                            <span className="text-2xl font-light text-muted-foreground w-12 shrink-0">03</span>
+                            <div className="h-px bg-border w-10 mt-4 mr-6 shrink-0 hidden sm:block" />
+                            <div className="flex-1 pt-1.5">
+                                <h3 className="text-[10px] font-bold uppercase tracking-[0.2em] mb-4 text-foreground">Reception</h3>
+                                <ul className="space-y-2 text-sm text-muted-foreground">
+                                    <li className="flex justify-between border-b border-border/50 pb-1">
+                                        <span>Score</span> <span className="text-foreground">{anime.score || 'N/A'}</span>
+                                    </li>
+                                    <li className="flex justify-between border-b border-border/50 pb-1">
+                                        <span>Rank</span> <span className="text-foreground">#{anime.rank || '?'}</span>
+                                    </li>
+                                    <li className="flex justify-between border-b border-border/50 pb-1">
+                                        <span>Favorites</span> <span className="text-foreground">{anime.favorites?.toLocaleString() || '0'}</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        {/* 04: Background (Optional) */}
+                        {anime.background && (
+                            <div className="flex items-start mb-6">
+                                <span className="text-2xl font-light text-muted-foreground w-12 shrink-0">04</span>
+                                <div className="h-px bg-border w-10 mt-4 mr-6 shrink-0 hidden sm:block" />
+                                <div className="flex-1 pt-1.5">
+                                    <h3 className="text-[10px] font-bold uppercase tracking-[0.2em] mb-4 text-foreground">Background</h3>
+                                    <div className="text-sm text-muted-foreground leading-relaxed">
+                                        <ReadMoreText text={anime.background} maxChars={150} />
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+
+                        {/* 05: Genres & Studios */}
+                        <div className="flex items-start mb-6">
+                            <span className="text-2xl font-light text-muted-foreground w-12 shrink-0">{anime.background ? '05' : '04'}</span>
+                            <div className="h-px bg-border w-10 mt-4 mr-6 shrink-0 hidden sm:block" />
+                            <div className="flex-1 pt-1.5">
+                                <h3 className="text-[10px] font-bold uppercase tracking-[0.2em] mb-4 text-foreground">Tags & Studios</h3>
+                                <div className="flex flex-wrap gap-2 mb-3">
                                     {Allgenres.map((g) => (
-                                        <span key={g.mal_id} className="bg-[crimson]/10 text-[crimson] font-semibold px-3 py-1 rounded-full text-sm">
+                                        <span key={g.mal_id} className="text-xs border border-border px-2 py-1 text-muted-foreground uppercase tracking-wider">
                                             {g.name}
                                         </span>
                                     ))}
                                 </div>
+                                <div className="text-sm text-foreground">
+                                    {anime.studios?.map(s => s.name).join(', ')}
+                                </div>
                             </div>
-                        )}
-                        
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                            {anime.studios.length > 0 && (
-                                <div>
-                                    <h3 className="text-sm font-bold uppercase tracking-wider text-muted-foreground mb-3 flex items-center gap-2">
-                                        <Building2 className="w-4 h-4"/> Studios
-                                    </h3>
-                                    <div className="flex flex-wrap gap-2">
-                                        {anime.studios.map((s) => (
-                                            <span key={s.mal_id} className="bg-secondary text-secondary-foreground font-medium px-3 py-1 rounded-full text-sm border border-border">
-                                                {s.name}
-                                            </span>
-                                        ))}
-                                    </div>
-                                </div>
-                            )}
-                            {anime.producers.length > 0 && (
-                                <div>
-                                    <h3 className="text-sm font-bold uppercase tracking-wider text-muted-foreground mb-3 flex items-center gap-2">
-                                        <Building2 className="w-4 h-4"/> Producers
-                                    </h3>
-                                    <div className="flex flex-wrap gap-2">
-                                        {anime.producers.map((p) => (
-                                            <span key={p.mal_id} className="bg-secondary text-secondary-foreground font-medium px-3 py-1 rounded-full text-sm border border-border">
-                                                {p.name}
-                                            </span>
-                                        ))}
-                                    </div>
-                                </div>
-                            )}
                         </div>
                     </div>
 
-                    {/* Synopsis */}
-                    {anime.synopsis && (
-                        <div>
-                            <h2 className="text-2xl font-bold mb-4">Synopsis</h2>
-                            <div className="text-base sm:text-lg leading-relaxed text-muted-foreground">
-                                <ReadMoreText text={anime.synopsis} maxChars={400} />
-                            </div>
+                    {/* Right Column: Character Sidebar (Visible only on lg screens) */}
+                    <div className="hidden lg:block lg:col-span-2 lg:pl-8">
+                        <h3 className="text-[10px] font-bold uppercase tracking-[0.2em] mb-6 text-foreground">Featured Characters</h3>
+                        <div className="flex flex-col gap-4">
+
+                            {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
+                            {characters?.slice(0, 4).map((char: any) => (
+                                <div key={char.character.mal_id} className="relative w-full aspect-square bg-muted">
+                                    {char.character.images?.jpg?.image_url && (
+                                        <Image
+                                            src={char.character.images.jpg.image_url}
+                                            fill
+                                            alt={char.character.name}
+                                            className="object-cover "
+                                        />
+                                    )}
+                                </div>
+                            ))}
                         </div>
+                    </div>
+                </div>
+
+                {/* --- Bottom Data (Trailer & Sliders) --- */}
+                {/* A clean horizontal rule separates the editorial section from the heavy media components */}
+                <div className="w-full h-px bg-border my-24" />
+
+                <div className="space-y-24">
+                    {/* Trailer */}
+                    {anime.trailer.embed_url && (
+                        <section className="max-w-4xl mx-auto">
+                            <h2 className="text-xs font-bold uppercase tracking-[0.2em] mb-6 flex items-center justify-center gap-2 text-foreground">
+                                <PlayCircle className="w-4 h-4" /> Official Trailer
+                            </h2>
+                            <div className="w-full bg-muted relative aspect-video">
+                                <iframe
+                                    src={anime.trailer.embed_url}
+                                    className="absolute inset-0 w-full h-full"
+                                    allowFullScreen
+                                />
+                            </div>
+                        </section>
                     )}
 
-                    {/* Background */}
-                    {anime.background && (
-                        <div>
-                            <h2 className="text-2xl font-bold mb-4">Background</h2>
-                            <div className="text-base sm:text-lg leading-relaxed text-muted-foreground">
-                                <ReadMoreText text={anime.background} maxChars={300} />
-                            </div>
-                        </div>
+                    {/* Paginated Sections */}
+                    {characters?.length > 0 && (
+                        <section>
+                            <h2 className="text-2xl font-light tracking-tight mb-8">Characters</h2>
+                            <Pagination data={characters} type="characters" limit={8} />
+                        </section>
+                    )}
+
+                    {staff?.length > 0 && (
+                        <section>
+                            <h2 className="text-2xl font-light tracking-tight mb-8">Staff</h2>
+                            <Pagination data={staff} type="staff" limit={8} />
+                        </section>
+                    )}
+
+                    {recommendations?.length > 0 && (
+                        <section>
+                            <h2 className="text-2xl font-light tracking-tight mb-8">Recommendations</h2>
+                            <Pagination data={recommendations} type="recommendations" limit={8} />
+                        </section>
                     )}
                 </div>
-            </div>
 
-            <div className="w-full h-px bg-border my-12" />
-
-            {/* --- Media & Additional Data --- */}
-            <div className="space-y-16">
-                
-                {/* Trailer */}
-                {anime.trailer.embed_url && (
-                    <section>
-                        <h2 className="text-2xl sm:text-3xl font-bold mb-6 flex items-center gap-2">
-                            <PlayCircle className="w-7 h-7 text-[crimson]"/> Official Trailer
-                        </h2>
-                        <div className="w-full max-w-4xl rounded-2xl overflow-hidden border border-border shadow-lg">
-                            <iframe
-                                src={anime.trailer.embed_url}
-                                className="w-full aspect-video"
-                                allowFullScreen
-                            />
-                        </div>
-                    </section>
-                )}
-
-                {/* Paginated Sections */}
-                {characters.length > 0 && (
-                    <section>
-                        <h2 className="text-2xl sm:text-3xl font-bold mb-6">Characters</h2>
-                        <Pagination data={characters} type="characters" limit={8} />
-                    </section>
-                )}
-
-                {staff.length > 0 && (
-                    <section>
-                        <h2 className="text-2xl sm:text-3xl font-bold mb-6">Staff</h2>
-                        <Pagination data={staff} type="staff" limit={8} />
-                    </section>
-                )}
-
-                {recommendations.length > 0 && (
-                    <section>
-                        <h2 className="text-2xl sm:text-3xl font-bold mb-6">More Like This</h2>
-                        <Pagination data={recommendations} type="recommendations" limit={8} />
-                    </section>
-                )}
-                
             </div>
         </div>
     );

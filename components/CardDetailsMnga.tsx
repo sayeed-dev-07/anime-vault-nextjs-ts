@@ -2,89 +2,85 @@ import Image from 'next/image';
 import ReadMoreText from './ReadMoreText';
 import { getRecAndCharData } from './Fetch';
 import Pagination from './Pagination';
-import { 
-    Star, Trophy, TrendingUp, Heart, Calendar, 
-    Book, Activity, Info, Users, PenTool, Newspaper, Tags 
-} from "lucide-react";
 
 // ... [Keep all your existing TypeScript Interfaces here exactly as they are] ...
 
 export interface MangaResponse {
-  data: MangaData;
+    data: MangaData;
 }
 
 export interface MangaData {
-  mal_id: number;
-  url: string;
-  images: MangaImages;
-  approved: boolean;
-  titles: MangaTitle[];
-  title: string;
-  title_english: string | null;
-  title_japanese: string | null;
-  title_synonyms: string[];
-  type: string | null;
-  chapters: number | null;
-  volumes: number | null;
-  status: string | null;
-  publishing: boolean;
-  published: PublishedInfo;
-  score: number | null;
-  scored: number | null;
-  scored_by: number | null;
-  rank: number | null;
-  popularity: number | null;
-  members: number | null;
-  favorites: number | null;
-  synopsis: string | null;
-  background: string | null;
-  authors: MalEntity[];
-  serializations: MalEntity[];
-  genres: MalEntity[];
-  explicit_genres: MalEntity[];
-  themes: MalEntity[];
-  demographics: MalEntity[];
+    mal_id: number;
+    url: string;
+    images: MangaImages;
+    approved: boolean;
+    titles: MangaTitle[];
+    title: string;
+    title_english: string | null;
+    title_japanese: string | null;
+    title_synonyms: string[];
+    type: string | null;
+    chapters: number | null;
+    volumes: number | null;
+    status: string | null;
+    publishing: boolean;
+    published: PublishedInfo;
+    score: number | null;
+    scored: number | null;
+    scored_by: number | null;
+    rank: number | null;
+    popularity: number | null;
+    members: number | null;
+    favorites: number | null;
+    synopsis: string | null;
+    background: string | null;
+    authors: MalEntity[];
+    serializations: MalEntity[];
+    genres: MalEntity[];
+    explicit_genres: MalEntity[];
+    themes: MalEntity[];
+    demographics: MalEntity[];
 }
 
 export interface MangaImages {
-  jpg: MangaImageSet;
-  webp: MangaImageSet;
+    jpg: MangaImageSet;
+    webp: MangaImageSet;
 }
 
 export interface MangaImageSet {
-  image_url: string | null;
-  small_image_url: string | null;
-  large_image_url: string | null;
+    image_url: string | null;
+    small_image_url: string | null;
+    large_image_url: string | null;
 }
 
 export interface MangaTitle {
-  type: string;
-  title: string;
+    type: string;
+    title: string;
 }
 
 export interface PublishedInfo {
-  from: string | null;
-  to: string | null;
-  prop: PublishedProp;
-  string: string | null;
+    from: string | null;
+    to: string | null;
+    prop: PublishedProp;
+    string: string | null;
 }
 
 export interface PublishedProp {
-  from: PublishedDate;
-  to: PublishedDate;
+    from: PublishedDate;
+    to: PublishedDate;
 }
 
 export interface PublishedDate {
-  day: number | null;
-  month: number | null;
-  year: number | null;
+    day: number | null;
+    month: number | null;
+    year: number | null;
 }
 
 export interface MalEntity {
-  mal_id: number;
-  type: string;
-  name: string;
-  url: string;
+    mal_id: number;
+    type: string;
+    name: string;
+    url: string;
 }
 
 const CardDetailsMnga = async ({ manga }: { manga: MangaData }) => {
@@ -97,214 +93,199 @@ const CardDetailsMnga = async ({ manga }: { manga: MangaData }) => {
     const recommendationsData = await getRecAndCharData('manga', manga.mal_id, 'recommendations');
 
     return (
-        <div className="max-w-[1400px] py-3 lg:py-5 mx-auto   sm:px-6 overflow-x-hidden">
-            
-            {/* --- Hero Section --- */}
-            <div className="flex flex-col lg:flex-row gap-6 lg:gap-12 items-center lg:items-start">
-                
-                {/* Left: Cover Image */}
-                <div className="w-[200px] sm:w-[260px] lg:w-[320px] shrink-0 mx-auto lg:mx-0">
-                    {manga.images.jpg.large_image_url && (
-                        <div className="relative aspect-[2/3] w-full rounded-2xl overflow-hidden shadow-2xl border border-border">
-                            <Image
-                                src={manga.images.jpg.large_image_url}
-                                fill
-                                sizes="(max-width: 768px) 260px, 320px"
-                                alt={manga.title}
-                                className="object-cover"
-                                priority
-                            />
-                        </div>
-                    )}
-                </div>
+        <div className="w-full min-h-screen bg-background text-foreground pb-24 pt-8 md:pt-16">
+            <div className="max-w-[1400px] mx-auto  sm:px-6 md:px-12">
 
-                {/* Right: Titles and Main Stats */}
-                <div className="flex flex-col gap-6 w-full flex-1 text-left">
-                    
-                    {/* Titles */}
-                    <div className="mt-4 lg:mt-0">
-                        <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-foreground tracking-tight mb-2">
-                            {manga.title}
-                        </h1>
-                        <div className="flex flex-col gap-1 text-sm sm:text-base text-muted-foreground font-medium">
-                            {manga.title_english && <p>English: {manga.title_english}</p>}
-                            {manga.title_japanese && <p>Japanese: {manga.title_japanese}</p>}
-                            {manga.title_synonyms.length > 0 && (
-                                <p className="line-clamp-2" title={manga.title_synonyms.join(", ")}>
-                                    Synonyms: {manga.title_synonyms.join(", ")}
-                                </p>
+                {/* --- Editorial 3-Column Layout --- */}
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-0">
+
+                    {/* Left Column: Image & Main Title */}
+                    <div className="lg:col-span-5 lg:pr-12">
+                        <div className="w-full max-w-[350px] aspect-[4/5] relative mb-8 bg-muted">
+                            {manga.images?.jpg?.large_image_url ? (
+                                <Image
+                                    src={manga.images.jpg.large_image_url}
+                                    fill
+                                    sizes="(max-width: 1024px) 100vw, 40vw"
+                                    loading="eager"
+                                    alt={manga.title}
+                                    className="object-cover"
+                                />
+                            ) : (
+                                <div className="w-full h-full flex items-center justify-center text-muted-foreground text-sm">No Image Available</div>
                             )}
                         </div>
-                    </div>
 
-                    {/* Stats Grid */}
-                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 lg:gap-4 mt-2">
-                        <div className="bg-secondary/60 p-3 lg:p-4 rounded-xl flex flex-col items-center text-center justify-center border border-border/50">
-                            <Star className="w-5 h-5 lg:w-6 lg:h-6 text-yellow-500 mb-1 lg:mb-2" />
-                            <span className="text-[10px] lg:text-sm text-muted-foreground font-semibold uppercase tracking-wider">Score</span>
-                            <span className="text-lg lg:text-xl font-bold text-foreground">{manga.score ? manga.score : 'N/A'}</span>
-                            <span className="text-[10px] text-muted-foreground mt-0.5">{manga.scored_by ? manga.scored_by.toLocaleString() : '0'} users</span>
-                        </div>
-                        <div className="bg-secondary/60 p-3 lg:p-4 rounded-xl flex flex-col items-center text-center justify-center border border-border/50">
-                            <Trophy className="w-5 h-5 lg:w-6 lg:h-6 text-amber-600 mb-1 lg:mb-2" />
-                            <span className="text-[10px] lg:text-sm text-muted-foreground font-semibold uppercase tracking-wider">Rank</span>
-                            <span className="text-lg lg:text-xl font-bold text-foreground">#{manga.rank ? manga.rank : '?'}</span>
-                        </div>
-                        <div className="bg-secondary/60 p-3 lg:p-4 rounded-xl flex flex-col items-center text-center justify-center border border-border/50">
-                            <TrendingUp className="w-5 h-5 lg:w-6 lg:h-6 text-emerald-500 mb-1 lg:mb-2" />
-                            <span className="text-[10px] lg:text-sm text-muted-foreground font-semibold uppercase tracking-wider">Popularity</span>
-                            <span className="text-lg lg:text-xl font-bold text-foreground">#{manga.popularity ? manga.popularity : '?'}</span>
-                        </div>
-                        <div className="bg-secondary/60 p-3 lg:p-4 rounded-xl flex flex-col items-center text-center justify-center border border-border/50">
-                            <Heart className="w-5 h-5 lg:w-6 lg:h-6 text-[crimson] mb-1 lg:mb-2" />
-                            <span className="text-[10px] lg:text-sm text-muted-foreground font-semibold uppercase tracking-wider">Favorites</span>
-                            <span className="text-lg lg:text-xl font-bold text-foreground">{manga.favorites ? manga.favorites.toLocaleString() : '0'}</span>
-                        </div>
-                    </div>
+                        <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground mb-4 border-b border-border pb-2 inline-block">
+                            Manga details
+                        </p>
 
-                </div>
-            </div>
+                        <h1 className="text-4xl md:text-5xl font-light tracking-tight leading-tight text-foreground mb-3">
+                            {manga.title}
+                        </h1>
 
-            <div className="w-full h-px bg-border my-8 lg:my-10" />
-
-            {/* --- Info & Tags Section --- */}
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-16">
-                
-                {/* Left Column: Info Grid */}
-                <div className="lg:col-span-1 space-y-4 bg-secondary/30 p-5 lg:p-6 rounded-2xl border border-border/50 h-fit">
-                    <h2 className="text-lg lg:text-xl font-bold flex items-center gap-2 mb-2 lg:mb-4">
-                        <Info className="w-5 h-5 text-[crimson]" /> Information
-                    </h2>
-                    
-                    <ul className="space-y-3 lg:space-y-4 text-sm sm:text-base">
-                        <li className="flex justify-between items-center border-b border-border/50 pb-2">
-                            <span className="text-muted-foreground font-medium flex items-center gap-2"><Book className="w-4 h-4"/> Type</span>
-                            <span className="font-semibold text-right">{manga.type ? manga.type : '?'}</span>
-                        </li>
-                        <li className="flex justify-between items-center border-b border-border/50 pb-2">
-                            <span className="text-muted-foreground font-medium flex items-center gap-2"><Book className="w-4 h-4"/> Volumes</span>
-                            <span className="font-semibold text-right">{manga.volumes ?? '?'}</span>
-                        </li>
-                        <li className="flex justify-between items-center border-b border-border/50 pb-2">
-                            <span className="text-muted-foreground font-medium flex items-center gap-2"><Book className="w-4 h-4"/> Chapters</span>
-                            <span className="font-semibold text-right">{manga.chapters ?? '?'}</span>
-                        </li>
-                        <li className="flex justify-between items-center border-b border-border/50 pb-2">
-                            <span className="text-muted-foreground font-medium flex items-center gap-2"><Activity className="w-4 h-4"/> Status</span>
-                            <span className="font-semibold text-right">{manga.status ?? '?'}</span>
-                        </li>
-                        <li className="flex justify-between items-center border-b border-border/50 pb-2">
-                            <span className="text-muted-foreground font-medium flex items-center gap-2"><Activity className="w-4 h-4"/> Publishing</span>
-                            <span className="font-semibold text-right">{manga.publishing ? "Yes" : "No"}</span>
-                        </li>
-                        <li className="flex justify-between items-center border-b border-border/50 pb-2">
-                            <span className="text-muted-foreground font-medium flex items-center gap-2"><Calendar className="w-4 h-4"/> Published</span>
-                            <span className="font-semibold text-right max-w-[140px] truncate">{manga.published.string ?? '?'}</span>
-                        </li>
-                        {manga.demographics.length > 0 && (
-                            <li className="flex justify-between items-center border-b border-border/50 pb-2">
-                                <span className="text-muted-foreground font-medium flex items-center gap-2"><Users className="w-4 h-4"/> Demo</span>
-                                <span className="font-semibold text-right">{manga.demographics[0].name}</span>
-                            </li>
+                        <div className="text-sm text-muted-foreground font-medium flex flex-col gap-1">
+                            {manga.title_japanese && <span>{manga.title_japanese}</span>}
+                            {manga.title_english && <span className="opacity-70">{manga.title_english}</span>}
+                        </div>
+                        {/* 01: Synopsis */}
+                        {manga.synopsis && (
+                            <div className="flex items-start mt-6 mb-6">
+                                <span className="text-2xl font-light text-muted-foreground w-12 shrink-0">01</span>
+                                <div className="h-px bg-border w-10 mt-4 mr-6 shrink-0 hidden sm:block" />
+                                <div className="flex-1 pt-1.5">
+                                    <h3 className="text-[10px] font-bold uppercase tracking-[0.2em] mb-4 text-foreground">Synopsis</h3>
+                                    <div className="text-sm text-muted-foreground leading-relaxed">
+                                        <ReadMoreText text={manga.synopsis} maxChars={280} />
+                                    </div>
+                                </div>
+                            </div>
                         )}
-                    </ul>
-                </div>
 
-                {/* Right Column: Synopsis, Background, Tags */}
-                <div className="lg:col-span-2 space-y-8 lg:space-y-10">
-                    
-                    {/* Badges / Tags */}
-                    <div className="space-y-5 lg:space-y-6">
-                        {Allgenres.length > 0 && (
-                            <div>
-                                <h3 className="text-[11px] lg:text-sm font-bold uppercase tracking-wider text-muted-foreground mb-2 lg:mb-3 flex items-center gap-2">
-                                    <Tags className="w-4 h-4"/> Genres & Themes
-                                </h3>
-                                <div className="flex flex-wrap gap-2">
+
+
+                    </div>
+
+                    {/* Middle Column: Numbered Content List */}
+                    <div className="lg:col-span-5 lg:border-l lg:border-border lg:pl-12 pt-0">
+
+                        {/* 03: Reception */}
+                        <div className="flex items-start mb-6">
+                            <span className="text-2xl font-light text-muted-foreground w-12 shrink-0">02</span>
+                            <div className="h-px bg-border w-10 mt-4 mr-6 shrink-0 hidden sm:block" />
+                            <div className="flex-1 pt-1.5">
+                                <h3 className="text-[10px] font-bold uppercase tracking-[0.2em] mb-4 text-foreground">Reception</h3>
+                                <ul className="space-y-2 text-sm text-muted-foreground">
+                                    <li className="flex justify-between border-b border-border/50 pb-1">
+                                        <span>Score</span> <span className="text-foreground">{manga.score || 'N/A'}</span>
+                                    </li>
+                                    <li className="flex justify-between border-b border-border/50 pb-1">
+                                        <span>Rank</span> <span className="text-foreground">#{manga.rank || '?'}</span>
+                                    </li>
+                                    <li className="flex justify-between border-b border-border/50 pb-1">
+                                        <span>Favorites</span> <span className="text-foreground">{manga.favorites?.toLocaleString() || '0'}</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        {/* 04: Background (Optional) */}
+                        {manga.background && (
+                            <div className="flex items-start mb-6">
+                                <span className="text-2xl font-light text-muted-foreground w-12 shrink-0">03</span>
+                                <div className="h-px bg-border w-10 mt-4 mr-6 shrink-0 hidden sm:block" />
+                                <div className="flex-1 pt-1.5">
+                                    <h3 className="text-[10px] font-bold uppercase tracking-[0.2em] mb-4 text-foreground">Background</h3>
+                                    <div className="text-sm text-muted-foreground leading-relaxed">
+                                        <ReadMoreText text={manga.background} maxChars={150} />
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+
+                        {/* 02: Technical Specs */}
+                        <div className="flex items-start mb-6">
+                            <span className="text-2xl font-light text-muted-foreground w-12 shrink-0">04</span>
+                            <div className="h-px bg-border w-10 mt-4 mr-6 shrink-0 hidden sm:block" />
+                            <div className="flex-1 pt-1.5">
+                                <h3 className="text-[10px] font-bold uppercase tracking-[0.2em] mb-4 text-foreground">Data File</h3>
+                                <ul className="space-y-2 text-sm text-muted-foreground">
+                                    <li className="flex justify-between border-b border-border/50 pb-1">
+                                        <span>Format</span> <span className="text-foreground">{manga.type || '?'}</span>
+                                    </li>
+                                    <li className="flex justify-between border-b border-border/50 pb-1">
+                                        <span>Volumes</span> <span className="text-foreground">{manga.volumes || '?'}</span>
+                                    </li>
+                                    <li className="flex justify-between border-b border-border/50 pb-1">
+                                        <span>Chapters</span> <span className="text-foreground">{manga.chapters || '?'}</span>
+                                    </li>
+                                    <li className="flex justify-between border-b border-border/50 pb-1">
+                                        <span>Status</span> <span className="text-foreground">{manga.status || '?'}</span>
+                                    </li>
+                                    <li className="flex justify-between border-b border-border/50 pb-1">
+                                        <span>Published</span> <span className="text-foreground text-right max-w-[150px] truncate">{manga.published?.string || '?'}</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+
+                        {/* 05: Credits & Tags */}
+                        <div className="flex items-start mb-6">
+                            <span className="text-2xl font-light text-muted-foreground w-12 shrink-0">{manga.background ? '05' : '04'}</span>
+                            <div className="h-px bg-border w-10 mt-4 mr-6 shrink-0 hidden sm:block" />
+                            <div className="flex-1 pt-1.5">
+                                <h3 className="text-[10px] font-bold uppercase tracking-[0.2em] mb-4 text-foreground">Credits & Tags</h3>
+
+                                <div className="mb-4">
+                                    <span className="block text-xs text-muted-foreground mb-1">Authors</span>
+                                    <div className="text-sm text-foreground">
+                                        {manga.authors?.map(a => a.name).join(', ') || 'Unknown'}
+                                    </div>
+                                </div>
+
+                                <div className="mb-4">
+                                    <span className="block text-xs text-muted-foreground mb-1">Serialization</span>
+                                    <div className="text-sm text-foreground">
+                                        {manga.serializations?.map(s => s.name).join(', ') || 'Unknown'}
+                                    </div>
+                                </div>
+
+                                <div className="flex flex-wrap gap-2 mt-4">
                                     {Allgenres.map((g) => (
-                                        <span key={g.mal_id} className="bg-[crimson]/10 text-[crimson] font-semibold px-2.5 py-1 lg:px-3 rounded-full text-xs lg:text-sm">
+                                        <span key={g.mal_id} className="text-xs border border-border px-2 py-1 text-muted-foreground uppercase tracking-wider">
                                             {g.name}
                                         </span>
                                     ))}
                                 </div>
                             </div>
-                        )}
-                        
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 lg:gap-6">
-                            {manga.authors.length > 0 && (
-                                <div>
-                                    <h3 className="text-[11px] lg:text-sm font-bold uppercase tracking-wider text-muted-foreground mb-2 lg:mb-3 flex items-center gap-2">
-                                        <PenTool className="w-4 h-4"/> Authors
-                                    </h3>
-                                    <div className="flex flex-wrap gap-2">
-                                        {manga.authors.map((a) => (
-                                            <span key={a.mal_id} className="bg-secondary text-secondary-foreground font-medium px-2.5 py-1 lg:px-3 rounded-full text-xs lg:text-sm border border-border">
-                                                {a.name}
-                                            </span>
-                                        ))}
-                                    </div>
-                                </div>
-                            )}
-                            {manga.serializations.length > 0 && (
-                                <div>
-                                    <h3 className="text-[11px] lg:text-sm font-bold uppercase tracking-wider text-muted-foreground mb-2 lg:mb-3 flex items-center gap-2">
-                                        <Newspaper className="w-4 h-4"/> Serialization
-                                    </h3>
-                                    <div className="flex flex-wrap gap-2">
-                                        {manga.serializations.map((s) => (
-                                            <span key={s.mal_id} className="bg-secondary text-secondary-foreground font-medium px-2.5 py-1 lg:px-3 rounded-full text-xs lg:text-sm border border-border">
-                                                {s.name}
-                                            </span>
-                                        ))}
-                                    </div>
-                                </div>
-                            )}
                         </div>
+
+
+
                     </div>
 
-                    {/* Synopsis */}
-                    <div>
-                        <h2 className="text-xl lg:text-2xl font-bold mb-3 lg:mb-4">Synopsis</h2>
-                        {manga.synopsis ? (
-                            <div className="text-sm sm:text-base lg:text-lg leading-relaxed text-muted-foreground">
-                                <ReadMoreText text={manga.synopsis} maxChars={350} />
-                            </div>
-                        ) : (
-                            <p className="text-sm sm:text-base lg:text-lg text-muted-foreground">No synopsis available.</p>
-                        )}
-                    </div>
+                    {/* Right Column: Character Sidebar (Visible only on lg screens) */}
+                    <div className="hidden lg:block lg:col-span-2 lg:pl-8">
+                        <h3 className="text-[10px] font-bold uppercase tracking-[0.2em] mb-6 text-foreground">Featured Characters</h3>
+                        <div className="flex flex-col gap-4">
 
-                    {/* Background */}
-                    {manga.background && (
-                        <div>
-                            <h2 className="text-xl lg:text-2xl font-bold mb-3 lg:mb-4">Background</h2>
-                            <div className="text-sm sm:text-base lg:text-lg leading-relaxed text-muted-foreground">
-                                <ReadMoreText text={manga.background} maxChars={250} />
-                            </div>
+                            {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
+                            {characterData?.slice(0, 4).map((char: any) => (
+                                <div key={char.character.mal_id} className="relative w-full aspect-square bg-muted">
+                                    {char.character.images?.jpg?.image_url && (
+                                        <Image
+                                            src={char.character.images.jpg.image_url}
+                                            fill
+                                            alt={char.character.name}
+                                            className="object-cover"
+                                        />
+                                    )}
+                                </div>
+                            ))}
                         </div>
+                    </div>
+                </div>
+
+                {/* --- Bottom Data (Sliders) --- */}
+                <div className="w-full h-px bg-border my-24" />
+
+                <div className="space-y-24">
+                    {characterData?.length > 0 && (
+                        <section>
+                            <h2 className="text-2xl font-light tracking-tight mb-8">Characters</h2>
+                            <Pagination name='mangas' data={characterData} type="characters" limit={8} />
+                        </section>
+                    )}
+
+                    {recommendationsData?.length > 0 && (
+                        <section>
+                            <h2 className="text-2xl font-light tracking-tight mb-8">Recommendations</h2>
+                            <Pagination name='mangas' data={recommendationsData} type="recommendations" limit={8} />
+                        </section>
                     )}
                 </div>
-            </div>
 
-            <div className="w-full h-px bg-border my-8 lg:my-12" />
-
-            {/* --- Additional Data & Pagination --- */}
-            <div className="space-y-12 lg:space-y-16">
-                
-                {characterData.length > 0 && (
-                    <section>
-                        <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold mb-4 lg:mb-6">Characters</h2>
-                        <Pagination name='animes' data={characterData} type="characters" limit={8} />
-                    </section>
-                )}
-
-                {recommendationsData.length > 0 && (
-                    <section>
-                        <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold mb-4 lg:mb-6">More Like This Manga</h2>
-                        <Pagination name='mangas' data={recommendationsData} type="recommendations" limit={8} />
-                    </section>
-                )}
-                
             </div>
         </div>
     );
