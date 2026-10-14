@@ -1,4 +1,18 @@
 import SearchFetch from '@/components/SearchFetch';
+import type { Metadata } from 'next';
+
+export async function generateMetadata({ searchParams }: { searchParams: Promise<{ name?: string }> }): Promise<Metadata> {
+    const { name } = await searchParams;
+    const query = name?.trim();
+
+    return {
+        title: query ? `Search: ${query}` : 'Search Anime & Manga',
+        description: query
+            ? `Search AniSearch for anime and manga matching ${query}.`
+            : 'Search the AniSearch anime and manga catalog.',
+        robots: { index: false, follow: true },
+    };
+}
 
 const Page = async ({ searchParams }: { searchParams: Promise<{ name: string }> }) => {
     const { name } = await searchParams;

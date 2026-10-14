@@ -1,6 +1,18 @@
 
 import FormatSegment from '@/components/Format';
 import InfinityScroll from '@/components/InfinityScroll';
+import type { Metadata } from 'next';
+import { formatSlug } from '@/lib/seo';
+
+export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
+    const { id } = await params;
+    const genre = formatSlug(id.replace(/-\d+$/, ''));
+
+    return {
+        title: `${genre} Anime`,
+        description: `Browse ${genre.toLowerCase()} anime and discover your next series to watch.`,
+    };
+}
 
 
 const page = async ({params}: {params: Promise<{ id: string }>

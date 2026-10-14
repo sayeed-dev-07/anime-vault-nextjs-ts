@@ -1,16 +1,11 @@
 'use client'
 
-import React, { useRef } from 'react';
+import React from 'react';
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
-import gsap from 'gsap';
-import { useGSAP } from '@gsap/react';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 import { genNameProp } from "./FetchGenres";
 import { genreEmoji } from "@/public/data/EmojiData";
-
-gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 interface genDataFullProp {
     data: genDatProp;
@@ -24,49 +19,12 @@ export interface genDatProp {
 }
 
 const GenCard = ({ data, name }: genDataFullProp) => {
-    const cardRef = useRef<HTMLAnchorElement>(null);
     const emoji = genreEmoji[data.name] || "🎬";
-
-    useGSAP(() => {
-        const card = cardRef.current;
-        if (!card) return;
-
-        const mm = gsap.matchMedia();
-
-        mm.add("(prefers-reduced-motion: no-preference)", () => {
-            gsap.fromTo(
-                card,
-                { autoAlpha: 0, y: 20 },
-                {
-                    autoAlpha: 1,
-                    y: 0,
-                    duration: 0.6,
-                    ease: 'power2.out',
-                    scrollTrigger: {
-                        trigger: card,
-                        start: 'top 95%',
-                        once: true,
-                    },
-                }
-            );
-        });
-
-        mm.add("(prefers-reduced-motion: reduce)", () => {
-            gsap.to(card, {
-                autoAlpha: 1,
-                duration: 0.4,
-                scrollTrigger: { trigger: card, start: 'top 95%', once: true },
-            });
-        });
-
-        return () => mm.revert();
-    }, { scope: cardRef });
 
     return (
         <Link
             href={`/genres-${name}/${data.name.toLowerCase()}-${data.mal_id}`}
-            ref={cardRef}
-            className="group relative flex flex-col justify-between p-4 sm:p-5 h-28 sm:h-36 border border-border/50 bg-background transition-colors duration-300 md:hover:bg-foreground md:hover:text-background invisible"
+            className="group relative flex flex-col justify-between p-4 sm:p-5 h-28 sm:h-36 border border-border/50 bg-background transition-colors duration-300 md:hover:bg-foreground md:hover:text-background"
         >
             {/* Top Row: Emoji & Count */}
             <div className="flex justify-between items-start">

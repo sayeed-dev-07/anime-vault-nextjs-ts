@@ -2,6 +2,12 @@ import FetchAnime from '@/components/FetchAnime';
 import Link from 'next/link';
 import { ChevronRight } from 'lucide-react';
 import HeroSection from '@/components/Hero';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Anime & Manga Database',
+  description: 'Discover trending anime and popular manga, then explore detailed information for your next favorite series.',
+};
 
 
 export default function HomePage() {

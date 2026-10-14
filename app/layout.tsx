@@ -23,8 +23,11 @@ const OutfitFont = Outfit({
 });
 
 export const metadata: Metadata = {
-  title: "AniSearch.",
-  description: "Discover detailed information about your favorite anime and manga.",
+  title: {
+    default: "AniSearch | Anime & Manga Database",
+    template: "%s | AniSearch",
+  },
+  description: "Discover anime and manga, browse genres and rankings, and explore detailed series information on AniSearch.",
 };
 
 export default function RootLayout({

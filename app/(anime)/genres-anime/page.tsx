@@ -1,6 +1,12 @@
 
 
 import FetchGenres from '@/components/FetchGenres';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+    title: 'Anime Genres',
+    description: 'Browse anime by genre, from action and adventure to romance, fantasy, and more.',
+};
 
 
 const page = () => {

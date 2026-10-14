@@ -1,62 +1,19 @@
 ﻿'use client'
 
-import React, { useRef } from 'react';
+import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import gsap from 'gsap';
-import { useGSAP } from '@gsap/react';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Star, Heart, Book, ArrowUpRight } from 'lucide-react';
 
 import { Manga } from './FetchAnime';
 import FormatSegment from './Format';
 import FavButton from './FavButton';
 
-gsap.registerPlugin(useGSAP, ScrollTrigger);
-
 const MangaCard = ({ data }: { data: Manga }) => {
-  const cardRef = useRef<HTMLAnchorElement | null>(null);
-
-  useGSAP(() => {
-    const card = cardRef.current;
-    if (!card) return;
-
-    const mm = gsap.matchMedia();
-
-    mm.add("(prefers-reduced-motion: no-preference)", () => {
-      gsap.fromTo(
-        card,
-        { autoAlpha: 0, y: 20 },
-        {
-          autoAlpha: 1,
-          y: 0,
-          duration: 0.6,
-          ease: 'power2.out',
-          scrollTrigger: {
-            trigger: card,
-            start: 'top 90%',
-            once: true,
-          },
-        }
-      );
-    });
-
-    mm.add("(prefers-reduced-motion: reduce)", () => {
-      gsap.to(card, {
-        autoAlpha: 1,
-        duration: 0.4,
-        scrollTrigger: { trigger: card, start: 'top 90%', once: true },
-      });
-    });
-
-    return () => mm.revert();
-  }, { scope: cardRef });
-
   return (
     <Link
       href={`/mangas/${FormatSegment(data.title)}-${data.mal_id}`}
-      ref={cardRef}
-      className='group my-3 relative flex flex-col invisible  w-full'
+      className='group my-3 relative flex flex-col w-full'
     >
       <div
         className='absolute top-2 right-2 z-20 transition-opacity duration-300 opacity-100 md:opacity-0 md:group-hover:opacity-100'

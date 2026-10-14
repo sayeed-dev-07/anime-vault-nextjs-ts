@@ -1,6 +1,12 @@
 
 
 import InfinityScroll from '@/components/InfinityScroll';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+    title: 'Top Manga',
+    description: 'Explore the top-ranked manga and discover highly rated stories to read next.',
+};
 
 
 const page = () => {
