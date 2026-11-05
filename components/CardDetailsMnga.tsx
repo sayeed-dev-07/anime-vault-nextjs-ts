@@ -101,7 +101,7 @@ const CardDetailsMnga = async ({ manga }: { manga: MangaData }) => {
 
                     {/* Left Column: Image & Main Title */}
                     <div className="lg:col-span-5 lg:pr-12">
-                        <div className="w-full max-w-[350px] aspect-[4/5] relative mb-8 bg-muted">
+                        <div className="comic-image w-full max-w-[350px] aspect-[4/5] relative mb-8 bg-muted">
                             {manga.images?.jpg?.large_image_url ? (
                                 <Image
                                     src={manga.images.jpg.large_image_url}
@@ -116,11 +116,11 @@ const CardDetailsMnga = async ({ manga }: { manga: MangaData }) => {
                             )}
                         </div>
 
-                        <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground mb-4 border-b border-border pb-2 inline-block">
+                        <p className="bg-[#f9c846] text-[#161616] px-2 py-1 text-[10px] font-black uppercase tracking-[0.14em] mb-4 inline-block rotate-1">
                             Manga details
                         </p>
 
-                        <h1 className="text-4xl md:text-5xl font-light tracking-tight leading-tight text-foreground mb-3">
+                        <h1 className="text-3xl md:text-5xl leading-tight text-foreground mb-3">
                             {manga.title}
                         </h1>
 
@@ -233,7 +233,7 @@ const CardDetailsMnga = async ({ manga }: { manga: MangaData }) => {
 
                                 <div className="flex flex-wrap gap-2 mt-4">
                                     {Allgenres.map((g) => (
-                                        <span key={g.mal_id} className="text-xs border border-border px-2 py-1 text-muted-foreground uppercase tracking-wider">
+                                        <span key={g.mal_id} className="comic-tag px-2 py-1">
                                             {g.name}
                                         </span>
                                     ))}
@@ -252,7 +252,7 @@ const CardDetailsMnga = async ({ manga }: { manga: MangaData }) => {
 
                             {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
                             {characterData?.slice(0, 4).map((char: any) => (
-                                <div key={char.character.mal_id} className="relative w-full aspect-square bg-muted">
+                                <div key={char.character.mal_id} className="comic-image relative w-full aspect-square bg-muted">
                                     {char.character.images?.jpg?.image_url && (
                                         <Image
                                             src={char.character.images.jpg.image_url}
@@ -273,14 +273,14 @@ const CardDetailsMnga = async ({ manga }: { manga: MangaData }) => {
                 <div className="space-y-24">
                     {characterData?.length > 0 && (
                         <section>
-                            <h2 className="text-2xl font-light tracking-tight mb-8">Characters</h2>
+                            <h2 className="text-xl sm:text-2xl mb-8">Characters</h2>
                             <Pagination name='mangas' data={characterData} type="characters" limit={8} />
                         </section>
                     )}
 
                     {recommendationsData?.length > 0 && (
                         <section>
-                            <h2 className="text-2xl font-light tracking-tight mb-8">Recommendations</h2>
+                            <h2 className="text-xl sm:text-2xl mb-8">Recommendations</h2>
                             <Pagination name='mangas' data={recommendationsData} type="recommendations" limit={8} />
                         </section>
                     )}

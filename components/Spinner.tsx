@@ -22,12 +22,11 @@ const Spinner = ({ size = 'md', className = '' }: SpinnerProps) => {
   return (
     <div className={`flex justify-center items-center ${className}`}>
 
-      {/* Strict architectural square, replacing the generic circular ring */}
-      <div className={`relative flex items-center justify-center ${widthHeight}`}>
+        <div className={`relative flex items-center justify-center ${widthHeight} rotate-45`}>
 
         {/* Background Track (Faint geometric outline inheriting parent text color) */}
         <div
-          className={`absolute inset-0 rounded-none border-current opacity-20 ${borderThickness}`}
+          className={`absolute inset-0 border-current opacity-30 ${borderThickness}`}
         />
 
         {/* 
@@ -35,12 +34,12 @@ const Spinner = ({ size = 'md', className = '' }: SpinnerProps) => {
           Uses a sharp crimson top edge, leaving the rest transparent to create the spin effect.
         */}
         <div
-          className={`absolute inset-0 rounded-none border-transparent border-t-[crimson] animate-spin ${borderThickness}`}
+          className={`absolute inset-0 border-transparent border-t-[#e6392d] border-r-[#f9c846] animate-spin ${borderThickness}`}
         />
 
         {/* Inner static dot for the larger sizes to give it a 'radar/crosshair' feel */}
         {size !== 'sm' && (
-          <div className="w-1.5 h-1.5 bg-[crimson]/50 rounded-none animate-pulse" />
+          <div className="w-1.5 h-1.5 bg-[#e6392d] animate-pulse -rotate-45" />
         )}
 
       </div>

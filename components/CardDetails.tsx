@@ -130,7 +130,7 @@ const CardDetails = async ({ anime }: { anime: AnimeData }) => {
 
                     {/* Left Column: Image & Main Title */}
                     <div className="lg:col-span-5 lg:pr-12">
-                        <div className="w-full max-w-[350px] aspect-4/5 relative mb-8 bg-muted">
+                        <div className="comic-image w-full max-w-[350px] aspect-4/5 relative mb-8 bg-muted">
                             {anime.images?.jpg?.large_image_url ? (
                                 <Image
                                     src={anime.images.jpg.large_image_url}
@@ -145,11 +145,11 @@ const CardDetails = async ({ anime }: { anime: AnimeData }) => {
                             )}
                         </div>
 
-                        <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground mb-4 border-b border-border pb-2 inline-block">
+                        <p className="bg-[#e6392d] text-white px-2 py-1 text-[10px] font-black uppercase tracking-[0.14em] mb-4 inline-block -rotate-1">
                             anime info
                         </p>
 
-                        <h1 className="text-4xl md:text-5xl font-light tracking-tight leading-tight text-foreground mb-3">
+                        <h1 className="text-3xl md:text-5xl leading-tight text-foreground mb-3">
                             {anime.title}
                         </h1>
 
@@ -242,7 +242,7 @@ const CardDetails = async ({ anime }: { anime: AnimeData }) => {
                                 <h3 className="text-[10px] font-bold uppercase tracking-[0.2em] mb-4 text-foreground">Tags & Studios</h3>
                                 <div className="flex flex-wrap gap-2 mb-3">
                                     {Allgenres.map((g) => (
-                                        <span key={g.mal_id} className="text-xs border border-border px-2 py-1 text-muted-foreground uppercase tracking-wider">
+                                        <span key={g.mal_id} className="comic-tag px-2 py-1">
                                             {g.name}
                                         </span>
                                     ))}
@@ -261,7 +261,7 @@ const CardDetails = async ({ anime }: { anime: AnimeData }) => {
 
                             {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
                             {characters?.slice(0, 4).map((char: any) => (
-                                <div key={char.character.mal_id} className="relative w-full aspect-square bg-muted">
+                                <div key={char.character.mal_id} className="comic-image relative w-full aspect-square bg-muted">
                                     {char.character.images?.jpg?.image_url && (
                                         <Image
                                             src={char.character.images.jpg.image_url}
@@ -300,21 +300,21 @@ const CardDetails = async ({ anime }: { anime: AnimeData }) => {
                     {/* Paginated Sections */}
                     {characters?.length > 0 && (
                         <section>
-                            <h2 className="text-2xl font-light tracking-tight mb-8">Characters</h2>
+                            <h2 className="text-xl sm:text-2xl mb-8">Characters</h2>
                             <Pagination data={characters} type="characters" limit={8} />
                         </section>
                     )}
 
                     {staff?.length > 0 && (
                         <section>
-                            <h2 className="text-2xl font-light tracking-tight mb-8">Staff</h2>
+                            <h2 className="text-xl sm:text-2xl mb-8">Staff</h2>
                             <Pagination data={staff} type="staff" limit={8} />
                         </section>
                     )}
 
                     {recommendations?.length > 0 && (
                         <section>
-                            <h2 className="text-2xl font-light tracking-tight mb-8">Recommendations</h2>
+                            <h2 className="text-xl sm:text-2xl mb-8">Recommendations</h2>
                             <Pagination data={recommendations} type="recommendations" limit={8} />
                         </section>
                     )}

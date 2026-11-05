@@ -27,20 +27,20 @@ const ButtonSpin = ({ text = 'Details', className = '' }: ButtonSpinProps) => {
 
     return (
         <Button
-            className={`w-full h-11 cursor-pointer group transition-all duration-500 rounded-none border border-foreground bg-foreground text-background hover:bg-transparent hover:text-foreground uppercase tracking-[0.2em] text-[10px] font-bold ${className}`}
+            className={`w-full h-11 cursor-pointer group transition-all duration-200 rounded-none border-2 border-[#161616] bg-[#e6392d] text-white shadow-[4px_4px_0_#161616] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0_#161616] uppercase tracking-[0.16em] text-[10px] font-black ${className}`}
             disabled={loading}
             onClick={handleClick}
         >
             {loading ? (
                 <span className="flex items-center justify-center gap-3">
                     <Spinner size="sm" className="text-current" />
-                    <span>Loading...</span>
+                    <span>Opening...</span>
                 </span>
             ) : (
                 <span className="flex items-center justify-center gap-2 w-full">
                     {text}
                     {/* The arrow starts neutral and turns crimson while sliding right on hover */}
-                    <ArrowRight className="w-3.5 h-3.5 transition-all duration-300 group-hover:translate-x-1 group-hover:text-[crimson]" />
+                    <ArrowRight className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1" />
                 </span>
             )}
         </Button>

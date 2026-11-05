@@ -33,11 +33,11 @@ export default function BackButton() {
       className="
         group invisible flex items-center justify-center 
         w-12 h-12 sm:w-14 sm:h-14 
-        bg-foreground text-background border border-foreground 
-        rounded-none cursor-pointer
-        transition-colors duration-300 ease-out
-        hover:bg-background hover:text-foreground
-        focus:outline-none focus:ring-1 focus:ring-[crimson] focus:ring-offset-2 focus:ring-offset-background
+        bg-[#f9c846] text-[#161616] border-2 border-foreground 
+        rounded-none cursor-pointer shadow-[4px_4px_0_var(--foreground)]
+        transition-all duration-200 ease-out
+        hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0_var(--foreground)]
+        focus:outline-none focus:ring-2 focus:ring-[#e6392d] focus:ring-offset-2 focus:ring-offset-background
       "
     >
       <ArrowLeft

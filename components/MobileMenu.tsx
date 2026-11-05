@@ -46,7 +46,7 @@ export default function MobileMenu() {
             {/* Brutalist Hamburger Button */}
             <button
                 onClick={() => setIsOpen(true)}
-                className="w-9 h-9 sm:w-10 sm:h-10 border border-border bg-transparent flex items-center justify-center text-foreground hover:bg-foreground hover:text-background transition-colors mr-3 sm:mr-4 rounded-none cursor-pointer"
+                className="w-9 h-9 sm:w-10 sm:h-10 border-2 border-border bg-[#f9c846] text-[#161616] shadow-[3px_3px_0_var(--foreground)] flex items-center justify-center hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all mr-3 sm:mr-4 rounded-none cursor-pointer"
                 aria-label="Open Menu"
             >
                 <Menu className="w-5 h-5" />
@@ -62,16 +62,16 @@ export default function MobileMenu() {
             {/* Sliding Drawer (Uses 100dvh to fix iOS Safari cutoffs) */}
             <div
                 ref={drawerRef}
-                className="fixed top-0 left-0 w-[280px] h-[100dvh] bg-background border-r-2 border-border z-[101] -translate-x-full flex flex-col"
+                className="fixed top-0 left-0 w-[280px] h-[100dvh] comic-dots bg-background border-r-[3px] border-border z-[101] -translate-x-full flex flex-col"
             >
                 {/* Drawer Header */}
                 <div className="flex items-center justify-between p-4 border-b border-border shrink-0 h-20 sm:h-[90px]">
-                    <span className="text-2xl font-black uppercase tracking-tighter text-foreground">
-                        <span className="text-[crimson]">Ani</span>Search<span className="text-[crimson]">.</span>
+                    <span className="comic-heading text-xl uppercase text-foreground">
+                        <span className="text-[#e6392d]">Ani</span>Search<span className="text-[#e6392d]">!</span>
                     </span>
                     <button
                         onClick={() => setIsOpen(false)}
-                        className="w-8 h-8 border border-border flex items-center justify-center hover:bg-[crimson] hover:text-white hover:border-[crimson] transition-colors rounded-none cursor-pointer"
+                        className="w-8 h-8 border-2 border-border bg-[#e6392d] text-white flex items-center justify-center hover:rotate-6 transition-transform rounded-none cursor-pointer"
                     >
                         <X className="w-4 h-4" />
                     </button>

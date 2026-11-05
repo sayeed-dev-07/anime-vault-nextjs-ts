@@ -30,13 +30,13 @@ const FavButton = ({ data, type }: Props) => {
     <button
       onClick={handleClick}
       aria-label={exists ? "Remove from favorites" : "Add to favorites"}
-      className="p-2 sm:p-2.5 rounded-full bg-black/40 hover:bg-black/60 backdrop-blur-md shadow-lg transition-all duration-300 hover:scale-110 active:scale-90 group focus:outline-none focus:ring-2 focus:ring-[crimson]/50"
+      className="p-2 sm:p-2.5 border-2 border-[#161616] bg-[#fff8e7] text-[#161616] shadow-[2px_2px_0_#161616] transition-all duration-200 hover:translate-x-px hover:translate-y-px hover:shadow-none active:scale-90 group focus:outline-none focus:ring-2 focus:ring-[#e6392d]"
     >
       <Heart
         size={22}
         className={`transition-all duration-300 ease-out ${exists
-          ? 'fill-[crimson] stroke-[crimson] scale-100'
-          : 'fill-transparent stroke-white/90 group-hover:stroke-[crimson] scale-95 group-hover:scale-100'
+          ? 'fill-[#e6392d] stroke-[#e6392d] scale-100'
+          : 'fill-transparent stroke-current scale-95 group-hover:scale-100'
           }`}
       />
     </button>

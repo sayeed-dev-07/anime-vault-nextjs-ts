@@ -109,12 +109,12 @@ const Pagination = ({ data, limit = 12, name = 'animes', type }: { data: dataPro
               w-full sm:w-[300px] h-12 
               rounded-none border border-foreground bg-transparent text-foreground 
               transition-all duration-300 ease-out
-              hover:bg-foreground hover:text-background
+              hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none shadow-[4px_4px_0_var(--foreground)]
               uppercase tracking-[0.2em] text-[10px] font-bold
             '
           >
             Load More
-            <ChevronDown className="w-4 h-4 transition-transform duration-300 group-hover:translate-y-1 group-hover:text-[crimson]" />
+            <ChevronDown className="w-4 h-4 transition-transform duration-300 group-hover:translate-y-1" />
           </Button>
         </div>
       }

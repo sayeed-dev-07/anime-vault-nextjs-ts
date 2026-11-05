@@ -13,12 +13,12 @@ const SideBar = () => {
     const isRouteActive = path !== "/" && pathname.startsWith(path);
 
     return (isHomeActive || isRouteActive)
-      ? "bg-foreground text-background font-bold border-l-[3px] border-[crimson]"
-      : "text-muted-foreground border-l-[3px] border-transparent hover:bg-foreground hover:text-background hover:border-[crimson] font-medium transition-all duration-300";
+      ? "bg-[#e6392d] text-white font-extrabold border-l-[5px] border-[#f9c846] shadow-[3px_3px_0_var(--foreground)]"
+      : "text-foreground border-l-[5px] border-transparent hover:bg-[#f9c846] hover:text-[#161616] hover:border-[#e6392d] font-bold transition-all duration-200";
   };
 
-  const linkBaseClass = "flex items-center gap-3 px-4 py-3 text-xs sm:text-sm uppercase tracking-widest w-full";
-  const sectionHeaderClass = "text-[9px] font-mono font-bold uppercase tracking-[0.2em] text-muted-foreground border-b border-border pb-2 mb-2 px-4 mt-8 first:mt-0";
+  const linkBaseClass = "flex items-center gap-3 px-4 py-3 text-xs sm:text-sm uppercase tracking-wider w-full";
+  const sectionHeaderClass = "text-[10px] font-black uppercase tracking-[0.14em] text-foreground border-b-2 border-border pb-2 mb-2 px-4 mt-8 first:mt-0";
 
   return (
     // STRICT flex-col layout fixes the bug where links disappear off-screen on mobile

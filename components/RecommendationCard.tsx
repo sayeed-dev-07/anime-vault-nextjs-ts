@@ -65,7 +65,7 @@ const RecommendationCard = ({ data, name = 'animes' }: { data: Recommendation, n
         <div ref={cardRef} className='invisible flex flex-col group h-full w-full'>
 
             {/* Sleek Image Container */}
-            <div className='relative w-full aspect-[3/4] bg-muted overflow-hidden mb-3 ring-1 ring-border/50'>
+            <div className='comic-image relative w-full aspect-[3/4] bg-muted overflow-hidden mb-3'>
                 <Image
                     fill
                     className='object-cover'
@@ -78,7 +78,7 @@ const RecommendationCard = ({ data, name = 'animes' }: { data: Recommendation, n
 
             {/* Editorial Content */}
             <div className='flex flex-col gap-2 px-1 flex-grow'>
-                <h4 className='font-bold text-sm sm:text-base leading-tight line-clamp-2 text-foreground transition-colors group-hover:text-[crimson]' title={data.entry.title}>
+                <h4 className='font-extrabold text-sm sm:text-base leading-tight line-clamp-2 text-foreground transition-colors group-hover:text-[#e6392d]' title={data.entry.title}>
                     {data.entry.title}
                 </h4>
 

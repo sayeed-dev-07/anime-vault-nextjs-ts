@@ -52,7 +52,7 @@ const StaffCard = ({ Staff }: { Staff: StaffProp }) => {
         <div ref={cardRef} className='invisible flex flex-col group w-full'>
 
             {/* Minimalist Image Container with Grayscale Effect */}
-            <div className='relative w-full aspect-[3/4] bg-muted overflow-hidden mb-3 ring-1 ring-border/50'>
+            <div className='comic-image relative w-full aspect-[3/4] bg-muted overflow-hidden mb-3'>
                 <Image
                     fill
                     className='object-cover'
@@ -65,7 +65,7 @@ const StaffCard = ({ Staff }: { Staff: StaffProp }) => {
 
             {/* Editorial Typography */}
             <div className='flex flex-col gap-1 px-1'>
-                <h4 className='font-bold text-sm sm:text-base leading-tight line-clamp-1 text-foreground transition-colors group-hover:text-[crimson]' title={Staff.person.name}>
+                <h4 className='font-extrabold text-sm sm:text-base leading-tight line-clamp-1 text-foreground transition-colors group-hover:text-[#e6392d]' title={Staff.person.name}>
                     {Staff.person.name}
                 </h4>
 

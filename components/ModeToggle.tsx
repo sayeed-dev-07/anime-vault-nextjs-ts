@@ -15,7 +15,7 @@ export function ModeToggle() {
 
   if (!mounted) {
     return (
-      <Button variant="outline" size="icon" className="rounded-none border-foreground/30 bg-transparent w-9 h-9 sm:w-10 sm:h-10">
+      <Button variant="outline" size="icon" className="rounded-none border-2 border-foreground bg-[#f9c846] text-[#161616] w-9 h-9 sm:w-10 sm:h-10 shadow-[3px_3px_0_var(--foreground)]">
         <span className="h-4 w-4" />
       </Button>
     )
@@ -30,7 +30,7 @@ export function ModeToggle() {
       variant="outline"
       size="icon"
       onClick={toggleTheme}
-      className="relative cursor-pointer rounded-none border border-foreground/30 bg-transparent hover:bg-foreground hover:text-background dark:hover:text-background dark:hover:bg-foreground hover:border-foreground transition-all duration-300 w-9 h-9 sm:w-10 sm:h-10 group"
+      className="relative cursor-pointer rounded-none border-2  border-foreground bg-[#f9c846] text-[#161616] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all duration-200 w-9 h-9 sm:w-10 sm:h-10 shadow-[3px_3px_0_var(--foreground)] group"
     >
       <Sun
         className={`absolute h-4 w-4 text-current transition-all duration-500 ease-out ${resolvedTheme === "dark" ? "translate-y-10 opacity-0" : "translate-y-0 opacity-100"

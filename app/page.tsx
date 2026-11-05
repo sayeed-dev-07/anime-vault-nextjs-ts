@@ -1,6 +1,5 @@
 import FetchAnime from '@/components/FetchAnime';
 import Link from 'next/link';
-import { ChevronRight } from 'lucide-react';
 import HeroSection from '@/components/Hero';
 import type { Metadata } from 'next';
 
@@ -19,14 +18,15 @@ export default function HomePage() {
         {/* Insert the new technical editorial hero here */}
         <HeroSection />
 
-        <div className="space-y-12 md:space-y-20 mt-12">
+        <div className="space-y-16 md:space-y-24 mt-12">
           {/* Anime Section */}
           {/* Anime Section */}
           <section className="space-y-6">
-            <div className="flex flex-col sm:flex-row justify-between sm:items-end gap-4 border-b border-border/50 pb-3">
+            <div className="flex flex-col sm:flex-row justify-between sm:items-end gap-4 border-b-[3px] border-border pb-4">
               <div>
-                <h2 className="text-xl sm:text-2xl font-semibold tracking-tight text-foreground">Trending Animes</h2>
-                <p className="text-muted-foreground mt-1 text-xs   tracking-widest uppercase opacity-70">
+                <p className="inline-block bg-[#e6392d] text-white px-2 py-1 text-[10px] font-black tracking-widest uppercase -rotate-1 mb-2">Fresh from the vault</p>
+                <h2 className="comic-heading text-xl sm:text-3xl text-foreground">Trending Anime</h2>
+                <p className="text-muted-foreground mt-2 text-sm font-bold tracking-wide uppercase">
                   Discover what everyone is watching
                 </p>
               </div>
@@ -55,10 +55,11 @@ export default function HomePage() {
 
           {/* Manga Section */}
           <section className="space-y-6 mt-12 md:mt-16">
-            <div className="flex flex-col sm:flex-row justify-between sm:items-end gap-4 border-b border-border/50 pb-3">
+            <div className="flex flex-col sm:flex-row justify-between sm:items-end gap-4 border-b-[3px] border-border pb-4">
               <div>
-                <h2 className="text-xl sm:text-2xl font-semibold tracking-tight text-foreground">Popular Mangas</h2>
-                <p className="text-muted-foreground mt-1 text-xs   tracking-widest uppercase opacity-70">
+                <p className="inline-block bg-[#f9c846] text-[#161616] px-2 py-1 text-[10px] font-black tracking-widest uppercase rotate-1 mb-2">Turn the page</p>
+                <h2 className="comic-heading text-xl sm:text-3xl text-foreground">Popular Manga</h2>
+                <p className="text-muted-foreground mt-2 text-sm font-bold tracking-wide uppercase">
                   Dive into the latest chapters
                 </p>
               </div>

@@ -70,8 +70,8 @@ const SearchFetch = ({ name = 'search-anime', searchName }: PageProp) => {
     return (
         <div>
             {/* Minimalist Section Header */}
-            <div className="flex items-end justify-between mb-8 border-b border-border/50 pb-3">
-                <h2 className="text-xl sm:text-2xl font-bold uppercase tracking-tight text-foreground">
+            <div className="flex items-end justify-between mb-8 border-b-[3px] border-border pb-4">
+                <h2 className="text-xl sm:text-2xl uppercase text-foreground">
                     {sectionTitle} Collection
                 </h2>
                 {fetchData && (
@@ -84,7 +84,7 @@ const SearchFetch = ({ name = 'search-anime', searchName }: PageProp) => {
             {/* Content Area */}
             {fetchData?.length === 0 ? (
                 // Brutalist Empty State
-                <div className="w-full flex flex-col items-center justify-center py-20 px-4 border border-border bg-muted/10 text-center">
+                <div className="comic-panel w-full flex flex-col items-center justify-center py-20 px-4 bg-card text-center">
                     <SearchX className="w-12 h-12 text-muted-foreground mb-6 opacity-40" />
                     <span className="  text-[10px] tracking-[0.2em] uppercase text-muted-foreground mb-2">
                         Blank Canvas
@@ -123,7 +123,7 @@ const SearchFetch = ({ name = 'search-anime', searchName }: PageProp) => {
                                     w-full sm:w-[300px] h-12 
                                     rounded-none border border-foreground bg-transparent text-foreground 
                                     transition-all duration-300 ease-out
-                                    hover:bg-foreground hover:text-background disabled:opacity-50 disabled:hover:bg-transparent disabled:hover:text-foreground
+                                    hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none shadow-[4px_4px_0_var(--foreground)] disabled:opacity-50
                                     uppercase tracking-[0.2em] text-[10px] font-bold
                                 '
                             >
@@ -133,7 +133,7 @@ const SearchFetch = ({ name = 'search-anime', searchName }: PageProp) => {
                                     </>
                                 ) : (
                                     <>
-                                        Expand Gallery <ChevronDown className="w-4 h-4 transition-transform duration-300 group-hover:translate-y-1 group-hover:text-[crimson]" />
+                                        Expand Gallery <ChevronDown className="w-4 h-4 transition-transform duration-300 group-hover:translate-y-1" />
                                     </>
                                 )}
                             </Button>

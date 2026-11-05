@@ -22,7 +22,7 @@ const MangaCard = ({ data }: { data: Manga }) => {
         <FavButton type='Manga' data={data} />
       </div>
 
-      <div className='relative w-full aspect-[3/4] max-h-[320px] overflow-hidden rounded-md bg-muted/30 mb-3 shadow-sm'>
+      <div className='relative w-full aspect-[3/4] max-h-[320px] overflow-hidden border-[3px] border-foreground bg-muted mb-3 shadow-[4px_4px_0_var(--foreground)] transition-transform duration-300 md:group-hover:-translate-y-1'>
         {data.images?.jpg?.large_image_url ? (
           <Image
             src={data.images.jpg.large_image_url}
@@ -43,7 +43,7 @@ const MangaCard = ({ data }: { data: Manga }) => {
       <div className='flex flex-col px-1'>
 
         <div className="flex justify-between items-start gap-2 mb-1">
-          <h3 className='text-sm sm:text-base font-semibold leading-snug line-clamp-2 text-foreground transition-colors md:group-hover:text-[crimson]'>
+          <h3 className='text-sm sm:text-base font-extrabold leading-snug line-clamp-2 text-foreground transition-colors md:group-hover:text-[#e6392d]'>
             {data.title}
           </h3>
           <ArrowUpRight className="w-4 h-4 text-muted-foreground flex-shrink-0 transition-all duration-300 opacity-100 translate-x-0 translate-y-0 md:opacity-0 md:-translate-x-2 md:translate-y-2 md:group-hover:opacity-100 md:group-hover:translate-x-0 md:group-hover:translate-y-0" />

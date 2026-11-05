@@ -24,7 +24,7 @@ const GenCard = ({ data, name }: genDataFullProp) => {
     return (
         <Link
             href={`/genres-${name}/${data.name.toLowerCase()}-${data.mal_id}`}
-            className="group relative flex flex-col justify-between p-4 sm:p-5 h-28 sm:h-36 border border-border/50 bg-background transition-colors duration-300 md:hover:bg-foreground md:hover:text-background"
+            className="group relative flex flex-col justify-between p-4 sm:p-5 h-28 sm:h-36 border-[3px] border-foreground bg-card shadow-[4px_4px_0_var(--foreground)] transition-all duration-200 md:hover:-translate-y-1 md:hover:bg-[#f9c846] md:hover:text-[#161616]"
         >
             {/* Top Row: Emoji & Count */}
             <div className="flex justify-between items-start">
@@ -38,7 +38,7 @@ const GenCard = ({ data, name }: genDataFullProp) => {
 
             {/* Bottom Row: Title & Arrow */}
             <div className="flex justify-between items-end">
-                <h3 className="text-sm sm:text-base md:text-lg font-bold tracking-tight line-clamp-1 pr-2">
+                <h3 className="text-sm sm:text-base md:text-lg leading-tight line-clamp-1 pr-2">
                     {data.name}
                 </h3>
 

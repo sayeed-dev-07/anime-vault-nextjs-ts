@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 const page = () => {
     return (
         <div className=' max-w-[1600px] mx-auto'>
-            <p className='sm:text-6xl text-3xl mb-3'>Top Animes</p>
+            <p className='comic-heading sm:text-5xl text-3xl mb-7 text-[#e6392d] [text-shadow:3px_3px_0_var(--foreground)]'>Top Animes</p>
             <div>
                 <InfinityScroll randomIdnt='animeTop' top={true} />
             </div>

@@ -16,9 +16,9 @@ const Page = () => {
     <div className="max-w-[1600px] mx-auto  md:px-8 min-h-screen pt-8 md:pt-16 pb-24">
 
       {/* Editorial Page Header */}
-      <header className="mb-16 border-b-2 border-border pb-6">
+      <header className="mb-16 border-b-[3px] border-border pb-6">
 
-        <h1 className="text-5xl md:text-7xl lg:text-[6rem]  uppercase tracking-tighter text-foreground leading-[0.85]">
+        <h1 className="text-4xl md:text-6xl lg:text-[5rem] uppercase text-[#e6392d] leading-[.9] [text-shadow:4px_4px_0_var(--foreground)]">
           Favorites.
         </h1>
       </header>
@@ -26,7 +26,7 @@ const Page = () => {
       {/* --- Anime Section --- */}
       <section className="mb-24">
         {/* Minimalist Section Header */}
-        <div className="flex items-end justify-between mb-8 border-b border-border/50 pb-3">
+        <div className="flex items-end justify-between mb-8 border-b-[3px] border-border pb-4">
           <h2 className="text-xl sm:text-2xl font-bold uppercase tracking-tight text-foreground">
             Anime
           </h2>
@@ -38,7 +38,7 @@ const Page = () => {
 
         {animeFavs.length === 0 ? (
           /* Brutalist Empty State */
-          <div className="w-full flex flex-col items-center justify-center py-20 px-4 border border-border bg-muted/10 text-center">
+          <div className="comic-panel w-full flex flex-col items-center justify-center py-20 px-4 bg-card text-center">
             <span className="text-[14px] tracking-[0.2em] uppercase text-muted-foreground mb-2">
               Empty
             </span>
@@ -47,10 +47,10 @@ const Page = () => {
             </h3>
             <Link
               href="/animes"
-              className="group flex items-center justify-center gap-3 w-[240px] h-12 border border-foreground bg-foreground text-background font-bold uppercase tracking-[0.2em] text-[10px] hover:bg-transparent hover:text-foreground transition-all duration-300"
+              className="group flex items-center justify-center gap-3 w-[240px] h-12 border-2 border-[#161616] bg-[#e6392d] text-white font-black uppercase tracking-[0.16em] text-[10px] shadow-[4px_4px_0_#161616] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0_#161616] transition-all duration-200"
             >
               Browse
-              <ArrowRight className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1 group-hover:text-[crimson]" />
+              <ArrowRight className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1" />
             </Link>
           </div>
         ) : (
@@ -66,7 +66,7 @@ const Page = () => {
       {/* --- Manga Section --- */}
       <section>
         {/* Minimalist Section Header */}
-        <div className="flex items-end justify-between mb-8 border-b border-border/50 pb-3">
+        <div className="flex items-end justify-between mb-8 border-b-[3px] border-border pb-4">
           <h2 className="text-xl sm:text-2xl font-bold uppercase tracking-tight text-foreground">
             Manga
           </h2>
@@ -77,7 +77,7 @@ const Page = () => {
 
         {mangaFavs.length === 0 ? (
           /* Brutalist Empty State */
-          <div className="w-full flex flex-col items-center justify-center py-20 px-4 border border-border bg-muted/10 text-center">
+          <div className="comic-panel w-full flex flex-col items-center justify-center py-20 px-4 bg-card text-center">
             <span className=" text-[14px] tracking-[0.2em] uppercase text-muted-foreground mb-2">
               Empty
             </span>
@@ -86,10 +86,10 @@ const Page = () => {
             </h3>
             <Link
               href="/mangas"
-              className="group flex items-center justify-center gap-3 w-[240px] h-12 border border-foreground bg-foreground text-background font-bold uppercase tracking-[0.2em] text-[10px] hover:bg-transparent hover:text-foreground transition-all duration-300"
+              className="group flex items-center justify-center gap-3 w-[240px] h-12 border-2 border-[#161616] bg-[#e6392d] text-white font-black uppercase tracking-[0.16em] text-[10px] shadow-[4px_4px_0_#161616] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0_#161616] transition-all duration-200"
             >
               Browse
-              <ArrowRight className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1 group-hover:text-[crimson]" />
+              <ArrowRight className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1" />
             </Link>
           </div>
         ) : (
