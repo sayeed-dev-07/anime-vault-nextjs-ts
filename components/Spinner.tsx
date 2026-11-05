@@ -6,43 +6,25 @@ interface SpinnerProps {
 }
 
 const Spinner = ({ size = 'md', className = '' }: SpinnerProps) => {
-  // Map size props to exact Tailwind dimensions and border thicknesses.
-  // Brutalist sizes are kept slightly tighter for a dense, mechanical feel.
   const sizes = {
-    sm: 'w-3.5 h-3.5 border-[1.5px]',
-    md: 'w-6 h-6 border-2',
-    lg: 'w-10 h-10 border-2',
-    xl: 'w-14 h-14 border-[3px]',
+    sm: 'w-5 h-4 border-2',
+    md: 'w-9 h-7 border-2',
+    lg: 'w-14 h-11 border-[3px]',
+    xl: 'w-20 h-16 border-[3px]',
   };
 
-  const parts = sizes[size].split(' ');
-  const widthHeight = `${parts[0]} ${parts[1]}`;
-  const borderThickness = parts[2];
-
   return (
-    <div className={`flex justify-center items-center ${className}`}>
-
-        <div className={`relative flex items-center justify-center ${widthHeight} rotate-45`}>
-
-        {/* Background Track (Faint geometric outline inheriting parent text color) */}
-        <div
-          className={`absolute inset-0 border-current opacity-30 ${borderThickness}`}
-        />
-
-        {/* 
-          Spinning Highlight 
-          Uses a sharp crimson top edge, leaving the rest transparent to create the spin effect.
-        */}
-        <div
-          className={`absolute inset-0 border-transparent border-t-[#e6392d] border-r-[#f9c846] animate-spin ${borderThickness}`}
-        />
-
-        {/* Inner static dot for the larger sizes to give it a 'radar/crosshair' feel */}
-        {size !== 'sm' && (
-          <div className="w-1.5 h-1.5 bg-[#e6392d] animate-pulse -rotate-45" />
-        )}
-
+    <div className={`flex items-center justify-center ${className}`} role="status">
+      <div
+        className={`manga-loader relative overflow-hidden border-foreground bg-card ${sizes[size]}`}
+        aria-label="Loading"
+      >
+        <span className="manga-loader-sun absolute left-[42%] top-1/2 h-[32%] w-[18%] -translate-y-1/2 rounded-full bg-[#e6392d]" />
+        <span className="manga-loader-line manga-loader-line-one absolute left-[-25%] top-[23%] h-[10%] w-[62%] bg-foreground" />
+        <span className="manga-loader-line manga-loader-line-two absolute left-[-25%] top-[45%] h-[10%] w-[82%] bg-[#f9c846]" />
+        <span className="manga-loader-line manga-loader-line-three absolute left-[-25%] top-[67%] h-[10%] w-[48%] bg-foreground" />
       </div>
+      <span className="sr-only">Loading</span>
     </div>
   );
 };

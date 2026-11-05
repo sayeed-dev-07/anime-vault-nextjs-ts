@@ -214,6 +214,36 @@ html.lenis body {
 
 /* Add to your globals.css */
 @layer utilities {
+  @keyframes manga-loader-scan {
+    0% { transform: translateX(-20%) skewX(-24deg); opacity: 0; }
+    18% { opacity: 1; }
+    78% { opacity: 1; }
+    100% { transform: translateX(225%) skewX(-24deg); opacity: 0; }
+  }
+
+  @keyframes manga-loader-sun {
+    0%, 100% { transform: translate(-50%, -50%) scale(.72); }
+    50% { transform: translate(-50%, -50%) scale(1); }
+  }
+
+  .manga-loader-line {
+    animation: manga-loader-scan .9s cubic-bezier(.55, 0, .25, 1) infinite;
+    transform: skewX(-24deg);
+  }
+
+  .manga-loader-line-two { animation-delay: .12s; }
+  .manga-loader-line-three { animation-delay: .24s; }
+
+  .manga-loader-sun {
+    animation: manga-loader-sun .9s ease-in-out infinite;
+    transform: translate(-50%, -50%);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .manga-loader-line,
+    .manga-loader-sun { animation: none; }
+  }
+
   .no-scrollbar::-webkit-scrollbar {
     display: none;
   }
